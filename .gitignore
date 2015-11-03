@@ -94,3 +94,6 @@ sympy-plots-for-*.tex/
 ## TeXnicCenter
 *.tps
 *.glsdefs
+
+
+*.sublime-workspace
