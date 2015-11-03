@@ -1,1 +1,1 @@
-# zhaw_bachelor
+#ZHAW Bachelor Thesis
