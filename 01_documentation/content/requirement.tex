@@ -23,6 +23,37 @@ Die Anforderungen werden mithilfe von User Stories in der Form \glqq Als <Rolle>
 \item[US-1] Als End User möchte ich Start- und Zielort eingeben, um die verfügbaren Routen zu sehen.
 \end{description}
 
+\addcontentsline{toc}{subsection}{SC-001 Routen/Produkte anzeigen}
+\begin{usecase}
+\addtitle{SC-001}{Routen/Produkte anzeigen}
+\addscenario{Story}{
+	\item Als Kunde möchte ich Start und Zielort eingeben können, um die verfügbaren Routen/Produkte zu sehen.
+}
+\addscenario{Akzeptanzkriterien}{
+	\item Der Kunde sieht Routen welche zwischen seine seinem Start und Zielort liegen.
+	\item ...
+}
+\addfield{Priorität}{Hoch}
+\addfield{Domain}{???}
+\end{usecase}
+
+\newpage
+\addcontentsline{toc}{subsection}{SC-002 Leistung kaufen}
+\begin{usecase}
+\addtitle{SC-002}{Leistung kaufen}
+\addscenario{Story}{
+	\item Als Kunde möchte ich eine Leistung kaufen können, um den Auftrag abzuschliessen.
+}
+\addscenario{Akzeptanzkriterien}{
+	\item Der Kunde kann die Leistung kaufen, wenn sie fertig konfiguriert ist und ein akzeptiertes Zahlungsmittel eingegeben wurde.
+	\item Der Kaufauftrag muss nach dem abschliessen persistent gespeichert sein und ein Abbuchungsbefehl beim Zahlungsinstitut aufgegeben sein.
+	\item Der Kunde bekommt per Mail eine Auftragsbestätigung.
+}
+\addfield{Priorität}{Hoch}
+\addfield{Domain}{???}
+\end{usecase}
+
+
 \section{Akzeptanztests}
 
 \begin{description}
