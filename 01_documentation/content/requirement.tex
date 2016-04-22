@@ -4,51 +4,250 @@
 
 
 \section{Einleitung}
-Die Anforderungen werden mithilfe von User Stories in der Form \glqq Als <Rolle> möchte ich <Ziel/Wunsch>, um <Nutzen>\grqq festgehalten.
-
-\section{Rollen}
-\subsection{End User (EU)}
-\textcolor{darkgray}{
-	Den End User detailiert beschreiben
-}
-\subsection{System Administrator (SA)}
-\textcolor{darkgray}{
-	System Admin of Lobo?
-}
-
-\section{User Stories}
-\subsection{End User (EU)}
+Mit dem User Centered Design Prozess konzentriert sich die Anforderungsanalyse sehr stark auf den Benutzer. Dennoch wurden mit den wichtigsten Stakeholders Interviews geführt, in welchen sich zeigte was für Aufgaben und die Webapplikation für die Firma lösen soll.
 
 
-\addcontentsline{toc}{subsection}{SC-001 Routen/Produkte anzeigen}
+\subsection{User Stories vs Persona Stories}
+- Seit wann gibt es User Stories, Wie sind sie entstanden
+\newline{}
+- Negative Aspekte: (Zitieren aus dem Artikel)
+	1. Role ambiguity
+	2. Sie erzählen was für eine Art Aktivität der Benutzer machen will aber nicht wie und wenn. Dabei wird auch die Frequenz ausser acht gelassen.
+	3. User Stories sind in der Ich Person geschrieben und verhindern dadurch ein teil des Kreativen Prozesses.
+
+
+
+\section{Stakeholders}
+\begin{itemize}
+	\item David Emmerth
+	\item Nick Blake
+	\item Jürgen (Lobo)
+\end{itemize}
+
+\subsection{Zusammenfassung der Interviews}
+
+\section{Personas}
+
+\subsection{Mara}
+
+\subsubsection{Front}
+Mara welche unbedingt unbedingt etwas nach Berlin zu ihrer Tochter schicken muss.
+Mara ist 49 und alleinerziehende Mutter. Ihre ältere Tochter studiert in Berlin. Mara ist sehr umweltbewusst fährt fast immer mit dem Fahrrad oder dem öffentlichen Verkehr. Für grosse Besorgungen bzw. Entsorgungen mietet sie ein Auto bei Mobility. Sie kauft sehr bewusst sasional und regional ein und versucht ihren CO2 Fussabdruck klein zu halten.
+
+Ihre ältere Tochter hat beim letzten Heimatsbesuch ihre Handgeschrieben Unterlagsnotizen sowie das Elektrische gebastelte Gerät (Raspberry Pi) für ihre Abschlussarbeit vergessen. Die Präsentation ist am nächsten Tag um 16 Uhr.
+
+Mara benötigt eine Same Day Lieferung und will dabei einen zuverlässigen Express Kurier welcher auch ihre philosophie vom geringen CO2 ausstoss untersützt.
+
+\subsubsection{Back}
+Die Personen sind zwischen 20 und 60 Jahre alt und haben eine Mittlere (Irgendwas höheres als Lehre) Ausbildung. Sie brauchen eine Express Kurier Dienstleistung nur für Notfälle oder sehr spezielle Ausnahmen. 1 bis 2 mal im Jahr. Dabei ist ihnen aber das Image der Firma wichtig. Sie haben keine grosse Erfahrung mit irgendwelchen Kurieren und sind auf Hilfe angewiesen.
+
+
+
+\subsection{Peter}
+\subsubsection{Front}
+Peter einfach in einer Kreative Agentur der gelegentlich Ausdrucke an CLiente verschicken muss.
+Peter ist 28 und arbeite als Projektleiter in einer Werbeagentur. In seiner Freizeit spielt er mit seinen Arbeitskollegein Fussball. Peter kleidet sich stets gut aber nie kriegt man den gedanken seinen Stil zu kopieren. Peter hat seine Prinzipien aber kann sehr oportun sein. Peter verwaltet sehr viele Kunden und will auf alle Bedürfnisse seiner Kunden eingehen.
+
+Peter muss regelmäsig ausdrucke von Sujets oder Prints an seine Kunden schicken um das "Gut zum Druck" zu bekommen. Üblicherweise werden diese erst kurz vor der Deadline fertig. Damit der Kunde schnellstmöglich das Okay geben kann, werden diese Prints per Express Kurier verschickt. Peters Kunden sind zum grösstenteil ausserkantonal und deshalb nicht über einen lokalen Fahrradkurierdienst zu erreichen.
+
+Peter benötigt dafür eine Same Day Lieferung und will eine verlässlichen und transparenten Express Kurier. Pflichtbewusst wie Peter ist, hat er den Express Kurier bei seinen Kunden schon budgetiert und will nicht mit unvorhergesehen Kosten überrascht werden.
+
+\subsubsection{Back}
+Die Personen sind zwischen 20 und 40 Jahren alt und haben mindestens einen Bachelorabschluss. Sie benötigen regelmässig Express Kurierdienstleistungen und können gut mit Webbasierten Platformen umgehen. Sie wollen alle sich wiederholen Tasks z. B. "Abholadresse eingeben", da sie fast immer die gleiche ist, automatisieren können.
+
+\subsection{Laura}
+\subsubsection{Front}
+Laura welche einen Verlag hat und täglich neue Kunden für ein monatliches Abonoment abschliesst, welche verschickt werden müssen.
+Laura ist 37 und hat ein Stadtmagazin welches sie monatlich selber publiziert. Sie hat einen sehr guten Geschäftssinn und schon früh bemerkt dass mit Grün und Bio Labels sehr einfach zu werben ist. Als Geschäftsfrau ist ihr die Umwelt nicht gerade an erster Stelle aber auch sie will wenn möglich etwas zum Umweltschutz bei tragen.
+
+Laura macht Wöchentlich Aboabschlüsse im 2-Stelligen bereich und will die Ausgabe mit einem Expresskurier verschicken. Sie benötigt dafür eine einfache Maske in der alle Lieferadressen schnell und effizient eingetragen werden können. Laura ist auch an einer API Anbindung an ihre Abonomentsverwaltungssoftware intressiert.
+
+\subsubsection{Back}
+Die Personen sind zwischen 30 und 50 Jahren alt und haben keinen bestimmten Schulabschluss. Sie sind meist Inhaber oder verantwortlich für die Logistik ihres Unternehmen. Sie brauchen die Expresskurier Dienstleistung als ein Teil ihres Businessprozesses und sind an einer total automatisierung intressiert.
+
+\section{Persona Stories}
+
+ Anforderungen werden mithilfe von Persona Stories in der Form \glqq <Persona[:Rolle]> macht <Aufgabe>[, um <Ziel> zu erreichen]\grqq festgehalten. Die Platzhalter in den eckigen Klammern sind optional und sollen ausgefüllt werden, wenn dabei der Sinn der Story klarer wird.
+
+
+\subsection{Mara}
+
+\addcontentsline{toc}{subsection}{SC-001 Abholadresse eingeben}
 \begin{usecase}
-\addtitle{SC-001}{Routen/Produkte anzeigen}
+\addtitle{SC-001}{Abholadresse eingeben}
 \addscenario{Story}{
-	\item Als Kunde möchte ich Startort, Zielort und eine Uhrzeit eingeben können, um die verfügbaren Routen/Produkte zu sehen.
+	\item Mara gibt eine Abholadresse ein.
 }
 \addscenario{Akzeptanzkriterien}{
-	\item Der Kunde sieht Routen welche zu einer bestimmten Uhrzeit zwischen seinem Start und Zielort liegen.
-	\item ...
+	\item Mara sieht während der Eingabe Vorschläge von Adressen welche im Versorgungsgebiet liegen.
+	\item Mara sieht nach Abschluss der Eingabe ob die Adresse im Versorgungsgebiet liegt.
+	\item Mara wird nach der Eingabe zum nächsten Eingabeschritt weitergeleitet.
 }
 \addfield{Priorität}{Hoch}
 \addfield{Domain}{???}
 \end{usecase}
 
-\newpage
-\addcontentsline{toc}{subsection}{SC-002 Leistung kaufen}
+\addcontentsline{toc}{subsection}{SC-002 Lieferadresse eingeben}
 \begin{usecase}
-\addtitle{SC-002}{Leistung kaufen}
+\addtitle{SC-002}{Lieferadresse eingeben}
 \addscenario{Story}{
-	\item Als Kunde möchte ich eine Leistung kaufen können, um den Auftrag abzuschliessen.
+	\item Mara gibt eine Lieferadresse ein.
 }
 \addscenario{Akzeptanzkriterien}{
-	\item Der Kunde kann die Leistung kaufen, wenn sie fertig konfiguriert ist und ein akzeptiertes Zahlungsmittel eingegeben wurde.
-	\item Der Kaufauftrag muss nach dem abschliessen persistent gespeichert sein und ein Abbuchungsbefehl beim Zahlungsinstitut aufgegeben sein.
-	\item Der Kunde bekommt per Mail eine Auftragsbestätigung.
+	\item Mara sieht während der Eingabe Vorschläge von Adressen welche im Versorgungsgebiet liegen.
+	\item Mara sieht nach Abschluss der Eingabe ob die Adresse im Versorgungsgebiet liegt.
+	\item Mara wird nach der Eingabe zum nächsten Eingabeschritt weitergeleitet.
 }
 \addfield{Priorität}{Hoch}
 \addfield{Domain}{???}
 \end{usecase}
+
+\addcontentsline{toc}{subsection}{SC-003 Pakete Dimensionen eingeben}
+\begin{usecase}
+\addtitle{SC-003}{Pakete Dimensionen eingeben}
+\addscenario{Story}{
+	\item Mara gibt die Pakete Dimensionen (Gewicht, Länge, Breite und Grösse) ein.
+}
+\addscenario{Akzeptanzkriterien}{
+	\item Mara sieht ob die Dimension versendet werden können.
+	\item Mara wird nach der Eingabe zum nächsten Eingabeschritt weitergeleitet.
+}
+\addfield{Priorität}{Hoch}
+\addfield{Domain}{???}
+\end{usecase}
+
+\addcontentsline{toc}{subsection}{SC-004 Abholuhrzeit eingeben}
+\begin{usecase}
+\addtitle{SC-004}{Abholuhrzeit eingeben}
+\addscenario{Story}{
+	\item Mara gibt eine Abholurzeit ein um die verfügbaren Routen und deren Preis (Begriffs definition) zu sehen.
+}
+\addscenario{Akzeptanzkriterien}{
+	\item Mara kann eine verfügbare Route auswählen.
+	\item Mara wird nach der Auswahl zum nächsten Eingabeschritt weitergeleitet.
+}
+\addfield{Priorität}{Hoch}
+\addfield{Domain}{???}
+\end{usecase}
+
+\addcontentsline{toc}{subsection}{SC-005 Kontaktinformationen eingeben}
+\begin{usecase}
+\addtitle{SC-005}{Kontaktinformationen eingeben}
+\addscenario{Story}{
+	\item Mara gibt Kontaktinformation (Name, Telefonnummer, evt. Stockwerk) für den Abhol sowie den Zielort ein.
+}
+\addscenario{Akzeptanzkriterien}{
+	\item Mara wird nach der Eingabe zum nächsten Eingabeschritt weitergeleitet.
+}
+\addfield{Priorität}{Hoch}
+\addfield{Domain}{???}
+\end{usecase}
+
+\addcontentsline{toc}{subsection}{SC-006 Zollinformationen eingeben}
+\begin{usecase}
+\addtitle{SC-006}{Zollinformationen eingeben}
+\addscenario{Story}{
+	\item Mara gibt bei grenzüberschreitenden Paketen zusätzliche Informationen für den reibungslosen Ablauf beim Zoll ein
+}
+\addscenario{Akzeptanzkriterien}{
+	\item Mara sieht allfällige Dokumente welche ausgedruckt und mitgeschickt werden müssen
+	\item Mara wird nach der Eingabe zum nächsten Eingabeschritt weitergeleitet.
+}
+\addfield{Priorität}{Hoch}
+\addfield{Domain}{???}
+\end{usecase}
+
+\addcontentsline{toc}{subsection}{SC-007 Dienstleistung kaufen}
+\begin{usecase}
+\addtitle{SC-007}{Dienstleistung kaufen}
+\addscenario{Story}{
+	\item Mara kauft die Dienstleistung um den Auftrag abzuschliessen.
+}
+\addscenario{Akzeptanzkriterien}{
+	\item Mara bekommt eine Bestätigung (Mail/Drucken) für ihren Auftragsabschluss
+	\item Mara bekommt eine Nummer mit welcher der Lieferprozess verfolgt werden kann.
+	\item
+}
+\addfield{Priorität}{Hoch}
+\addfield{Domain}{???}
+\end{usecase}
+
+\addcontentsline{toc}{subsection}{SC-008 Lieferung verfolgen}
+\begin{usecase}
+\addtitle{SC-008}{Lieferung verfolgen}
+\addscenario{Story}{
+	\item Mara gibt die Trackingnummer ein um den Lieferung Status zu überprüfen.
+}
+\addscenario{Akzeptanzkriterien}{
+	\item Mara sieht den Fortschritt ihrer Lieferung
+}
+\addfield{Priorität}{Hoch}
+\addfield{Domain}{???}
+\end{usecase}
+
+\newpage{}
+\subsection{Peter}
+
+\addcontentsline{toc}{subsection}{SC-009 Versandangaben Eingeben}
+\begin{usecase}
+\addtitle{SC-009}{Versandangaben Eingeben}
+\addscenario{Story}{
+	\item Peter gibt alle Informationen für den Versand ein um die verfügbaren Routen und deren Preis (Begriffsdefinition) zu sehen.
+}
+\addscenario{Akzeptanzkriterien}{
+	\item Peter kann eine verfügbare Route auswählen
+	\item Peter wird zum Zoll Informationen Schritt weitergeleitet
+}
+\addfield{Priorität}{Hoch}
+\addfield{Domain}{???}
+\end{usecase}
+
+% Das gleich wie SC-006
+\addcontentsline{toc}{subsection}{SC-010 Zollinformationen Eingeben}
+\begin{usecase}
+\addtitle{SC-010}{Zollinformationen Eingeben}
+\addscenario{Story}{
+	\item Peter gibt alle relevanten Informationen für den Zoll ein.
+}
+\addscenario{Akzeptanzkriterien}{
+	\item Peter sieht allfällige Dokumente welche ausgedruckt und mitgeschickt werden müssen
+	\item Peter wird nach der Eingabe zum Bezahlung Schritt weitergeleitet.
+}
+\addfield{Priorität}{Hoch}
+\addfield{Domain}{???}
+\end{usecase}
+
+\addcontentsline{toc}{subsection}{SC-011 Abholadressen Speichern}
+\begin{usecase}
+\addtitle{SC-011}{Abholadressen Speichern}
+\addscenario{Story}{
+	\item Peter speichert die Abholadresse und Kontaktinformationen seines Büros um sie für den späteren Gebrauch wiederverwenden zu können.
+}
+\addscenario{Akzeptanzkriterien}{
+	\item Peter sieht seine gespeicherten Adressen und kann sie bearbeiten
+	\item Peter kann die gespeicherte Adresse beim SC-009 auswählen
+}
+\addfield{Priorität}{Hoch}
+\addfield{Domain}{???}
+\end{usecase}
+
+\addcontentsline{toc}{subsection}{SC-012 Zieladressen Speichern}
+\begin{usecase}
+\addtitle{SC-012}{Zieladressen Speichern}
+\addscenario{Story}{
+	\item Peter speichert die Zieladressen und Kontaktinformationen seiner Kunden um sie für den späteren Gebrauch wiederverwenden zu können.
+}
+\addscenario{Akzeptanzkriterien}{
+	\item Peter sieht seine gespeicherten Adressen und kann sie bearbeiten
+	\item Peter kann die gespeicherte Adresse beim SC-009 auswählen
+}
+\addfield{Priorität}{Hoch}
+\addfield{Domain}{???}
+\end{usecase}
+
+
+\newpage{}
+\subsection{Laura}
 
 
 \section{Akzeptanztests}
