@@ -7,14 +7,6 @@
 Mit dem User Centered Design Prozess konzentriert sich die Anforderungsanalyse sehr stark auf den Benutzer. Dennoch wurden mit den wichtigsten Stakeholders Interviews geführt, in welchen sich zeigte was für Aufgaben und die Webapplikation für die Firma lösen soll.
 
 
-\subsection{User Stories vs Persona Stories}
-- Seit wann gibt es User Stories, Wie sind sie entstanden
-\newline{}
-- Negative Aspekte: (Zitieren aus dem Artikel)
-	1. Role ambiguity
-	2. Sie erzählen was für eine Art Aktivität der Benutzer machen will aber nicht wie und wenn. Dabei wird auch die Frequenz ausser acht gelassen.
-	3. User Stories sind in der Ich Person geschrieben und verhindern dadurch ein teil des Kreativen Prozesses.
-
 
 
 \section{Stakeholders}
@@ -28,42 +20,164 @@ Mit dem User Centered Design Prozess konzentriert sich die Anforderungsanalyse s
 
 \section{Personas}
 
-\subsection{Mara}
+\subsection{Einleitung}
+Personas sind Urbilder welche die verschiedenen Ziele und Verhaltensmuster der typischen Benutzer beschreiben sollen. Sie unterscheiden sich von anderen Methoden hauptsächlich durch ihre Geschichte erzählenden Art, welche bei Entwicklern und Designern besonders die sozialen und emotionale Intelligenz fördert. Die Wichtigkeit von Personas werden im Buch Designing for the Digital Age \citep[chapter 11]{goodwin2011designing} wie folgt beschrieben: \glqq A persona encapsulates and explains the most critical behavioral data in a way that designers and stakeholders can understand, remember, and relate to\grqq. Besonders in einem Umfeld wo... (erklären wieso empathie kleiner) \citep{hudson2009empathy}.
+\newline{}
+Es gibt verschiedene Möglichkeiten die Beschreibung und Charakterisierung einer Persona fest zu halten. Im Rahmen dieser Arbeit wird die Methode welche im Artikel \citep{interactions.acm2013online} \glqq User stories don't helpt users: introducing persona stories \grqq beschrieben ist. Die Beschreibung ist in eine Vorder- und Rückseite aufgeteilt. Die Vorderseite soll den Hintergrund und die Motivation einer Persona beschreiben und damit erklären, warum ein gewisse Merkmal auf diese Art und Weise implementiert werden soll. Die Rückseite beschreibt praktisch Details welche helfen Personas von diesem Typ zu erkennen. Diese Informationen werden auch beim rekrutieren von Testpersonen benötigt.
 
-\subsubsection{Front}
-Mara welche unbedingt unbedingt etwas nach Berlin zu ihrer Tochter schicken muss.
-Mara ist 49 und alleinerziehende Mutter. Ihre ältere Tochter studiert in Berlin. Mara ist sehr umweltbewusst fährt fast immer mit dem Fahrrad oder dem öffentlichen Verkehr. Für grosse Besorgungen bzw. Entsorgungen mietet sie ein Auto bei Mobility. Sie kauft sehr bewusst sasional und regional ein und versucht ihren CO2 Fussabdruck klein zu halten.
+\subsubsection{User Stories vs Persona Stories}
+- Seit wann gibt es User Stories, Wie sind sie entstanden
+\newline{}
+- Negative Aspekte: (Zitieren aus dem Artikel)
+	1. Role ambiguity
+	2. Sie erzählen was für eine Art Aktivität der Benutzer machen will aber nicht wie und wenn. Dabei wird auch die Frequenz ausser acht gelassen.
+	3. User Stories sind in der Ich Person geschrieben und verhindern dadurch ein teil des Kreativen Prozesses.
 
-Ihre ältere Tochter hat beim letzten Heimatsbesuch ihre Handgeschrieben Unterlagsnotizen sowie das Elektrische gebastelte Gerät (Raspberry Pi) für ihre Abschlussarbeit vergessen. Die Präsentation ist am nächsten Tag um 16 Uhr.
+\subsection{Mara Hürlimann}
 
-Mara benötigt eine Same Day Lieferung und will dabei einen zuverlässigen Express Kurier welcher auch ihre philosophie vom geringen CO2 ausstoss untersützt.
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{ | c | m{5cm} | }
+    \hline
+    Photo & Steckbrief \\ \hline
+    \begin{minipage}{.3\textwidth}
+      \includegraphics[width=\linewidth, height=60mm]{images/batman.jpg}
+    \end{minipage}
+    &
+    %\begin{minipage}[t]{5cm}
+      \begin{itemize}
+        \item Mara Hürlimann
+        \item 49 Jährig
+        \item aus Zürich (Stadt)
+        \item arbeite als Lektorin
+      \end{itemize}
+    %\end{minipage}
+    \\ \hline
+  \end{tabular}
+  \caption{Persona Steckbrief für Mara Hürlimann}\label{tbl:steckbriefmara}
+\end{table}
 
-\subsubsection{Back}
-Die Personen sind zwischen 20 und 60 Jahre alt und haben eine Mittlere (Irgendwas höheres als Lehre) Ausbildung. Sie brauchen eine Express Kurier Dienstleistung nur für Notfälle oder sehr spezielle Ausnahmen. 1 bis 2 mal im Jahr. Dabei ist ihnen aber das Image der Firma wichtig. Sie haben keine grosse Erfahrung mit irgendwelchen Kurieren und sind auf Hilfe angewiesen.
+\subsubsection{Hintergrund \& Motivation}
+Mara nutzt die Dienstleistungen der KEP-Branche nicht regelmässig, was Sie aber nicht zu einer atypischen Nutzerin macht. Mara ist alleinerziehende Mutter und arbeite als Lektorin von zuhause aus. In ihrer Freizeit engagiert sie sich im Quartiersverein, organisiert kleinere Veranstaltungen für Flüchtlinge oder liest in der Sonne auf dem Balkon. Mara hat ein starkes Umweltbewusstsein und setzt für die Fortbewegung in der Stadt voll und ganz auf das Fahrrad. Für grössere Be- bzw. Entsorgungen mietet Mara ein Fahrzeug bei Mobility. Maras Umweltbewusst sein wird auch bei den wöchentlichen Einkäufen wiedergegeben. Sie kauft bewusst sasional und regional ein und versucht dadurch ihren CO2 Abdruck möglichst klein zu halten.
+
+Maras älteste Tochter studiert Medialekünste in Berlin und hat bei ihrem letzten Besuch in Zürich ihre Unterlagen und ein Raspberry Pi, welches Sie für die Abschlusspräsentation benötigt, vergessen. Die Präsentation findet am Folgetag um 16 Uhr statt und hat keine Möglichkeit ein neues Gerät aufzutreiben. Mara will die Unterlagen inklusive dem Raspberry Pi mit einer Same Day Lieferung an ihre Tochter schicken und dabei ihre Umweltsphilosophie nicht verraten.
+
+\subsubsection{Charaktermerkmal}
+\begin{table}[]
+\centering
+
+\label{my-label}
+\begin{tabular}{|l|l|}
+\hline
+Alter                                   & 20 - 60 Jahre        \\ \hline
+Wohnort                                 & Stadtzentrum         \\ \hline
+Ausbildung                              & Matura oder besser \\ \hline
+Nutzung einer KEP Dienstleistung / Jahr & 1 - 2 mal            \\ \hline
+\end{tabular}
+\caption{Charaktermerkmal für Persona Mara Hürlimann}
+\end{table}
+
+Die Personen brauchen eine Express Kurier Dienstleistung nur für Notfälle oder sehr spezielle Ausnahmen. Sie haben keine Erfahrungen mit anderen KEP Dienstleistern und verlassen sich auf das im Markt etablierte Image eines Anbieters. Ihnen ist Transparenz und Zuverlässigkeit weicht. Sie wissen nicht wie der Prozess abläuft oder welche Informationen benötigt werden und sind beim Einkauf einer Dienstleistung auf Hilfe angewiesen.
 
 
 
 \subsection{Peter}
-\subsubsection{Front}
-Peter einfach in einer Kreative Agentur der gelegentlich Ausdrucke an CLiente verschicken muss.
-Peter ist 28 und arbeite als Projektleiter in einer Werbeagentur. In seiner Freizeit spielt er mit seinen Arbeitskollegein Fussball. Peter kleidet sich stets gut aber nie kriegt man den gedanken seinen Stil zu kopieren. Peter hat seine Prinzipien aber kann sehr oportun sein. Peter verwaltet sehr viele Kunden und will auf alle Bedürfnisse seiner Kunden eingehen.
 
-Peter muss regelmäsig ausdrucke von Sujets oder Prints an seine Kunden schicken um das "Gut zum Druck" zu bekommen. Üblicherweise werden diese erst kurz vor der Deadline fertig. Damit der Kunde schnellstmöglich das Okay geben kann, werden diese Prints per Express Kurier verschickt. Peters Kunden sind zum grösstenteil ausserkantonal und deshalb nicht über einen lokalen Fahrradkurierdienst zu erreichen.
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{ | c | m{5cm} | }
+    \hline
+    Photo & Steckbrief \\ \hline
+    \begin{minipage}{.3\textwidth}
+      \includegraphics[width=\linewidth, height=60mm]{images/batman.jpg}
+    \end{minipage}
+    &
+    %\begin{minipage}[t]{5cm}
+      \begin{itemize}
+        \item Peter Elsener
+        \item 28 Jährig
+        \item aus Zürich (Stadt)
+        \item arbeite als Projektleiter
+      \end{itemize}
+    %\end{minipage}
+    \\ \hline
+  \end{tabular}
+  \caption{Persona Steckbrief für Peter Elsener}\label{tbl:steckbriefpeter}
+\end{table}
+
+\subsubsection{Hintergrund \& Motivation}
+Peter arbeitet in einer kreativen Agentur als Projektleiter. Peter betreibt in seiner Freizeit viel Sport und spielt einmal in der Woche mit seinen Arbeitskollegen über den Mittag Fussball. Peter hat seine Prinzipien welche auch der Umwelt zugute kommen aber kann unter Umständen sehr opportun sein. Effizientes Arbeiten ist ihm sehr wichtig und das Gegenteil wird weder bei Mitarbeitern noch bei Dienstleistern akzeptiert. Peter verwaltet sehr viele Kunden und ist sehr darum Bemüht all deren Bedürfnisse zu 100\% Zufriedenheit zu erfüllen.
+
+Trotz des digitalen Zeitalters involvieren viele Projekte von Peter immer noch Drucksachen. Diese Drucksachen werden vor der Massenproduktion dem Kunden ausgedruckt vorgelegt damit dieser ein "Gut zum Druck" geben kann. Üblicherweise werden diese Drucksachen erst kurz vor der Deadline fertig. Damit der Kunde schnellstmöglich das Okay geben kann, werden diese Ausdrucke per Express Kurier verschickt. Viele Kunden von Peter haben ihre Räumlichkeiten ausserkantonal und sind deshalb nicht über einen lokalen Fahrradkurierdienst erreichbar.
 
 Peter benötigt dafür eine Same Day Lieferung und will eine verlässlichen und transparenten Express Kurier. Pflichtbewusst wie Peter ist, hat er den Express Kurier bei seinen Kunden schon budgetiert und will nicht mit unvorhergesehen Kosten überrascht werden.
 
-\subsubsection{Back}
-Die Personen sind zwischen 20 und 40 Jahren alt und haben mindestens einen Bachelorabschluss. Sie benötigen regelmässig Express Kurierdienstleistungen und können gut mit Webbasierten Platformen umgehen. Sie wollen alle sich wiederholen Tasks z. B. "Abholadresse eingeben", da sie fast immer die gleiche ist, automatisieren können.
+\subsubsection{Charaktermerkmal}
+\begin{table}[]
+\centering
 
-\subsection{Laura}
-\subsubsection{Front}
-Laura welche einen Verlag hat und täglich neue Kunden für ein monatliches Abonoment abschliesst, welche verschickt werden müssen.
-Laura ist 37 und hat ein Stadtmagazin welches sie monatlich selber publiziert. Sie hat einen sehr guten Geschäftssinn und schon früh bemerkt dass mit Grün und Bio Labels sehr einfach zu werben ist. Als Geschäftsfrau ist ihr die Umwelt nicht gerade an erster Stelle aber auch sie will wenn möglich etwas zum Umweltschutz bei tragen.
+\label{my-label}
+\begin{tabular}{|l|l|}
+\hline
+Alter                                   & 20 - 40 Jahre        \\ \hline
+Wohnort                                 & Stadt oder Land         \\ \hline
+Ausbildung                              & Bachelor oder besser \\ \hline
+Nutzung einer KEP Dienstleistung / Jahr & 50 - 100 mal            \\ \hline
+\end{tabular}
+\caption{Charaktermerkmal für Persona Peter Elsener}
+\end{table}
 
-Laura macht Wöchentlich Aboabschlüsse im 2-Stelligen bereich und will die Ausgabe mit einem Expresskurier verschicken. Sie benötigt dafür eine einfache Maske in der alle Lieferadressen schnell und effizient eingetragen werden können. Laura ist auch an einer API Anbindung an ihre Abonomentsverwaltungssoftware intressiert.
+Die Personen benötigen regelmässig Express Kurierdienstleistungen und können gut mit Webbasierten Plattformen umgehen. Sie wissen welche Informationen für eine Erfolgreiche Lieferung benötigt werden und brauchen bei der Eingabe keinen Assistenten. Sie wollen alle sich wiederholen Tasks z. B. \glqq Abholadresse eingeben\grqq, da sie fast immer die gleiche ist, automatisieren bzw. speichern können.
 
-\subsubsection{Back}
-Die Personen sind zwischen 30 und 50 Jahren alt und haben keinen bestimmten Schulabschluss. Sie sind meist Inhaber oder verantwortlich für die Logistik ihres Unternehmen. Sie brauchen die Expresskurier Dienstleistung als ein Teil ihres Businessprozesses und sind an einer total automatisierung intressiert.
+\subsection{Laura Energie}
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{ | c | m{5cm} | }
+    \hline
+    Photo & Steckbrief \\ \hline
+    \begin{minipage}{.3\textwidth}
+      \includegraphics[width=\linewidth, height=60mm]{images/batman.jpg}
+    \end{minipage}
+    &
+    %\begin{minipage}[t]{5cm}
+      \begin{itemize}
+        \item Laura Energie
+        \item 37 Jährig
+        \item aus Aarau
+        \item Inhaberin eines Verlags
+      \end{itemize}
+    %\end{minipage}
+    \\ \hline
+  \end{tabular}
+  \caption{Persona Steckbrief für Laura Energie}\label{tbl:steckbrieflaura}
+\end{table}
+
+\subsubsection{Hintergrund \& Motivation}
+Laura ist Geschäftsführerin eines Verlages und publiziert ein monatliches Stadt/Land Magazin, welches sich stark mit den Themen Nachhaltigkeit, Familie und Ernährung auseinander setzt. Laura ist ein starke Persönlichkeit und trennt ihr Arbeits- und Privatleben strikt. Ihr Geschäft wird rein wirtschaftlich betrieben und was keinen Gewinn abwirft, wird nicht verfolgt.
+
+Trotz der Mehrkosten die ein nachhaltiger KEP Dienstleister mit sich bringt, wittert Laura die grosse Marketing Idee. Sie hat einen sehr guten Geschäftssinn und schon früh bemerkt dass mit Grün und Bio Labels sehr einfach zu werben ist. Als Geschäftsfrau ist ihr die Umwelt nicht gerade an erster Stelle aber auch sie will wenn möglich etwas zum Umweltschutz bei tragen.
+
+
+Lauras Verlag macht Wöchentlich Aboabschlüsse im 2-Stelligen Bereich und will die Ausgabe mit einem Expresskurier verschicken. Laura ist mehr an einer API Anbindung an ihre Abonomentsverwaltungssoftware intressiert, als an einer Maske wo die neuen Adressen eingetragen werden. Für eine begrenzte Zeit wäre ein Workaround möglich. Sie interessiert sich sowieso viel mehr für die Zahlen, welche eine solche Webapplikation liefern könnte.
+
+\subsubsection{Charaktermerkmal}
+\begin{table}[]
+\centering
+
+\label{my-label}
+\begin{tabular}{|l|l|}
+\hline
+Alter                                   & 30 - 50 Jahre        \\ \hline
+Wohnort                                 & Stadt oder Land         \\ \hline
+Ausbildung                              & N/A  \\ \hline
+Nutzung einer KEP Dienstleistung / Jahr & > 100 mal            \\ \hline
+\end{tabular}
+\caption{Charaktermerkmal für Persona Laura Energie}
+\end{table}
+
+Die Personen sind meist Inhaber oder verantwortlich für die Bereiche Logistik und/oder Versand ihres Unternehmen. Sie brauchen die KEP Dienstleistung als ein Teil ihres Businessprozesses und sind an einer total automatisierung intressiert. Ihr Interesse an einer Webapplikation liegt alleine im Auswerten von Zahlen und Statistiken.
+
+
 
 \section{Persona Stories}
 
