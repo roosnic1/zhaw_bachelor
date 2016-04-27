@@ -180,8 +180,9 @@ Die Personen sind meist Inhaber oder verantwortlich für die Bereiche Logistik u
 
 
 \section{Persona Stories}
+\label{sec:personastories}
 
- Anforderungen werden mithilfe von Persona Stories in der Form \glqq <Persona[:Rolle]> macht <Aufgabe>[, um <Ziel> zu erreichen]\grqq festgehalten. Die Platzhalter in den eckigen Klammern sind optional und sollen ausgefüllt werden, wenn dabei der Sinn der Story klarer wird.
+ Anforderungen werden mithilfe von Persona Stories in der Form \glqq <Persona[:Rolle]> macht <Aufgabe>[, um <Ziel> zu erreichen]\grqq festgehalten. Die Platzhalter in den eckigen Klammern sind optional und sollen ausgefüllt werden, wenn dabei der Sinn der Story klarer wird. Zusätzlich werden Akzeptanzkriterien für die Stories definiert, welche in einem späteren Schritt als Akzeptanztests dienen. Die Priorität wird mit dem Kano Model bestimmt, welches im Kapitel \ref{sec:priorisierung} beschrieben und auf die folgenden Persona Stories angewendet worden ist. Die Priorität wird nur der Schönheits halber auch in der Persona Storie Karte aufgeführt
 
 
 \subsection{Mara}
@@ -216,6 +217,8 @@ Die Personen sind meist Inhaber oder verantwortlich für die Bereiche Logistik u
 \addfield{Domain}{???}
 \end{usecase}
 
+\newpage{}
+
 \addcontentsline{toc}{subsection}{SC-003 Pakete Dimensionen eingeben}
 \begin{usecase}
 \addtitle{SC-003}{Pakete Dimensionen eingeben}
@@ -244,6 +247,8 @@ Die Personen sind meist Inhaber oder verantwortlich für die Bereiche Logistik u
 \addfield{Domain}{???}
 \end{usecase}
 
+\newpage{}
+
 \addcontentsline{toc}{subsection}{SC-005 Kontaktinformationen eingeben}
 \begin{usecase}
 \addtitle{SC-005}{Kontaktinformationen eingeben}
@@ -270,6 +275,8 @@ Die Personen sind meist Inhaber oder verantwortlich für die Bereiche Logistik u
 \addfield{Priorität}{Hoch}
 \addfield{Domain}{???}
 \end{usecase}
+
+\newpage{}
 
 \addcontentsline{toc}{subsection}{SC-007 Dienstleistung kaufen}
 \begin{usecase}
@@ -299,12 +306,30 @@ Die Personen sind meist Inhaber oder verantwortlich für die Bereiche Logistik u
 \addfield{Domain}{???}
 \end{usecase}
 
+
+\newpage{}
+
+
+\addcontentsline{toc}{subsection}{SC-009 Unterstützung Anfordern}
+\begin{usecase}
+\addtitle{SC-009}{Unterstützung Anfordern}
+\addscenario{Story}{
+	\item Mara will mit einer Person telefonieren um Hilfe beim Kauf der Dienstleistung zu bekommen.
+}
+\addscenario{Akzeptanzkriterien}{
+	\item Mara sieht die Telefonnummer oder Emailadresse
+	\item Mara sieht die Auftragsnummer
+}
+\addfield{Priorität}{Hoch}
+\addfield{Domain}{???}
+\end{usecase}
+
 \newpage{}
 \subsection{Peter}
 
-\addcontentsline{toc}{subsection}{SC-009 Versandangaben Eingeben}
+\addcontentsline{toc}{subsection}{SC-010 Versandangaben Eingeben}
 \begin{usecase}
-\addtitle{SC-009}{Versandangaben Eingeben}
+\addtitle{SC-010}{Versandangaben Eingeben}
 \addscenario{Story}{
 	\item Peter gibt alle Informationen für den Versand ein um die verfügbaren Routen und deren Preis (Begriffsdefinition) zu sehen.
 }
@@ -316,10 +341,12 @@ Die Personen sind meist Inhaber oder verantwortlich für die Bereiche Logistik u
 \addfield{Domain}{???}
 \end{usecase}
 
+
+
 % Das gleich wie SC-006
-\addcontentsline{toc}{subsection}{SC-010 Zollinformationen Eingeben}
+\addcontentsline{toc}{subsection}{SC-011 Zollinformationen Eingeben}
 \begin{usecase}
-\addtitle{SC-010}{Zollinformationen Eingeben}
+\addtitle{SC-011}{Zollinformationen Eingeben}
 \addscenario{Story}{
 	\item Peter gibt alle relevanten Informationen für den Zoll ein.
 }
@@ -331,9 +358,11 @@ Die Personen sind meist Inhaber oder verantwortlich für die Bereiche Logistik u
 \addfield{Domain}{???}
 \end{usecase}
 
-\addcontentsline{toc}{subsection}{SC-011 Abholadressen Speichern}
+\newpage{}
+
+\addcontentsline{toc}{subsection}{SC-012 Abholadressen Speichern}
 \begin{usecase}
-\addtitle{SC-011}{Abholadressen Speichern}
+\addtitle{SC-012}{Abholadressen Speichern}
 \addscenario{Story}{
 	\item Peter speichert die Abholadresse und Kontaktinformationen seines Büros um sie für den späteren Gebrauch wiederverwenden zu können.
 }
@@ -345,9 +374,10 @@ Die Personen sind meist Inhaber oder verantwortlich für die Bereiche Logistik u
 \addfield{Domain}{???}
 \end{usecase}
 
-\addcontentsline{toc}{subsection}{SC-012 Zieladressen Speichern}
+
+\addcontentsline{toc}{subsection}{SC-013 Zieladressen Speichern}
 \begin{usecase}
-\addtitle{SC-012}{Zieladressen Speichern}
+\addtitle{SC-013}{Zieladressen Speichern}
 \addscenario{Story}{
 	\item Peter speichert die Zieladressen und Kontaktinformationen seiner Kunden um sie für den späteren Gebrauch wiederverwenden zu können.
 }
@@ -359,21 +389,144 @@ Die Personen sind meist Inhaber oder verantwortlich für die Bereiche Logistik u
 \addfield{Domain}{???}
 \end{usecase}
 
+\newpage{}
+
+
+\addcontentsline{toc}{subsection}{SC-014 Auftrag abbrechen}
+\begin{usecase}
+\addtitle{SC-014}{Auftrag abbrechen}
+\addscenario{Story}{
+	\item Peter bricht einen noch nicht gestarteten Auftrag ab.
+}
+\addscenario{Akzeptanzkriterien}{
+	\item Peter sieht dass der Auftrag abgebrochen ist.
+	\item Peter bekommt eine Bestätigung dass der Auftrag nicht ausgeführt wird.
+}
+\addfield{Priorität}{Hoch}
+\addfield{Domain}{???}
+\end{usecase}
+
+
+\addcontentsline{toc}{subsection}{SC-015 Aufträge auflisten}
+\begin{usecase}
+\addtitle{SC-015}{Aufträge auflisten}
+\addscenario{Story}{
+	\item Peter liste die im System erfassten Aufträge.
+}
+\addscenario{Akzeptanzkriterien}{
+	\item Peter sieht alle bereits erfassten Aufträge mit all ihren Details.
+}
+\addfield{Priorität}{Hoch}
+\addfield{Domain}{???}
+\end{usecase}
 
 \newpage{}
+
 \subsection{Laura}
 
+\addcontentsline{toc}{subsection}{SC-016 Routen auswählen}
+\begin{usecase}
+\addtitle{SC-015}{Routen auswählen}
+\addscenario{Story}{
+	\item Laura kann für ihren Auftrag zwischen verschiedenen Routen auswählen
+}
+\addscenario{Akzeptanzkriterien}{
+	\item Laura sieht mehrere Routen welche sich im Preis und/oder der Dauer unterscheiden.
+}
+\addfield{Priorität}{Hoch}
+\addfield{Domain}{???}
+\end{usecase}
 
-\section{Akzeptanztests}
 
-\begin{description}
-\item[US-1] End User sieht nach Eingabe des Start- und Zielort alle verfügbaren Routen.
-\end{description}
+\newpage{}
 
 
 \section{Priorisierung}
-Die User Stories werden mit dem MoSCoW Prinzip priorisiert.
-???
+\label{sec:priorisierung}
+
+\subsection{Kano Modell}
+Das Kano Modell welches nach seinem Erfinder Noriaki Kano, Professor an der Universität in Tokio, benannt ist, bestimmt die Notwendigkeit von Kundenwünschen und Erwartungen (Zitieren). Beim Kano Modell wird zwischen fünf Qualitätsebenen unterschieden.
+
+\begin{description}
+	\item[Basis-Merkmale] sind für den Benutzer so selbstverständlich, dass ihm/ihr ihre Notwendigkeit erst beim nicht vorhanden sein auffällt.
+	\item[Leistungs-Merkmal] werden vom Benutzer bewusst wahr genommen und sorgen für Zufriedenheit oder beseitigen Unzufriedenheit.
+	\item[Begeisterungs-Merkmale] überraschen den Benutzer und bringen ihm mehr Nutzen und Funktionalität.
+	\item[Unerhebliche Merkmale] sind dem Benutzer im Falle des Vorhandensein sowie auch Fehlens egal.
+	\item[Rückweisungs-Merkmale] machen den Benutzer unzufrieden, beim nicht vorhanden sein jedoch nicht zufrieden.
+\end{description}
+
+Der Benutzer antwortet bezüglich eines Produktwunsches bzw. einer Anforderung auf eine positiv formuliert und eine negativ formulierte Frage:
+\begin{itemize}
+	\item Funktional: Was würden Sie sagen, wenn die Applikation ..... macht.
+	\item Dysfunktional: Was würden Sie sagen, wenn die Applikation ..... NICHT macht.
+\end{itemize}
+
+Dabei stehen ihm folgende Antworten zur Auswahl:
+
+\begin{itemize}
+	\item Das würde mich sehr freuen
+	\item Das setzte ich voraus
+	\item Das ist mir egal
+	\item Das nehme ich gerade noch hin
+	\item Das würde mich sehr stören
+\end{itemize}
+
+Aus der Kombinationen der Antwort auf die Positive und der Antwort auf die Negative Frage, kann der Wunsch bzw. die Anforderung in eine der oben genannten 5 Qualitätsebenen eingeteilt werden. Es bestehen folgende Möglichkeiten:
+
+\begin{table}[h!]
+\centering
+\label{tbl:kanoantworten}
+\begin{tabular}{clclc}
+\multicolumn{2}{c}{\textbf{Funktionale Antwort}} & \multicolumn{2}{c}{\textbf{Dysfunktionale Antwort}} & \textbf{Merkmal}      \\
+Das setze ich voraus                & +          & Das würde mich stören                 & =           & Basis-Merkmal         \\
+Das würde mich sehr freuen          & +          & Das würde mich sehr stören            & =           & Leistungs-Merkmal     \\
+Das würde mich sehr freuen          & +          & Das ist mir egal                      & =           & Begeisterungs-Merkmal \\
+Das ist mir egal                    & +          & Das ist mir egal                      & =           & Unerhebliches Merkmal \\
+Das würde mich sehr stören          & +          & Das setze ich voraus                  & =           & Rückweisungs-Merkmal
+\end{tabular}
+\caption{Antwort Möglichkeiten beim Kano Modell}
+\end{table}
+
+Antworten welche in der Tabelle \ref{tbl:kanoantworten} nicht aufgelistet sind, sind unlogisch und werden für die Bewertung ignoriert.
+
+\subsection{Durchführung???}
+Die im Kapitel \ref{sec:personastories} aufgeführten Persona Story Karten werden in der folgenden Tabelle nach dem Kano Model priorisiert. Der Besseren Übersicht halber werden die möglichen Antworten auf die funktionale sowie die dysfunktionale Frage mit Grossbuchstaben wie folgt dargestellt.
+\begin{enumerate*}[label={\Alph*)},font={\color{red!50!black}\bfseries}]
+	\item Das würde mich sehr freuen
+	\item Das setzte ich voraus
+	\item Das ist mir egal
+	\item Das nehme ich gerade noch hin
+	\item Das würde mich sehr stören
+\end{enumerate*}. Die Persona Stories werde nur durch ihre Nummer SC-XXX identifiziert.
+
+\begin{table}[h!]
+\centering
+\caption{My caption}
+\label{my-label}
+\begin{tabular}{cccccc}
+Persona Story & \begin{tabular}[c]{@{}c@{}}Funktionale\\ Antwort\end{tabular} &   & \begin{tabular}[c]{@{}c@{}}Dysfunktionale\\ Antwort\end{tabular} &   & Ergebnis              \\
+SC-001        & B                                                             & + & E                                                                & = & Basis-Merkmal         \\
+SC-002        & B                                                             & + & E                                                                & = & Basis-Merkmal         \\
+SC-003        & B                                                             & + & E                                                                & = & Basis-Merkmal         \\
+SC-004        & B                                                             & + & E                                                                & = & Basis-Merkmal         \\
+SC-005        & B                                                             & + & E                                                                & = & Basis-Merkmal         \\
+SC-006        & B                                                             & + & E                                                                & = & Basis-Merkmal         \\
+SC-007        & A                                                             & + & E                                                                & = & Leistungs-Merkmal     \\
+SC-008        & A                                                             & + & C                                                                & = & Begeisterungs-Merkmal \\
+SC-009        & A                                                             & + & C                                                                & = & Begeisterungs-Merkmal \\
+SC-010        & B                                                             & + & E                                                                & = & Basis-Merkmal         \\
+SC-011        & B                                                             & + & E                                                                & = & Basis-Merkmal         \\
+SC-012        & A                                                             & + & E                                                                & = & Leistungs-Merkmal     \\
+SC-013        & A                                                             & + & E                                                                & = & Leistungs-Merkmal     \\
+SC-014        & A                                                             & + & E                                                                & = & Leistungs-Merkmal     \\
+SC-015        & A                                                             & + & C                                                                & = & Begeisterungs-Merkmal \\
+SC-016        & A                                                             & + & C                                                                & = & Begeisterungs-Merkmal
+\end{tabular}
+\end{table}
+
+
+
+
 
 
 
