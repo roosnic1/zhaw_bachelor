@@ -47,15 +47,22 @@ module.exports = function(grunt) {
                 }
             }
         },
+        babel: {
+            options: {
+                sourceMap: true,
+                presets: ['es2015']
+            },
+            dist: {
+                files: {
+                    "dist/server.js": "server/server.js",
+                    "dist/config.js": "server/config.js"
+                }
+            }
+        },
         copy: {
             html: {
                 files: [
                     {expand: true, src: 'app/index.html', dest: 'dist/app/', flatten: true }
-                ]
-            },
-            server: {
-                files: [
-                    {expand: true, src: 'server/server.js', dest: 'dist/', flatten: true}
                 ]
             }
         },
@@ -72,7 +79,7 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask('buildFrontend', ['copy:html','browserify','sass']);
-    grunt.registerTask('buildBackend',['copy:server']);
+    grunt.registerTask('buildBackend',['babel:dist']);
 
     grunt.registerTask('default', ['buildFrontend','buildBackend','express:dev','watch']);
 
