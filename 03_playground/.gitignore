@@ -29,5 +29,5 @@ jspm_packages
 .idea/jsLibraryMappings.xml
 
 
-app/styles/css/
+dist/
 /.sass-cache/

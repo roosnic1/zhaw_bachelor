@@ -1003,6 +1003,8 @@ if (!isset($postArray['responseFormat']))
 foreach ($postArray as &$postValue)
   $postValue = (string)$postValue;
 
+//echo(json_encode($postArray));
+
 $publicHash = hash_hmac('sha256', json_encode($postArray), LOBO_API_PRIVATE_KEY);
 
 $headerArray = array(
@@ -1024,8 +1026,14 @@ curl_setopt($ch, CURLOPT_TIMEOUT, 10);
 curl_setopt($ch, CURLOPT_POST, true);
 curl_setopt($ch, CURLOPT_HTTPHEADER, $headerArray);
 curl_setopt($ch, CURLOPT_POSTFIELDS, $postArray);
+curl_setopt($ch, CURLOPT_VERBOSE, true);
+curl_setopt($ch, CURLOPT_STDERR, $verbose = fopen('php://temp', 'rw+'));
+
+//$information = curl_getinfo($ch);
+//echo($ch);
 
 $response = curl_exec($ch);
+echo "Verbose information:\n", !rewind($verbose), stream_get_contents($verbose), "\n";
 $http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 curl_close($ch);
 
