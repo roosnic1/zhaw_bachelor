@@ -41,7 +41,7 @@ console.log(myHeaders.getAll('X-Public-Hash'));
 console.log(myHeaders.getAll('X-Client-Id'));
 
 fetch(CONFIG.LOBO_API_URL,myInit).then(function (data) {
-    console.log(data.json());
+    //console.log(data.json());
     //return data.json();
 }).then(function (json) {
     console.log(json);

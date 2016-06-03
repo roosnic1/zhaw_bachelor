@@ -21,9 +21,11 @@
     "grunt-contrib-sass": "^1.0.0",
     "grunt-contrib-watch": "^1.0.0",
     "grunt-eslint": "^18.1.0",
+    "grunt-express-server": "^0.5.3",
     "load-grunt-tasks": "^3.5.0"
   },
   "dependencies": {
+    "express": "^4.13.4",
     "jssha": "^2.1.0"
   }
 }

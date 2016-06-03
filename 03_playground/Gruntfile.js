@@ -4,23 +4,33 @@ module.exports = function(grunt) {
 
     grunt.initConfig({
         watch: {
-            scss: {
-                files: ['app/styles/scss/**/*.scss'],
-                tasks: ['sass']
+            frontend: {
+                files: ['app/styles/scss/**/*.scss','app/scripts/**/*.js','app/**/*.html'],
+                tasks: ['buildFrontend']
             },
-            scripts: {
-                files: ['app/scripts/**/*.js'],
-                tasks: ['browserify']
+            backend: {
+                files: ['server/**/*.js'],
+                tasks: ['buildBackend']
             },
-            html: {
-                files: ['app/**/*.html'],
-                taks:  ['copy:html']
+            app: {
+                options: {
+                    livereload: true
+                },
+                files: ['dist/app/**/*.*']
+            },
+            server: {
+                files: ['dist/**/*.*'],
+                tasks: ['express:dev'],
+                options: {
+                    nospawn: true,
+                    atBegin: true
+                }
             }
         },
         sass: {
             dev: {
                 files: {
-                    'dist/main.css': 'app/styles/scss/main.scss'
+                    'dist/app/main.css': 'app/styles/scss/main.scss'
                 }
             }
         },
@@ -33,34 +43,37 @@ module.exports = function(grunt) {
                     }
                 },
                 files: {
-                    'dist/app.js': "app/scripts/main.js"
+                    'dist/app/app.js': "app/scripts/main.js"
                 }
             }
         },
         copy: {
             html: {
                 files: [
-                    {expand: true, src: 'app/index.html', dest: 'dist/', flatten: true }
+                    {expand: true, src: 'app/index.html', dest: 'dist/app/', flatten: true }
+                ]
+            },
+            server: {
+                files: [
+                    {expand: true, src: 'server/server.js', dest: 'dist/', flatten: true}
                 ]
             }
         },
-        browserSync: {
-            bsFiles: {
-                src : [
-                    'app/scripts/**/*.js',
-                    'app/styles/css/*.css',
-                    'app/**/*.html'
-                ]
-            },
+        express: {
             options: {
-                watchTask: true,
-                server: {
-                    baseDir: "./dist/"
+                // Override defaults here
+            },
+            dev: {
+                options: {
+                    script: 'dist/server.js'
                 }
             }
         }
     });
 
-    grunt.registerTask('default', ['copy:html','browserify','sass','browserSync','watch']);
+    grunt.registerTask('buildFrontend', ['copy:html','browserify','sass']);
+    grunt.registerTask('buildBackend',['copy:server']);
+
+    grunt.registerTask('default', ['buildFrontend','buildBackend','express:dev','watch']);
 
 };
