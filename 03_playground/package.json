@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "express": "^4.13.4",
-    "jssha": "^2.1.0"
+    "jssha": "^2.1.0",
+    "request": "^2.72.0"
   }
 }
