@@ -10,12 +10,10 @@
 */
 
 // Be sure to have the following constants defined:
-define('LOBO_API_URL', "https://ic.groupnet.at/lobo/api/loboApi.php");
-define('LOBO_API_CLIENT_ID', "5665519fac98e");
-define('LOBO_API_PRIVATE_KEY', "f0843096098138bb81edf064cd926506b19a9ab9fd4f83f7a24d54fa2a56a602");
+
 
 // Alternatively you could define these constants in a sperate file:
-// require_once(__DIR__ . '/../../data/apiKeys/keyStore.php');
+require_once(__DIR__ . '/keyStore.php');
 
 
 
@@ -1033,7 +1031,7 @@ curl_setopt($ch, CURLOPT_STDERR, $verbose = fopen('php://temp', 'rw+'));
 //echo($ch);
 
 $response = curl_exec($ch);
-echo "Verbose information:\n", !rewind($verbose), stream_get_contents($verbose), "\n";
+//echo "Verbose information:\n", !rewind($verbose), stream_get_contents($verbose), "\n";
 $http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 curl_close($ch);
 
