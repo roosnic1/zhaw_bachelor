@@ -22,7 +22,7 @@ app.post('/api', function (req, res) {
 
 
     let opt = {
-        url: CONFIG.LOBO_API_URL,
+        url: CONFIG.LOBO_API_URL_SANDBOX,
         method: 'POST',
         headers: {
             'X-Client-Id': CONFIG.LOBO_API_CLIENT_ID,

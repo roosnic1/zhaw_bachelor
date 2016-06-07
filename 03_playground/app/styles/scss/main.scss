@@ -1,9 +1,12 @@
 
-body {
-  background-color: green;
-
-}
 
 .testclass {
   padding: 10px;
+}
+
+html, body { height: 100%; margin: 0; padding: 0; }
+
+#map {
+  width:100%;
+  height: 50%;
 }
