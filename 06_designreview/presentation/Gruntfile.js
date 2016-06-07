@@ -10,7 +10,8 @@ module.exports = function(grunt) {
 		meta: {
 			banner:
 				'/*!\n' +
-generatedSourceMapName				' * http://lab.hakim.se/reveal-js\n' +
+				' * reveal.jsnpm rebuild node-sas (<%= grunt.template.today("yyyy-mm-dd, HH:MM") %>)\n' +
+				' * http://lab.hakim.se/reveal-js\n' +
 				' * MIT licensed\n' +
 				' *\n' +
 				' * Copyright (C) 2015 Hakim El Hattab, http://hakim.se\n' +
