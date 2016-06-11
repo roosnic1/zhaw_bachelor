@@ -1,7 +1,19 @@
-.idea/
-node_modules/
-dist/
-*.iml
-webpack-assets.json
-webpack-stats.json
-npm-debug.log
+*.swp
+node_modules
+dist
+.tmp
+
+# User-specific stuff:
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/dictionaries
+.idea/vcs.xml
+.idea/jsLibraryMappings.xml
+.idea/libraries
+
+# Logs
+logs
+*.log
+npm-debug.log*
+# Optional npm cache directory
+.npm
