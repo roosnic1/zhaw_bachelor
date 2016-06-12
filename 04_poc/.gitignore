@@ -1,19 +1,32 @@
-*.swp
-node_modules
-dist
-.tmp
+#---------------------------------
+# Directories
+#---------------------------------
+**/node_modules/
+target/
+tmp/
 
-# User-specific stuff:
-.idea/workspace.xml
-.idea/tasks.xml
-.idea/dictionaries
-.idea/vcs.xml
-.idea/jsLibraryMappings.xml
-.idea/libraries
 
-# Logs
-logs
+#---------------------------------
+# Extensions
+#---------------------------------
+*.gz
 *.log
-npm-debug.log*
-# Optional npm cache directory
-.npm
+*.rar
+*.tar
+*.zip
+
+
+#---------------------------------
+# IDE generated
+#---------------------------------
+.idea/
+.project
+*.iml
+
+
+#---------------------------------
+# OS generated
+#---------------------------------
+__MACOSX/
+.DS_Store
+Thumbs.db
