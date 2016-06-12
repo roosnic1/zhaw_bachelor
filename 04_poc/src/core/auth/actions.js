@@ -1,9 +1,9 @@
 import { firebaseAuth } from 'src/core/firebase';
 import {
-  INIT_AUTH,
-  SIGN_IN_ERROR,
-  SIGN_IN_SUCCESS,
-  SIGN_OUT_SUCCESS
+    INIT_AUTH,
+    SIGN_IN_ERROR,
+    SIGN_IN_SUCCESS,
+    SIGN_OUT_SUCCESS
 } from './action-types';
 
 

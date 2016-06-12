@@ -1,10 +1,9 @@
 export const FIREBASE_CONFIG = {
-  apiKey: 'AIzaSyBsVVpEDrlNPEmshLcmOuE0FxhjPn0AqMg',
-  authDomain: 'todo-react-redux.firebaseapp.com',
-  databaseURL: 'https://todo-react-redux.firebaseio.com',
-  storageBucket: 'firebase-todo-react-redux.appspot.com'
+  apiKey: 'AIzaSyBU2u4Yf2zf5Wfwbd4qRDjIQpojBerzCno',
+  authDomain: 'imaginecargo-1332.firebaseapp.com',
+  databaseURL: 'https://imaginecargo-1332.firebaseio.com/',
+  storageBucket: 'imaginecargo-1332.appspot.com'
 };
-
 
 // Route paths
 export const SIGN_IN_PATH = '/sign-in';

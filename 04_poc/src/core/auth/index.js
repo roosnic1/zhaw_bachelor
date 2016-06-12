@@ -12,9 +12,10 @@ export function initAuth(dispatch) {
   return new Promise((resolve, reject) => {
     const unsub = firebaseAuth.onAuthStateChanged(
       user => {
-        dispatch(authActions.initAuth(user));
-        unsub();
-        resolve();
+          // onSuccess dispatch initAuth with returned user
+          dispatch(authActions.initAuth(user));
+          unsub();
+          resolve();
       },
       error => reject(error)
     );

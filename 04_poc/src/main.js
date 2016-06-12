@@ -37,6 +37,7 @@ if (module.hot) {
   });
 }
 
-initAuth(store.dispatch)
+render(Root);
+/*initAuth(store.dispatch)
   .then(() => render(Root))
-  .catch(error => console.error(error)); // eslint-disable-line no-console
+  .catch(error => console.error(error));*/ // eslint-disable-line no-console
