@@ -125,6 +125,12 @@ if (ENV_DEVELOPMENT) {
       reasons: true,
       timings: true,
       version: false
+    },
+    proxy: {
+      '/api/v1/*': {
+        target: 'http://localhost:3001',
+        secure: false
+      }
     }
   };
 }

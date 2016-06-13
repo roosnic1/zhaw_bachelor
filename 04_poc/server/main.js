@@ -3,6 +3,15 @@ const apiRouter = require('./api');
 const express = require('express');
 const logger = require('winston');
 
+//=========================================================
+//  ENVIRONMENT VARS
+//---------------------------------------------------------
+const NODE_ENV = process.env.NODE_ENV;
+
+const ENV_DEVELOPMENT = NODE_ENV === 'development';
+const ENV_PRODUCTION = NODE_ENV === 'production';
+const ENV_TEST = NODE_ENV === 'test';
+
 
 //=========================================================
 //  SETUP
@@ -16,6 +25,18 @@ app.set('port', process.env.PORT || 3001);
 
 app.use(require('morgan')('dev'));
 app.use(express.static(`${PROJECT_ROOT_DIR}/target`));
+
+if(ENV_DEVELOPMENT) {
+  //CORS middleware
+  var allowCrossDomain = function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+
+    next();
+  }
+  app.use(allowCrossDomain);
+}
 
 //=========================================================
 // API  ROUTER
