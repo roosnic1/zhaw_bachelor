@@ -3,13 +3,14 @@ import { Provider } from 'react-redux';
 import { Route, Router, IndexRoute } from 'react-router';
 
 // config
-import { SIGN_IN_PATH, TASKS_PATH } from 'src/config';
+import { SIGN_IN_PATH, TASKS_PATH, ORDERS_PATH } from 'src/config';
 
 // components
 import App from './app/app';
 import SignIn from './sign-in/sign-in';
 import Tasks from './tasks/tasks';
 import Orders from './orders/orders';
+import Home from './home/home';
 
 
 export default function Root({history, onEnter, store}) {
@@ -17,7 +18,8 @@ export default function Root({history, onEnter, store}) {
     <Provider store={store}>
       <Router history={history}>
         <Route component={App} onEnter={onEnter} path="/">
-          <IndexRoute component={Orders} />
+          <IndexRoute component={Home} />
+          <Route component={Orders} path={ORDERS_PATH} />
           <Route component={SignIn} path={SIGN_IN_PATH} />
           <Route component={Tasks} path={TASKS_PATH} />
         </Route>
