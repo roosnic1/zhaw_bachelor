@@ -89,7 +89,7 @@ if (ENV_DEVELOPMENT || ENV_PRODUCTION) {
 //  DEVELOPMENT
 //-------------------------------------
 if (ENV_DEVELOPMENT) {
-  config.devtool = 'cheap-module-source-map';
+  config.devtool = '#cheap-module-eval-source-map';
 
   config.entry.main.unshift(
     `webpack-dev-server/client?http://${HOST}:${PORT}`,
