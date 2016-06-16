@@ -15,7 +15,6 @@ export class Orders extends Component {
     }
 
     render() {
-        //console.log(this.props);
         const {
             getProductId,
             orders
