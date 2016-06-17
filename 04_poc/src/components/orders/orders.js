@@ -11,13 +11,27 @@ export class Orders extends Component {
         getPaymentId: PropTypes.func.isRequired
     };
 
-    componentWillMount() {
-        //this.props.registerListeners();
+    constructor(props, context) {
+        super(props, context);
+
+        this.state = {readyForTask: false};
+
     }
 
+    componentWillMount() {
+        this.getIds();
+    }
+
+    //renderSelect()
+
     getIds() {
-        this.props.getProductId();
-        this.props.getPaymentId();
+        Promise.all([
+            this.props.getProductId(),
+            this.props.getPaymentId()
+        ]).then(() => {
+            this.setState({readyForTask: true});
+            console.log('Got all the infos');
+        });
     }
 
     createTask() {
@@ -31,11 +45,10 @@ export class Orders extends Component {
 
         return (
             <div className="product-id">
-                <button onClick={this.getIds.bind(this)}>Get Ids</button>
                 <p>Product Alias: { orders.productList[0] ? orders.productList[0].alias : "No Product" }</p>
                 <p>Payment Alias: { orders.paymentList[0] ? orders.paymentList[0].alias : "No Payment" }</p>
                 
-                <button onClick={this.createTask.bind(this)}>Create Task</button>
+                <button onClick={this.createTask.bind(this)} disabled={!this.state.readyForTask}>Create Task</button>
                 <p>Task Token: { orders.taskToken }</p>
             </div>
         );
