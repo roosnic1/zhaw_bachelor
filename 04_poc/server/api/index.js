@@ -7,6 +7,9 @@ const CONFIG = require('./config');
 const apiRouter = express.Router();
 
 function createLoboRequest(action,params = {}) {
+    for(key in params) {
+        params[key] = String(params[key]);
+    }
     const postArray  = Object.assign({
         action: action,
         clientIp: '127.0.0.1',
@@ -53,7 +56,7 @@ apiRouter.connectToLobo = function () {
 
 //apiRouter.route('/check')
 
-apiRouter.get('/productlist', function (req,res, next) {
+apiRouter.get('/productlist', function (req,res) {
     const opt = createLoboRequest('getProductList');
     request.post(opt, function (err,response,body) {
         if(err) {
@@ -64,19 +67,43 @@ apiRouter.get('/productlist', function (req,res, next) {
     });
 });
 
-apiRouter.get('/verifyAdress',function (req,res, next) {
-    const params = {
-        isocode: 'CHE',
-        zip: '8004',
-        street: 'Stauffacherstrasse',
-        housenumber: 223
-    };
-    const opt = createLoboRequest('verifyAddress',params);
-    console.log(opt);
+apiRouter.get('/paymentlist', function (req,res) {
+    const opt = createLoboRequest('getPaymentList');
     request.post(opt, function (err,response,body) {
         if(err) {
             res.json({error:err});
         } else {
+            res.send(body);
+        }
+    });
+});
+
+apiRouter.post('/createtask', function (req,res) {
+    if(!req.body.productid) {
+        res.json({error:'no product id'});
+    }
+    req.body.reftime = new Date().getTime();
+    const opt = createLoboRequest('createTask',req.body);
+    request.post(opt, function (err,response,body) {
+        if(err || response.statusCode === 403) {
+            res.json({error:err,statusCode:response.statusCode});
+        } else {
+            res.send(body);
+        }
+    });
+});
+
+apiRouter.post('/verifyaddress',function (req,res) {
+    if(!req.body.isocode) {
+        res.json({error:'no isocode'});
+    }
+
+    const opt = createLoboRequest('verifyAddress',req.body);
+    request.post(opt, function (err,response,body) {
+        if(err || response.statusCode === 403) {
+            res.json({error:err,statusCode:response.statusCode});
+        } else {
+            console.log(body);
             res.send(body);
         }
     });
