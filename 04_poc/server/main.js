@@ -2,6 +2,7 @@ const apiRouter = require('./api');
 
 const express = require('express');
 const logger = require('winston');
+const bodyParser = require('body-parser');
 
 //=========================================================
 //  ENVIRONMENT VARS
@@ -25,6 +26,10 @@ app.set('port', process.env.PORT || 3001);
 
 app.use(require('morgan')('dev'));
 app.use(express.static(`${PROJECT_ROOT_DIR}/target`));
+
+// for parsing application/json
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 if(ENV_DEVELOPMENT) {
   //CORS middleware
