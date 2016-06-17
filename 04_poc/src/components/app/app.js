@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { POST_SIGN_IN_PATH, POST_SIGN_OUT_PATH } from 'src/config';
 import { authActions } from 'src/core/auth';
 
+import AppBar from 'material-ui/AppBar'
+
 
 export class App extends Component {
   static contextTypes = {
@@ -43,19 +45,7 @@ export class App extends Component {
 
     return (
       <div>
-        <header className="header">
-          <div className="g-row">
-            <div className="g-col">
-              <h1 className="header__title">Todo React Redux</h1>
-
-              <ul className="header__links">
-                {auth.authenticated ? <li><a className="header__link" onClick={this.signOut} href="#">Sign out</a></li> : null}
-                <li><a className="header__link header__link--github" href="https://github.com/r-park/todo-react-redux"></a></li>
-              </ul>
-            </div>
-          </div>
-        </header>
-
+        <AppBar title="My AppBar" />
         <main className="main">{children}</main>
       </div>
     );

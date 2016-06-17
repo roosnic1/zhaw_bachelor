@@ -78,6 +78,8 @@
   },
   "dependencies": {
     "jssha": "^2.1.0",
+    "material-ui": "^0.15.0",
+    "react-tap-event-plugin": "^1.0.0",
     "request": "^2.72.0"
   }
 }

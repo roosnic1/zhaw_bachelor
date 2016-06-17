@@ -1,8 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { withRouter } from 'react-router'
-import { connect } from 'react-redux';
+import RaisedButton from 'material-ui/RaisedButton';
 
-//import { ordersActions } from 'src/core/orders';
 
 
 class OrdersStart extends Component {
@@ -32,7 +31,7 @@ class OrdersStart extends Component {
         return (
             <div className="orders-start">
                 <h1>Start</h1>
-                <button onClick={this.createTask.bind(this)} disabled={!this.context.readyForTask}>Create Task</button>
+                <RaisedButton label="Create Task" onClick={this.createTask.bind(this)} disabled={!this.context.readyForTask} />
             </div>
         );
     }
