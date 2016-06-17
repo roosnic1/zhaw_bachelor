@@ -1,51 +1,63 @@
 
 import {
+    GET_PRODUCTID_START,
     GET_PRODUCTID_SUCCESS,
-    GET_PRODUCTID_ERROR
+    GET_PRODUCTID_ERROR,
+    GET_PAYMENTID_START,
+    GET_PAYMENTID_SUCCESS,
+    GET_PAYMENTID_ERROR,
+    CREATE_ORDER_SUCCESS,
+    CREATE_ORDER_ERROR
 } from './action-types';
 
 
 export const initialState = {
-    list: []
+    fetchingProductList: false,
+    fetchingPaymentList: false,
+    creatingTask: false,
+    productList: [],
+    paymentList: [],
+    taskToken: null
 };
 
 
 export function ordersReducer(state = initialState, action) {
     switch (action.type) {
+        case GET_PRODUCTID_START:
+            return Object.assign({}, state, {fetchingProductList: true});
         case GET_PRODUCTID_SUCCESS:
-            return {
-                list: (action.payload && action.payload.length > 0) ?
+            return Object.assign({}, state, {
+                fetchingProductList: false,
+                productList: (action.payload && action.payload.length > 0) ?
                     [ ...action.payload ] :
-                    [ ...state.list ]
-            };
+                    [ ...state.productList ],
+                taskToken: null,
+            });
         case GET_PRODUCTID_ERROR:
             console.error(action.payload);
+            return Object.assign({},state, {fetchingProductList: false});
+        case GET_PAYMENTID_START:
+            return Object.assign({}, state, {fetchingPaymentList: true});
+        case GET_PAYMENTID_SUCCESS:
+            return Object.assign({}, state, {
+                fetchingPaymentList: false,
+                paymentList: (action.payload && action.payload.length > 0) ?
+                    [ ...action.payload ] :
+                    [ ...state.paymentList ],
+                taskToken: null,
+            });
+        case GET_PAYMENTID_ERROR:
+            console.error(action.payload);
+            return Object.assign({},state, {fetchingPaymentList: false});
+        case CREATE_ORDER_SUCCESS:
+            return {
+                productList: [ ...state.productList ],
+                paymentList: [ ...state.paymentList ],
+                taskToken: action.payload
+            };
+        case CREATE_ORDER_ERROR:
+            console.error(action.payload);
             return state;
-        /*case DELETE_TASK_SUCCESS:
-            return {
-                deleted: action.payload,
-                list: state.list.filter(task => {
-                    return task.key !== action.payload.key;
-                }),
-                previous: [ ...state.list ]
-            };
-
-        case UPDATE_TASK_SUCCESS:
-            return {
-                deleted: null,
-                list: state.list.map(task => {
-                    return task.key === action.payload.key ? action.payload : task;
-                }),
-                previous: []
-            };
-
-        case SIGN_OUT_SUCCESS:
-            return {
-                deleted: null,
-                list: [],
-                previous: []
-            };*/
-
         default:
             return state;
     }
