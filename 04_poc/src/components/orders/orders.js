@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { Navigation } from 'react-router';
 
 //import { notificationActions } from 'src/core/notification';
 import { ordersActions } from 'src/core/orders';
@@ -8,18 +9,19 @@ import { ordersActions } from 'src/core/orders';
 export class Orders extends Component {
     static propTypes = {
         getProductId: PropTypes.func.isRequired,
-        getPaymentId: PropTypes.func.isRequired
+        getPaymentId: PropTypes.func.isRequired,
+        createTask: PropTypes.func.isRequired
     };
 
     constructor(props, context) {
         super(props, context);
 
         this.state = {readyForTask: false};
-
     }
 
     componentWillMount() {
         this.getIds();
+        console.log(this.props);
     }
 
     //renderSelect()
@@ -34,9 +36,11 @@ export class Orders extends Component {
         });
     }
 
-    createTask() {
-        this.props.createTask(this.props.orders.productList[0].productid,this.props.orders.paymentList[0].paymentid);
+    getChildContext() {
+        return {readyForTask: this.state.readyForTask}
     }
+
+
 
     render() {
         const {
@@ -44,16 +48,21 @@ export class Orders extends Component {
         } = this.props;
 
         return (
-            <div className="product-id">
-                <p>Product Alias: { orders.productList[0] ? orders.productList[0].alias : "No Product" }</p>
-                <p>Payment Alias: { orders.paymentList[0] ? orders.paymentList[0].alias : "No Payment" }</p>
-                
-                <button onClick={this.createTask.bind(this)} disabled={!this.state.readyForTask}>Create Task</button>
-                <p>Task Token: { orders.taskToken }</p>
+            <div className="orders">
+                <div className="product-id">
+                    <p>Task Token: { orders.taskToken }</p>
+                </div>
+                <div className="orders__child">
+                    {React.cloneElement(this.props.children, this.props)}
+                </div>
             </div>
         );
     }
 }
+
+Orders.childContextTypes = {
+    readyForTask: PropTypes.bool
+};
 
 export default connect(state => {
     return {
