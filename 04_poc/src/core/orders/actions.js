@@ -5,8 +5,10 @@ import {
     GET_PAYMENTID_START,
     GET_PAYMENTID_ERROR,
     GET_PAYMENTID_SUCCESS,
+    CREATE_ORDER_START,
     CREATE_ORDER_ERROR,
     CREATE_ORDER_SUCCESS,
+    ADD_STOP_START,
     ADD_STOP_ERROR,
     ADD_STOP_SUCCESS,
     UPDATE_ORDER_ERROR,
@@ -49,6 +51,7 @@ export function getPaymentId() {
 
 export function createTask(productId,paymentId) {
     return(dispatch) => {
+        dispatch({type:CREATE_ORDER_START,payload:null});
         const opt = {
             'method': 'POST',
             'headers': {'Content-Type': 'application/json'},
@@ -66,7 +69,7 @@ export function createTask(productId,paymentId) {
                 } else {
                     dispatch({
                         type: CREATE_ORDER_ERROR,
-                        payload: {error:'apiError',data:json}
+                        payload: {err:'apiError',data:json}
                     });
                 }
             })
@@ -75,6 +78,38 @@ export function createTask(productId,paymentId) {
                 payload: {err:'fetchError',data:error}
             }));
     }
+}
+
+export function addAddress(taskToken,address) {
+    return(dispatch) => {
+        dispatch({type:ADD_STOP_START,payload:null});
+
+        const opt = {
+            'method': 'POST',
+            'headers': {'Content-Type': 'application/json'},
+            'body': JSON.stringify(Object.assign({tasktoken: taskToken},address))
+        };
+        return fetch('/api/v1/addaddress',opt)
+            .then(data => data.json())
+            .then(json => {
+                if(json.statuscode > 0) {
+                    dispatch({
+                        type: ADD_STOP_SUCCESS,
+                        payload: json.stop
+                    });
+                } else {
+                    dispatch({
+                        type: ADD_STOP_ERROR,
+                        payload: {err: 'apiError',data:json}
+                    });
+                }
+            })
+            .catch(error => dispatch({
+                type: ADD_STOP_ERROR,
+                payload: {err: 'fetchError',data:error}
+            }));
+    }
+    
 }
 
 /*export function registerListeners() {

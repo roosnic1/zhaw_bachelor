@@ -98,13 +98,37 @@ apiRouter.post('/verifyaddress',function (req,res) {
         res.json({error:'no isocode'});
     }
 
-    const opt = createLoboRequest('verifyAddress',req.body);
-    request.post(opt, function (err,response,body) {
+    const opt1 = createLoboRequest('addStop',req.body);
+    const opt2 = createLoboRequest('calculateTask',{tasktoken: req.body.tasktoken});
+    request.post(opt1, function (err,response,body) {
         if(err || response.statusCode === 403) {
             res.json({error:err,statusCode:response.statusCode});
         } else {
-            console.log(body);
-            res.send(body);
+            const resp = JSON.parse(body);
+            console.log(opt1,resp);
+            if(resp.statuscode > 0) {
+                const opt3 = createLoboRequest('deleteStop',{tasktoken: req.body.tasktoken, stopid: resp.stop.id});
+
+                // checking if address is in suply area
+                request.post(opt2, function (err,response,body) {
+                    if(err || response.statusCode === 403) {
+                        res.json({error:err,statusCode:response.statusCode});
+                    } else {
+                        res.send(body);
+                    }
+
+                    //delete stop
+                    request.post(opt3,function (err,response,body) {
+                        if(err || response.statuscode === 403) {
+                            console.error(err);
+                        } else {
+                            console.log(body);
+                        }
+                    });
+                });
+            } else {
+                res.json({error:'Address not found',statusCode:resp.statuscode});
+            }
         }
     });
 });

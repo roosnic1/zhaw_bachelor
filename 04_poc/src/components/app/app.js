@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { POST_SIGN_IN_PATH, POST_SIGN_OUT_PATH } from 'src/config';
 import { authActions } from 'src/core/auth';
 
-import AppBar from 'material-ui/AppBar'
+import { AppBar, Paper } from 'material-ui'
 
 
 export class App extends Component {
@@ -46,7 +46,9 @@ export class App extends Component {
     return (
       <div>
         <AppBar title="My AppBar" />
-        <main className="main">{children}</main>
+        <Paper zDepth={2} className="main">
+          {children}
+        </Paper>
       </div>
     );
   }
