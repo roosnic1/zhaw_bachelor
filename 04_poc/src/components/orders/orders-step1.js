@@ -37,7 +37,7 @@ class OrdersStep1 extends Component {
             types: ['address']
         }
         //let input = this.refs.step1Form.start;
-        let input1 = document.getElementById('start');
+        /*let input1 = document.getElementById('start');
         let start = new google.maps.places.Autocomplete(input1, options);
         let input2 = document.getElementById('end');
         let end = new google.maps.places.Autocomplete(input2, options);
@@ -48,7 +48,7 @@ class OrdersStep1 extends Component {
             end: {
                 auto: end
             }
-        });
+        });*/
     }
 
     handleSubmit(e) {
@@ -56,6 +56,7 @@ class OrdersStep1 extends Component {
     }
 
     verifyAddress(input) {
+        return;
         //console.log(this.state);
         if(!this.state[input].auto || !this.state[input].auto.getPlace()) {
             this.setInlineError(input,'not a valid address');
@@ -124,6 +125,22 @@ class OrdersStep1 extends Component {
         this.setState(newState);
     }
 
+    autoCompleteInput(input) {
+        console.log(this.refs[input].input.value);
+
+        const opt = {
+            'method': 'POST',
+            'headers': {'Content-Type': 'application/json'},
+            'body': JSON.stringify({querystring: this.refs[input].input.value})
+        };
+
+        fetch('/api/v1/autocompletestreet',opt)
+            .then((data) => data.json())
+            .then((json) => {
+                console.log(json);
+            });
+    }
+
     render() {
         const {
             orders
@@ -133,7 +150,7 @@ class OrdersStep1 extends Component {
             <div className="orders-step1">
                 <h1>Step 1</h1>
                 <form ref="step1Form" className="orders-step1__form" onSubmit={this.handleSubmit}>
-                    <TextField id="start" ref="start" fullWidth={true} onBlur={this.verifyAddress.bind(this,'start')} errorText={this.state.start.error} />
+                    <TextField id="start" ref="start" fullWidth={true} onChange={this.autoCompleteInput.bind(this,'start')} onBlur={this.verifyAddress.bind(this,'start')} errorText={this.state.start.error} />
                     <br />
                     <TextField id="end" ref="end" fullWidth={true} onBlur={this.verifyAddress.bind(this,'end')} errorText={this.state.end.error} />
                     <br />

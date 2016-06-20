@@ -93,6 +93,22 @@ apiRouter.post('/createtask', function (req,res) {
     });
 });
 
+apiRouter.post('/autocompletestreet', function (req,res) {
+    if(!req.body.querystring) {
+        res.json({error: 'no querystring'});
+        return;
+    }
+
+    request.post(createLoboRequest('autoCompleteStreet',req.body), function (err,response,body) {
+        if(err || response.statusCode === 403) {
+            res.json({err:err,statusCode:response.statusCode});
+        } else {
+            console.log(body);
+            res.send(body);
+        }
+    });
+});
+
 apiRouter.post('/verifyaddress',function (req,res) {
     if(!req.body.isocode) {
         res.json({error:'no isocode'});
