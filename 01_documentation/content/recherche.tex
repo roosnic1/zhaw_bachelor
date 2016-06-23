@@ -81,9 +81,9 @@ APD+EM2:0:1630::6+++++++DA'
 UNT+13+1'
 UNZ+1+1'
 \end{verbatim}
-Die erste Zeile mit \texit{UNA} wird in allen EDIFACT Nachrichten benötigt. Sie definiert die Trennzeichen der Nachricht fest. Darauf folgt mit \texit{UNB} ein \texit{Interchange Header} und danach mit \textit{UNH} die eigentliche Nachricht welche bei \textit{UNT} wieder endet. Mit \textit{UNZ} endet die Nachricht.
+Die erste Zeile mit \textit{UNA} wird in allen EDIFACT Nachrichten benötigt. Sie definiert die Trennzeichen der Nachricht fest. Darauf folgt mit \textit{UNB} ein \textit{Interchange Header} und danach mit \textit{UNH} die eigentliche Nachricht welche bei \textit{UNT} wieder endet. Mit \textit{UNZ} endet die Nachricht.
 \newline{}
-Obwohl der EDIFACT Standard viele Geschäftsprozesse abdecken könnte wird er nur von den grössten Anbietern der Branche wie z.B. Fedex und DLH eingesetzt (QUELLE oder Beweis). Ein finanzieller Gewinn durch den Standard entsteht erst ab einem gewissen Transportvolumen\footnote{Quelle finden. Internet-enabled coordination in the supply chain Sebastián J. Garcı́a-Dastugue, Douglas M. Lambert}.
+Obwohl der EDIFACT Standard viele Geschäftsprozesse abdecken könnte wird er nur von den grössten Anbietern der Branche wie z.B. Fedex und DLH eingesetzt (QUELLE oder Beweis). Ein finanzieller Gewinn durch den Standard entsteht erst ab einem gewissen Transportvolumen\footnote{Quelle finden. Internet-enabled coordination in the supply chain}.
 
 \subsection{Telext}
 //Nick old technology (slows down innovation)
@@ -114,7 +114,7 @@ In Lobo können Zeitmodelle erstellt werden, welche definieren wie eine Zustellu
 	\label{fig1:lobozeitmodell}
 \end{figure}
 
-Zusätzlich wird eine Preisstaffel erstellt welche den Preis für die Pakete und Route berechnet\foonote{Siehe Abbildung \ref{fig1:lobopreisstaffel}}.
+Zusätzlich wird eine Preisstaffel erstellt welche den Preis für die Pakete und Route berechnet\footnote{Siehe Abbildung \ref{fig1:lobopreisstaffel}}.
 
 \begin{figure}[ht]
 	\centering
@@ -131,8 +131,8 @@ Die API von Lovo kann mit jedem REST kompatiblen System angesprochen werden. Jed
 	\item[action] Die auszuführende Aktion
 	\item[clientIp] Die IP-Adresse des Anfragenden
 \end{description}
-Zusätzlich kann mit \texit{responseFormat} die Enkodierung des Antowrt angegeben werden. Standard ist JSON {JavaScript Object Notation}. Bei gewissen Aktionen   müssen oder können zusätzliche Parameter angegeben werden. Diese Parameter werden als URL-Enkodierten Forms versendet (\texit{application/x-www-form-urlencoded}).
-Bevor die Anfrage gesendet werden kann, wird ein Hash über die Parameters berechnet. Die Berechnung findet nach \texit{SHA-256} statt und der API Schlüssel wird dafür verwendet. Der berechnet Hash wird als Hexadezimal im Heder der Anfrage mitgeschickt. Zusätzlich wird die Client Identifikation im Header mitgeschickt. Dadurch lässt sich die Authentizität und Integrität der Daten auf dem Server verifizieren. Die API antworte im gewünschten Format mit numerischen Stati, welche den Erfolg bzw. nicht Erfolg beschreiben und im falle einer Erfolgreichen Anfrage die gewünschten Daten zurück liefert. Im folgenden eine nicht vollständige Liste mit einen Beispiel Anfragen.
+Zusätzlich kann mit \textit{responseFormat} die Enkodierung des Antowrt angegeben werden. Standard ist JSON {JavaScript Object Notation}. Bei gewissen Aktionen   müssen oder können zusätzliche Parameter angegeben werden. Diese Parameter werden als URL-Enkodierten Forms versendet (\textit{application/x-www-form-urlencoded}).
+Bevor die Anfrage gesendet werden kann, wird ein Hash über die Parameters berechnet. Die Berechnung findet nach \textit{SHA-256} statt und der API Schlüssel wird dafür verwendet. Der berechnet Hash wird als Hexadezimal im Header der Anfrage mitgeschickt. Zusätzlich wird die Client Identifikation im Header mitgeschickt. Dadurch lässt sich die Authentizität und Integrität der Daten auf dem Server verifizieren. Die API antworte im gewünschten Format mit numerischen Stati, welche den Erfolg bzw. nicht Erfolg beschreiben und im falle einer Erfolgreichen Anfrage die gewünschten Daten zurück liefert. Im folgenden eine nicht vollständige Liste mit einen Beispiel Anfragen.
 
 \begin{description}
 	\item[getProductList] Benötigt keine Parameter und liefert die oben erwähnten Produkte zurück.
