@@ -60,15 +60,20 @@ class OrdersStep1 extends Component {
             this.setInlineError(input,'not a valid address');
             return;
         }
-
-        let adr = this.state[input].auto.getPlace();
-        const address = getAddressFromGoogleMapAutoComplete(adr);
+        const address = getAddressFromGoogleMapAutoComplete(this.state[input].auto.getPlace(),document.getElementById(input));
 
         const opt = {
             'method': 'POST',
             'headers': {'Content-Type': 'application/json'},
-            'body': JSON.stringify(Object.assign({tasktoken: this.props.orders.taskToken},address))
+            'body': JSON.stringify({
+                ids: {
+                    productid: this.props.orders.productList[0].productid,
+                    paymentid: this.props.orders.paymentList[0].paymentid
+                },
+                address: address
+            })
         };
+        console.log(opt);
         fetch('/api/v1/verifyaddress',opt)
             .then(data => data.json())
             .then(json => {
@@ -88,6 +93,12 @@ class OrdersStep1 extends Component {
             .catch(error => {
                 console.error(error);
             });
+    }
+    
+    addAddressesAndContinue() {
+        //TODO: execute only if no error
+        
+        
     }
 
     setInlineError(field,message) {

@@ -1,7 +1,7 @@
 
 
 // Getting an address object from Google Maps Place for LoBo.
-export function getAddressFromGoogleMapAutoComplete(place) {
+export function getAddressFromGoogleMapAutoComplete(place,input) {
     if(!place || !place.address_components) {
         return {};
     }
@@ -10,7 +10,7 @@ export function getAddressFromGoogleMapAutoComplete(place) {
         switch(comp.types[0]) {
             case 'street_number':
                 if(isNaN(comp.long_name)) {
-                    address['housenumber'] = document.getElementById(input).value.match(/\d+/)[0];
+                    address['housenumber'] = input.value.match(/\d+/)[0];
                 } else{
                     address['housenumber'] = comp.long_name;
                 }
