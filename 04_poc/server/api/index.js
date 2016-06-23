@@ -1,5 +1,6 @@
 const express = require('express');
 const request = require('request');
+const rp = require('request-promise');
 const JsSHA = require('jssha');
 const CONFIG = require('./config');
 
@@ -94,44 +95,36 @@ apiRouter.post('/createtask', function (req,res) {
 });
 
 apiRouter.post('/verifyaddress',function (req,res) {
-    if(!req.body.isocode) {
-        res.json({error:'no isocode'});
-    }
-
-    const opt1 = createLoboRequest('addStop',req.body);
-    const opt2 = createLoboRequest('calculateTask',{tasktoken: req.body.tasktoken});
-    request.post(opt1, function (err,response,body) {
-        if(err || response.statusCode === 403) {
-            res.json({error:err,statusCode:response.statusCode});
-        } else {
-            const resp = JSON.parse(body);
-            console.log(opt1,resp);
-            if(resp.statuscode > 0) {
-                const opt3 = createLoboRequest('deleteStop',{tasktoken: req.body.tasktoken, stopid: resp.stop.id});
-
-                // checking if address is in suply area
-                request.post(opt2, function (err,response,body) {
-                    if(err || response.statusCode === 403) {
-                        res.json({error:err,statusCode:response.statusCode});
-                    } else {
-                        console.log('CalculateTask Response: ',body)
-                        res.send(body);
-                    }
-
-                    //delete stop
-                    request.post(opt3,function (err,response,body) {
-                        if(err || response.statuscode === 403) {
-                            console.error(err);
-                        } else {
-                            console.log(body);
-                        }
-                    });
-                });
-            } else {
-                res.json({error:'Address not found',statusCode:resp.statuscode});
+    var tasktoken = '';
+    rp(createLoboRequest('createTask',Object.assign({},req.body.ids,{customernumber: 200025})))
+        .then(function (json) {
+            const data = JSON.parse(json);
+            if(data.statuscode === 1) {
+                tasktoken = data.tasktoken;
+                return rp(createLoboRequest('addStop', Object.assign({}, {tasktoken: tasktoken}, req.body.address)));
             }
-        }
-    });
+        })
+        .then(function (json) {
+            const data = JSON.parse(json);
+            if(data.statuscode > 0) {
+                return rp(createLoboRequest('calculateTask',{tasktoken: tasktoken}));
+            }
+        })
+        .then(function (json) {
+            const data = JSON.parse(json);
+            console.log(data);
+            if(data.statuscode !== -3 && data.statuscode !== -1) {
+                res.json({valid: true, message: ''});
+            } else if(data.statuscode === -3) {
+                res.json({valid: false, message: 'not covered by supplyarea'});
+            } else {
+                res.json({valid: false, message: 'not a valid address'});
+            }
+        })
+        .catch(function (err) {
+            console.error('ERROR',err);
+            res.status(500).send('API Request failed');
+        });
 });
 
 module.exports = apiRouter;
