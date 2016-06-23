@@ -557,10 +557,120 @@ PS-018        & A                                                             & 
 \end{table}
 
 
+\section{Funktionale Anforderungen}
+\label{sec:funktionaleanforderungen}
+
+\addcontentsline{toc}{subsection}{FREQ-001 Adresse automatisch vervollständigen}
+\begin{usecase}
+\addtitle{FREQ-001}{Adresse automatisch vervollständigen}
+\addfield{PS-Referenz}{PS-001,PS-002,PS-010}
+\addfield{Beschreibung}{Die Applikation soll mit Hilfe einer geeigneten Bibliothek/API nach Eingabe von wenigen Buchstaben, Vorschläge zur Vollständigen Adresse machen.}
+\end{usecase}
+
+\addcontentsline{toc}{subsection}{FREQ-002 Adresse verifizieren}
+\begin{usecase}
+\addtitle{FREQ-002}{Adresse verifizieren}
+\addfield{PS-Referenz}{PS-001,PS-002,PS-010}
+\addfield{Beschreibung}{Die Applikation soll überprüfen ob die eingegebene Adresse in einem er Versorgungsgebiete liegt, welche bewirtschaftet werden.}
+\end{usecase}
+
+\addcontentsline{toc}{subsection}{FREQ-003 Auftrag im Backend-System erstellen}
+\begin{usecase}
+\addtitle{FREQ-003}{Auftrag in Backend-System erstellen}
+\addfield{PS-Referenz}{PS-001,PS-002,PS-004,PS-010}
+\addfield{Beschreibung}{Die Applikation soll im Backend-System einen Auftrag mit einer Start- und Zieladresse sowie einer Start Uhrzeit erstellen.}
+\end{usecase}
+
+\addcontentsline{toc}{subsection}{FREQ-004 Auftrag im Backend-System aktualisieren}
+\begin{usecase}
+\addtitle{FREQ-004}{Auftrag im Backend-System aktualisieren}
+\addfield{PS-Referenz}{PS-003,PS-005,PS-006,PS-010,PS-011,PS-014}
+\addfield{Beschreibung}{Die Applikation soll die zusätzlichen Angaben (z.B. Kontaktperson, Pakete Dimensionen, Gewicht) im Backend-System aktualisieren.}
+\end{usecase}
+
+\addcontentsline{toc}{subsection}{FREQ-005 Auftrag im Backend-System starten}
+\begin{usecase}
+\addtitle{FREQ-005}{Auftrag im Backend-System starten}
+\addfield{PS-Referenz}{PS-007}
+\addfield{Beschreibung}{Die Applikation soll den Auftrag im Backend-System starten.}
+\end{usecase}
+
+\addcontentsline{toc}{subsection}{FREQ-006 Auftragskosten in Rechnung stellen}
+\begin{usecase}
+\addtitle{FREQ-006}{Auftragskosten in Rechnung stellen}
+\addfield{PS-Referenz}{PS-007}
+\addfield{Beschreibung}{Die Applikation soll den Auftrag dem Benutzer in Rechnung stellen.}
+\end{usecase}
+
+\addcontentsline{toc}{subsection}{FREQ-007 Auftrag aus dem Backend-System laden}
+\begin{usecase}
+\addtitle{FREQ-007}{Auftrag aus dem Backend-System laden}
+\addfield{PS-Referenz}{PS-008,PS-014,PS-015}
+\addfield{Beschreibung}{Die Applikation soll Aufträge aus dem Backend-System laden.}
+\end{usecase}
+
+\addcontentsline{toc}{subsection}{FREQ-008 Auftrag Status synchronisieren}
+\begin{usecase}
+\addtitle{FREQ-008}{Auftrag Status synchronisieren}
+\addfield{PS-Referenz}{PS-009}
+\addfield{Beschreibung}{Die Applikation soll den Auftrags Status bei jeder Änderung synchronisieren.}
+\end{usecase}
+
+\addcontentsline{toc}{subsection}{FREQ-009 Benutzer registrieren}
+\begin{usecase}
+\addtitle{FREQ-009}{Benutzer registrieren}
+\addfield{PS-Referenz}{PS-012,PS-013,PS-014,PS-015}
+\addfield{Beschreibung}{Die Applikation soll einen neuen Benutzer persistent erstellen.}
+\end{usecase}
+
+\addcontentsline{toc}{subsection}{FREQ-010 Benutzer anmelden}
+\begin{usecase}
+\addtitle{FREQ-010}{Benutzer anmelden}
+\addfield{PS-Referenz}{PS-012,PS-013,PS-014,PS-015}
+\addfield{Beschreibung}{Die Applikation soll einen Benutzer mit dem korrekten Passwort anmelden.}
+\end{usecase}
+
+\addcontentsline{toc}{subsection}{FREQ-011 Benutzer verwalten}
+\begin{usecase}
+\addtitle{FREQ-011}{Benutzer verwalten}
+\addfield{PS-Referenz}{PS-012,PS-013,PS-014,PS-015}
+\addfield{Beschreibung}{Die Applikation soll die Benutzer verwalten.}
+\end{usecase}
+
+\addcontentsline{toc}{subsection}{FREQ-012 Daten speichern}
+\begin{usecase}
+\addtitle{FREQ-012}{Daten speichern}
+\addfield{PS-Referenz}{PS-012,PS-013,PS-014,PS-015}
+\addfield{Beschreibung}{Die Applikation soll Daten persistent speichern können.}
+\end{usecase}
 
 
+\addcontentsline{toc}{subsection}{FREQ-013 Daten laden}
+\begin{usecase}
+\addtitle{FREQ-013}{Daten laden}
+\addfield{PS-Referenz}{PS-012,PS-013,PS-014,PS-015}
+\addfield{Beschreibung}{Die Applikation soll abgespeicherte Daten laden können.}
+\end{usecase}
 
 
+\section{Nicht-Funktionale Anforderungen}
+\label{sec:nichtfunktionaleanforderungen}
 
 
+\addcontentsline{toc}{subsection}{NFREQ-001 Browser Kompatibel}
+\begin{usecase}
+\addtitle{NFREQ-001}{Browser Kompatibel}
+\addfield{Beschreibung}{Die Applikation muss in einem Browser funktionieren.}
+\end{usecase}
 
+\addcontentsline{toc}{subsection}{NFREQ-002 LoBo Kompatibel}
+\begin{usecase}
+\addtitle{NFREQ-002}{LoBo Kompatibel}
+\addfield{Beschreibung}{Die Applikation muss mit dem Backend-System LoBo funktionieren.}
+\end{usecase}
+
+\addcontentsline{toc}{subsection}{NFREQ-003 SSL Zertifikat}
+\begin{usecase}
+\addtitle{NFREQ-003}{SSL Zertifikat}
+\addfield{Beschreibung}{Die Applikation soll über eine sichere HTTPS Verbindung mit dem Benutzer und dem Backend-System kommunizieren.}
+\end{usecase}
