@@ -80,10 +80,11 @@ apiRouter.get('/paymentlist', function (req,res) {
 });
 
 apiRouter.post('/createtask', function (req,res) {
-    if(!req.body.productid) {
-        res.json({error:'no product id'});
+    // TODO: validate incoming data
+
+    if(!req.body.reftime) {
+        req.body.reftime = new Date().getTime();
     }
-    req.body.reftime = new Date().getTime();
     const opt = createLoboRequest('createTask',req.body);
     request.post(opt, function (err,response,body) {
         if(err || response.statusCode === 403) {
@@ -94,7 +95,38 @@ apiRouter.post('/createtask', function (req,res) {
     });
 });
 
+apiRouter.post('/getTrainStation', function (req,res) {
+    // TODO: check if lat/long point is inside polygon -> Google Maps and return placeID
+
+    res.json({customernumber:200024});
+});
+
+apiRouter.post('/addStop', function (req,res) {
+    let request;
+    if(req.body.type === 'place') {
+        request = createLoboRequest('addStopByCustomerNumber',req.body.params);
+    } else {
+        request = createLoboRequest('addStop',req.body.params);
+    }
+
+    rp(request)
+        .then(function (json) {
+            const data = JSON.parse(json);
+            if(data.statuscode > 0) {
+                res.json(json);
+            } else {
+                res.json({error:'could not add stop',statuscode: data.statuscode});
+            }
+        })
+        .catch(function (err) {
+            console.error('ERROR',err);
+            res.status(500).send('API Request failed');
+        });
+});
+
 apiRouter.post('/verifyaddress',function (req,res) {
+    // TODO: validate incoming data
+    
     var tasktoken = '';
     rp(createLoboRequest('createTask',Object.assign({},req.body.ids,{customernumber: 200025})))
         .then(function (json) {
