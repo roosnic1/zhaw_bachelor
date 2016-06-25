@@ -15,13 +15,9 @@ class OrdersStep1 extends Component {
         super(props, context);
 
         this.state = {
-            start: {
+            streetAddress: {
                 auto: null,
                 error: ''
-            },
-            end: {
-                auto: null,
-                error:''
             }
         };
     }
@@ -37,16 +33,11 @@ class OrdersStep1 extends Component {
         const options =  {
             types: ['address']
         }
-        let input1 = document.getElementById('start');
-        let start = new google.maps.places.Autocomplete(input1, options);
-        let input2 = document.getElementById('end');
-        let end = new google.maps.places.Autocomplete(input2, options);
+        const streetAddress = document.getElementById('street_address');
+        let autoComplete = new google.maps.places.Autocomplete(streetAddress, options);
         this.setState({
-            start: {
-                auto: start
-            },
-            end: {
-                auto: end
+            streetAddress: {
+                auto: autoComplete
             }
         });
     }
@@ -55,13 +46,13 @@ class OrdersStep1 extends Component {
         e.preventDefault();
     }
 
-    verifyAddress(input) {
-        if(!this.state[input].auto || !this.state[input].auto.getPlace()) {
-            this.setInlineError(input,'not a valid address');
+    verifyAddress() {
+        if(!this.state.streetAddress.auto || !this.state.streetAddress.auto.getPlace()) {
+            this.setInlineError('streetAddress','not a valid address');
             return;
         }
-        const address = getAddressFromGoogleMapAutoComplete(this.state[input].auto.getPlace(),document.getElementById(input));
-
+        const address = getAddressFromGoogleMapAutoComplete(this.state.streetAddress.auto.getPlace(),document.getElementById('street_address'));
+        let customernumber = '';
         const opt = {
             'method': 'POST',
             'headers': {'Content-Type': 'application/json'},
@@ -73,22 +64,71 @@ class OrdersStep1 extends Component {
                 address: address
             })
         };
-        console.log(opt);
         fetch('/api/v1/verifyaddress',opt)
             .then(data => data.json())
             .then(json => {
                 console.log(json);
-                switch(json.statuscode) {
-                    case -2:
-                    case 1:
-                        this.setInlineError(input,'');
-                        break;
-                    case -3:
-                        this.setInlineError(input,'not covered by supply area');
-                        break;
-                    default:
-                        this.setInlineError(input,'not a valid address');
+                this.setInlineError('streetAddress',json.message)
+                if(json.valid) {
+                    const getTrainStation = {
+                        'method': 'POST',
+                        'headers': {'Content-Type': 'application/json'},
+                        'body': JSON.stringify({
+                            address: address
+                        })
+                    };
+                    console.log(getTrainStation);
+                    return(fetch('/api/v1/getTrainStation',getTrainStation));
                 }
+            })
+            .then(data => data.json())
+            .then(json => {
+                customernumber = json.customernumber;
+                const stop = {
+                    'method': 'POST',
+                    'headers': {'Content-Type': 'application/json'},
+                    'body': JSON.stringify({
+                        type: 'address',
+                        params: Object.assign({},{tasktoken:this.props.orders.taskToken},address)
+                    })
+                };
+
+                return fetch('/api/v1/addStop',stop);
+            })
+            .then(data => data.json())
+            .then(json => {
+                if(json.statuscode < 1) {
+                    console.error(json);
+                    throw 'Could not add stop';
+                }
+                const stop = {
+                    'method': 'POST',
+                    'headers': {'Content-Type': 'application/json'},
+                    'body': JSON.stringify({
+                        type: 'customer',
+                        params: Object.assign({},{tasktoken:this.props.orders.taskToken},{customernumber:customernumber})
+                    })
+                };
+                return fetch('/api/v1/addStop',stop);
+            })
+            .then(data => data.json())
+            .then(json => {
+                if(json.statuscode < 1) {
+                    console.error(json);
+                    throw 'Could not add stop';
+                }
+                const stopList = {
+                    'method': 'POST',
+                    'headers': {'Content-Type': 'application/json'},
+                    'body': JSON.stringify({
+                        tasktoken: this.props.orders.taskToken
+                    })
+                };
+                return fetch('/api/v1/getStopList',stopList);
+            })
+            .then(data => data.json())
+            .then(json => {
+                console.log(json);
             })
             .catch(error => {
                 console.error(error);
@@ -116,9 +156,7 @@ class OrdersStep1 extends Component {
             <div className="orders-step1">
                 <h1>Step 1</h1>
                 <form ref="step1Form" className="orders-step1__form" onSubmit={this.handleSubmit}>
-                    <TextField id="start" ref="start" fullWidth={true} onBlur={this.verifyAddress.bind(this,'start')} errorText={this.state.start.error} />
-                    <br />
-                    <TextField id="end" ref="end" fullWidth={true} onBlur={this.verifyAddress.bind(this,'end')} errorText={this.state.end.error} />
+                    <TextField id="street_address" ref="street_address" fullWidth={true} onBlur={this.verifyAddress.bind(this)} errorText={this.state.streetAddress.error} />
                     <br />
                     <RaisedButton label="Primary" primary={true}  />
                 </form>
