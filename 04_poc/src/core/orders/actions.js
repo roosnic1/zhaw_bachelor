@@ -8,9 +8,13 @@ import {
     CREATE_ORDER_START,
     CREATE_ORDER_ERROR,
     CREATE_ORDER_SUCCESS,
-    ADD_STOP_START,
-    ADD_STOP_ERROR,
-    ADD_STOP_SUCCESS,
+    ADD_START_START,
+    ADD_START_STOPADDED,
+    ADD_START_ERROR,
+    ADD_START_SUCCESS,
+    GET_STOPLIST_START,
+    GET_STOPLIST_ERROR,
+    GET_STOPLIST_SUCCESS,
     UPDATE_ORDER_ERROR,
     UPDATE_ORDER_SUCCESS
 } from './action-types';
@@ -80,36 +84,113 @@ export function createTask(productId,paymentId) {
     }
 }
 
-export function addAddress(taskToken,address) {
+export function addStartAddress(taskToken,address) {
     return(dispatch) => {
-        dispatch({type:ADD_STOP_START,payload:null});
+        dispatch({type:ADD_START_START,payload:null});
+        const opt = {
+            'method': 'POST',
+            'headers': {'Content-Type': 'application/json'},
+            'body': JSON.stringify({
+                type: 'address',
+                params: Object.assign({tasktoken: taskToken}, address)
+            })
+        };
+        
+        return fetch('/api/v1/addstop',opt)
+            .then(data => data.json())
+            .then(json => {
+                if(json.statuscode > 0) {
+                    dispatch({
+                        type: ADD_START_STOPADDED,
+                        payload: json.stop
+                    });
+                    const getTrainstation = {
+                        'method': 'POST',
+                        'headers': {'Content-Type': 'application/json'},
+                        'body': JSON.stringify({address: address})
+                    };
+                    return fetch('/api/v1/gettrainstation',getTrainstation);
+                } else {
+                    dispatch({
+                        type: ADD_START_ERROR,
+                        payload: {err: 'apiError',data:json}
+                    });
+                }
+            })
+            .then(data => data.json())
+            .then(json => {
+                if(json.statuscode > 0) {
+                    const addTrainStop = {
+                        'method': 'POST',
+                        'headers': {'Content-Type': 'application/json'},
+                        'body': JSON.stringify({
+                            type: 'customer',
+                            params: Object.assign({tasktoken: taskToken},{customernumber: json.customernumber})
+                        })
+                    };
+                    return fetch('/api/v1/addstop',addTrainStop);
+                } else {
+                    dispatch({
+                        type: ADD_START_ERROR,
+                        payload: {err: 'apiError',data:json}
+                    });
+                }
+            })
+            .then(data => data.json())
+            .then(json => {
+                if(json.statuscode >0) {
+                    dispatch({
+                        type: ADD_START_STOPADDED,
+                        payload: json.stop
+                    });
+                    dispatch({
+                        type: ADD_START_SUCCESS,
+                        payload: true
+                    });
+                } else {
+                    dispatch({
+                        type: ADD_START_ERROR,
+                        payload: {err: 'apiError',data:json}
+                    });
+                }
+            })
+            .catch(error => dispatch({
+                type: ADD_START_ERROR,
+                payload: {err: 'fetchError',data:error}
+            }));
+        
+    }
+}
+
+export function getStopList(taskToken) {
+    return(dispatch) => {
+        dispatch({type:GET_STOPLIST_START,payload:null});
 
         const opt = {
             'method': 'POST',
             'headers': {'Content-Type': 'application/json'},
-            'body': JSON.stringify(Object.assign({tasktoken: taskToken},address))
+            'body': JSON.stringify({tasktoken: taskToken})
         };
         return fetch('/api/v1/addaddress',opt)
             .then(data => data.json())
             .then(json => {
                 if(json.statuscode > 0) {
                     dispatch({
-                        type: ADD_STOP_SUCCESS,
-                        payload: json.stop
+                        type: GET_STOPLIST_SUCCESS,
+                        payload: json
                     });
                 } else {
                     dispatch({
-                        type: ADD_STOP_ERROR,
+                        type: GET_STOPLIST_ERROR,
                         payload: {err: 'apiError',data:json}
                     });
                 }
             })
             .catch(error => dispatch({
-                type: ADD_STOP_ERROR,
+                type: GET_STOPLIST_ERROR,
                 payload: {err: 'fetchError',data:error}
             }));
     }
-    
 }
 
 /*export function registerListeners() {

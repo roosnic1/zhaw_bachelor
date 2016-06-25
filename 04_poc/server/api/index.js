@@ -95,13 +95,13 @@ apiRouter.post('/createtask', function (req,res) {
     });
 });
 
-apiRouter.post('/getTrainStation', function (req,res) {
+apiRouter.post('/gettrainstation', function (req,res) {
     // TODO: check if lat/long point is inside polygon -> Google Maps and return placeID
 
-    res.json({valid: true,customernumber:200024});
+    res.json({statuscode: 1,customernumber:200024});
 });
 
-apiRouter.post('/addStop', function (req,res) {
+apiRouter.post('/addstop', function (req,res) {
     let request;
     if(req.body.type === 'customer') {
         request = createLoboRequest('addStopByCustomerNumber',req.body.params);
@@ -114,7 +114,10 @@ apiRouter.post('/addStop', function (req,res) {
             if(data.statuscode > 0) {
                 res.send(json);
             } else {
-                res.json({error:'could not add stop',statuscode: data.statuscode});
+                console.log(request);
+                data.params = req.body.params;
+                data.errm = 'could not add stop';
+                res.json(data);
             }
         })
         .catch(function (err) {
@@ -123,7 +126,7 @@ apiRouter.post('/addStop', function (req,res) {
         });
 });
 
-apiRouter.post('/getStopList', function (req,res) {
+apiRouter.post('/getstoplist', function (req,res) {
     rp(createLoboRequest('getStopList',req.body))
         .then(function (json) {
             res.send(json);

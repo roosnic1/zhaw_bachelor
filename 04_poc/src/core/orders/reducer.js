@@ -7,7 +7,11 @@ import {
     GET_PAYMENTID_SUCCESS,
     GET_PAYMENTID_ERROR,
     CREATE_ORDER_SUCCESS,
-    CREATE_ORDER_ERROR
+    CREATE_ORDER_ERROR,
+    ADD_START_START,
+    ADD_START_STOPADDED,
+    ADD_START_ERROR,
+    ADD_START_SUCCESS
 } from './action-types';
 
 
@@ -17,7 +21,10 @@ export const initialState = {
     creatingTask: false,
     productList: [],
     paymentList: [],
-    taskToken: null
+    taskToken: null,
+    fetchingStartStop: false,
+    stops: [],
+    startStopsAdded: false,
 };
 
 
@@ -50,14 +57,36 @@ export function ordersReducer(state = initialState, action) {
             console.error(action.payload);
             return Object.assign({},state, {fetchingPaymentList: false});
         case CREATE_ORDER_SUCCESS:
-            return {
+            return Object.assign({}, state, {
                 productList: [ ...state.productList ],
                 paymentList: [ ...state.paymentList ],
                 taskToken: action.payload
-            };
+            });
         case CREATE_ORDER_ERROR:
             console.error(action.payload);
             return state;
+        case ADD_START_START:
+            return Object.assign({}, state, {
+                fetchingStartStop: true,
+                startStopsAdded: false,
+                stops: []
+            });
+        case ADD_START_STOPADDED:
+            return Object.assign({}, state, {
+                stops: [ ...state.stops, action.payload ]
+            });
+        case ADD_START_SUCCESS:
+            return Object.assign({}, state, {
+                fetchingStartStop: false,
+                startStopsAdded: true
+            });
+        case ADD_START_ERROR:
+            console.error(action.payload);
+            return Object.assign({}, state, {
+                fetchingStartStop: false,
+                startStopsAdded: false,
+                stops: [],
+            });
         default:
             return state;
     }
