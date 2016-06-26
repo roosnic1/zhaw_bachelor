@@ -71,19 +71,20 @@ class OrdersStep1 extends Component {
                     if(!this.props.orders.startStopsAdded) {
                         return this.props.addStartAddress(this.props.orders.taskToken,address);
                     } else {
-                        console.log('not yet implemented');
-                        //return this.props.addEndAddress(this.props.orders.taskToken,address);
+                        return this.props.addEndAddress(this.props.orders.taskToken,address);
                     }
 
                 }
             })
             .then(() => {
                 console.log('Job should be done',this.props.orders.startStopsAdded);
-                if(this.props.orders.startStopsAdded) {
+                if(this.props.orders.startStopsAdded || this.props.orders.endStopsAdded) {
                     const input = document.getElementById('street_address');
                     input.value = '';
                     input.focus();
                 }
+
+
             })
             .catch(error => {
                 console.error(error);
