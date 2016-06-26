@@ -31,7 +31,56 @@
   \item (Softwarecode)
   \end{itemize}
 }
+\newpage{}
+\section{Kano Modell}
+\label{sec:kanomodel}
+Das Kano Modell welches nach seinem Erfinder Noriaki Kano, Professor an der Universität in Tokio, benannt ist, bestimmt die Notwendigkeit von Kundenwünschen und Erwartungen (Zitieren). Beim Kano Modell wird zwischen fünf Qualitätsebenen unterschieden.
 
+\begin{description}
+  \item[Basis-Merkmale] sind für den Benutzer so selbstverständlich, dass ihm/ihr ihre Notwendigkeit erst beim nicht vorhanden sein auffällt.
+  \item[Leistungs-Merkmal] werden vom Benutzer bewusst wahr genommen und sorgen für Zufriedenheit oder beseitigen Unzufriedenheit.
+  \item[Begeisterungs-Merkmale] überraschen den Benutzer und bringen ihm mehr Nutzen und Funktionalität.
+  \item[Unerhebliche Merkmale] sind dem Benutzer im Falle des Vorhandensein sowie auch Fehlens egal.
+  \item[Rückweisungs-Merkmale] machen den Benutzer unzufrieden, beim nicht vorhanden sein jedoch nicht zufrieden.
+\end{description}
+
+Diese Qualitätsebenen geben die Priorität bei der Entwicklung der Kundenwünsche vor. Basis-Merkmale haben die Priorität Hoch, Leistungs-Merkmale haben die Priorität Mittel und Begeisterungs-Merkmale bekommen die Priorität Niedrig. Die restlichen 2 Merkmale können bei der Priorisierung vernachlässigt werden da Sie zum einen nicht implementiert werden sollten und zum andern nur bei fehlen der anderen 3 Merkmale relevant werden.
+
+Der Benutzer antwortet bezüglich eines Produktwunsches bzw. einer Anforderung auf eine positiv formuliert und eine negativ formulierte Frage:
+\begin{itemize}
+  \item Funktional: Was würden Sie sagen, wenn die Applikation ..... macht.
+  \item Dysfunktional: Was würden Sie sagen, wenn die Applikation ..... NICHT macht.
+\end{itemize}
+
+Dabei stehen ihm folgende Antworten zur Auswahl:
+
+\begin{itemize}
+  \item Das würde mich sehr freuen
+  \item Das setzte ich voraus
+  \item Das ist mir egal
+  \item Das nehme ich gerade noch hin
+  \item Das würde mich sehr stören
+\end{itemize}
+
+Aus der Kombinationen der Antwort auf die Positive und der Antwort auf die Negative Frage, kann der Wunsch bzw. die Anforderung in eine der oben genannten 5 Qualitätsebenen eingeteilt werden. Es bestehen folgende Möglichkeiten:
+
+\begin{table}[h!]
+\centering
+\label{tbl:kanoantworten}
+\begin{tabular}{clclc}
+\multicolumn{2}{c}{\textbf{Funktionale Antwort}} & \multicolumn{2}{c}{\textbf{Dysfunktionale Antwort}} & \textbf{Merkmal}      \\
+Das setze ich voraus                & +          & Das würde mich stören                 & =           & Basis-Merkmal         \\
+Das würde mich sehr freuen          & +          & Das würde mich sehr stören            & =           & Leistungs-Merkmal     \\
+Das würde mich sehr freuen          & +          & Das ist mir egal                      & =           & Begeisterungs-Merkmal \\
+Das ist mir egal                    & +          & Das ist mir egal                      & =           & Unerhebliches Merkmal \\
+Das würde mich sehr stören          & +          & Das setze ich voraus                  & =           & Rückweisungs-Merkmal
+\end{tabular}
+\caption{Antwort Möglichkeiten beim Kano Modell}
+\end{table}
+
+Antworten welche in der Tabelle \ref{tbl:kanoantworten} nicht aufgelistet sind, sind unlogisch und werden für die Bewertung ignoriert.
+
+\newpage{}
 \section{Interview Fragen}
 \subsection{Stakeholder Interview Fragen}
 \label{subsec:stakeholderfragen}
@@ -101,3 +150,9 @@
   \item Welche Unterschiede in den Benutzer Rollen und Aufgaben können erwartet werden?
   \item Welche Arbeitsabläufe und Praktiken können vor und nach der Benutzung erwartet  werden?
 \end{itemize}
+
+
+\subsection{Stakeholder Interview Zusammenfassung}
+\label{subsec:interviewzusammen}
+\subsubsection{Interview mit Nick Blake}
+\subsubsection{Interview mit David Emmerth}

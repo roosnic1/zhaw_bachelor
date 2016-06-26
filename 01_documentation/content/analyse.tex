@@ -2,7 +2,7 @@
 \chapter{Ist Analyse}
 \label{sec:istanalyse}
 \section{Imagin Cargo}
-Imagine Cargo operiert im DACH-Raum (Deutschland, Österreich und Schweiz) und bietet die nachhaltige Expresskurier-Dienstleistung in 15 Städten an. Das Startup wurde im Oktober 2014 von Nick Blake und David Emmerth gegründet und beschäftigt zur Zeit XY Mitarbeiter. Für das Unternehmen wurde ein Business Model Canvas erstellt, welches in der Abbildung \ref{fig1:businessmodelcanvas} zu sehen ist. Business Model Canvas sind Vorlagen um neue Prozesse zu entwickeln bzw. bestehende Prozesse zu dokumentieren.
+Imagine Cargo operiert im DACH-Raum (Deutschland, Österreich und Schweiz) und bietet die nachhaltige Expresskurier-Dienstleistung in 15 Städten an. Das Startup wurde im Oktober 2014 von Nick Blake und David Emmerth gegründet und beschäftigt zur Zeit 8-9 Mitarbeiter. Für das Unternehmen wurde ein Business Model Canvas erstellt, welches in der Abbildung \ref{fig1:businessmodelcanvas} zu sehen ist. Business Model Canvas sind Vorlagen um neue Prozesse zu entwickeln bzw. bestehende Prozesse zu dokumentieren.
 \begin{figure}[ht]
 	\centering
   \includegraphics[width=0.88\textwidth]{images/businessModelCanvas.png}
@@ -10,8 +10,10 @@ Imagine Cargo operiert im DACH-Raum (Deutschland, Österreich und Schweiz) und b
 	\label{fig1:businessmodelcanvas}
 \end{figure}
  Die Mitarbeiter von Imagine Cargo haben rotierend die Rolle des Disponenten, welcher Aufträge per Mail oder Telefon annimmt und alle notwendigen Schritte für eine erfolgreiche Lieferung ausführt. Auf der Webseite von Imagine Cargo exisitiert eine \textit{wufoo-Form} mit welchem über HTML 5 Form Elemente die benötigten Informationen eingegeben werden können und danach per Mail an den Zuständigen Disponenten geschickt werden. Der Prozess wird im Kapitel \ref{subsec:prozess} genauer beschrieben.
-
---> Einschub Deutschland problematik mit lieferung.
+\\
+\textcolor{darkgray}{
+  TODO: Einschub Deutschland problematik mit lieferung.
+}
 
 
 \subsection{Prozesse}
@@ -29,8 +31,9 @@ Bei der manuellen Dateneingabe in LoBo muss der korrekte Bahnhof der Stadt in de
 
 \subsection{Software}
 Imagine Cargo besitzt 3 LoBo Instanzen. Pro Land gibt es eine Instanz, welche die anderen als Kunden verlinkt hat. Wegen der rechtlichen Problematik, welche zu beginn des Kapitels beschrieben wurde, ist es notwendig dieses umständliche Setup zu benutzten. Imagine Cargo betreibt die Instanzen nicht selber und nutzten die Lösungen direkt als Service.
+\\
 \textcolor{darkgray}{
-  Informationen zur Infrastruktur
+  TODO: Informationen zur Infrastruktur
 }
 
 
@@ -38,7 +41,7 @@ Imagine Cargo besitzt 3 LoBo Instanzen. Pro Land gibt es eine Instanz, welche di
 Beim Versuch einen Überblick über die vorhanden Softwarelösungen auf dem Markt zu bekommen, sind viele Software Lösungen für Speditionen in den Suchresultaten. Viele dieser Software Lösungen sind nur schon unbrauchbar weil sie auf einer klassischen Client-Server Architektur mit ausführbaren Programmen aufbauen. Die wenigen Angebote welche eine webbasierte Benutzeroberfläche anbieten sind aber durch den starken Fokus auf Spedition unbrauchbar. Diese Tools sind besser geeignet eine möglichst effiziente Traveling-Salesman Route zu berechnen als für Kunden welche zum ersten mal versuchen ein Paket mit einem Expresskurier zu verschicken. Die 2 vielversprechendsten Lösungen werden im folgenden kurz vorgestellt.
 
 \subsection{Deliveo}
-Deliveo ist eine Software für Kurierdienste und KEP-Dienstleister mit dem Fokus auf motorisierte Fahrzeuge und Fahrräder. Die Benutzeroberfläche von Deliveo macht einen vielversprechenden Eindruck\footnote{Siehe Abbildung \ref{fig1:deliveomask}} und bietet eine grosse Anzahl an Funktionen. Im folgende eine nicht abgeschlossene Liste mit den Funktionen von Deliveo\footnote{ Informationen direkt von der Webseite des Herstellers. \url{http://deliveo.eu/}}.
+Deliveo ist eine Software für Kurierdienste und KEP-Dienstleister mit dem Fokus auf motorisierte Fahrzeuge und Fahrräder. Die Benutzeroberfläche von Deliveo macht einen vielversprechenden Eindruck\footnote{ Siehe Abbildung \ref{fig1:deliveomask}} und bietet eine grosse Anzahl an Funktionen. Im folgende eine nicht abgeschlossene Liste mit Funktionen von Deliveo\footnote{ Informationen direkt von der Webseite des Herstellers. \url{http://deliveo.eu/}}.
 \begin{itemize}
 	\item Das ganze System ist mehrsprachig.
 	\item Abrechnung mit dem Kurier(Nachnahme-Preise, Servicepreise und zurückgeholte Dokumente).
@@ -46,33 +49,39 @@ Deliveo ist eine Software für Kurierdienste und KEP-Dienstleister mit dem Fokus
 	\item Gut entwickeltes API System für die Kommunikation mit anderen Systemen, oder zur Unterstützung der unabhängigen Entwicklungen des Kurierdienstes.
 	\item Packet-Betrieb (Aufnahme und Auslieferung) mittels Barcode-Leser mit Smartphone-Kamera
 \end{itemize}
-Die Benutzeroberfläche welche die Erstellung eines neue Auftrags ermöglicht, scheint den Bedürfnissen welche in Kapitel \ref{sec:personastories} beschrieben sind zu einem grossen Teil gerecht zu werden\footnote{Siehe Abbildung \ref{fig1:deliveonew}}. Das Handhaben macht einen einfachen Eindruck und aus Sicht des Benutzer wirkt es angenehmer als die Eingabemaske von Lobo.
+Die Benutzeroberfläche welche die Erstellung eines neue Auftrags ermöglicht, scheint den Bedürfnissen welche in Kapitel \ref{sec:personastories} beschrieben sind zu einem grossen Teil gerecht zu werden\footnote{ Siehe Abbildung \ref{fig1:deliveonew}}. Das Handhaben macht einen einfachen Eindruck und aus Sicht des Benutzer wirkt es angenehmer als die Eingabemaske von Lobo.
 
 \begin{figure}[ht]
 	\centering
-  \includegraphics[width=0.88\textwidth]{images/deliveo.png}
+  \includegraphics[width=0.66\textwidth]{images/deliveo.png}
 	\caption{Auftragsmaske von Deliveo}
 	\label{fig1:deliveomask}
 \end{figure}
 
 \begin{figure}[ht]
 	\centering
-  \includegraphics[width=0.88\textwidth]{images/deliveoNew.png}
+  \includegraphics[width=0.66\textwidth]{images/deliveoNew.png}
 	\caption{Auftragsmaske für das Erstellen eines neuen Auftrages}
 	\label{fig1:deliveonew}
 \end{figure}
 
-Deliveo offeriert eine eigene API und obwohl die Dokumentation dieser Schnittstelle in Ungarisch geschrieben ist, ist es möglich damit einen Auftrag zu erstellen.
+Deliveo offeriert eine eigene API und obwohl die Dokumentation dieser Schnittstelle in Ungarisch geschrieben ist, ist es möglich damit einen Auftrag zu erstellen. Das System bietet eine Benutzerverwaltung an, welche aber nur eine Authentifizierung anbiete und keine Autorisierung betreibt.
 
-\subsection{Bamboo Software}
-Tested by ImagineCargo. Nicht den Anforderungen standgehalten.
+\subsection{eCourier}
+Die Webapplikation eCourier biete eine Softwarelösung für KEP-Dienstleister an. Sie wurde von Bamboo-Software, einem Entwicklungsunternehmen in Berlin, hergestellt. Die Software biete ähnliche Funktionen wie LoBo und Deliveo an. Im folgenden eine nicht abgeschlossene Liste mit Funktionen von eCourier\footnote{ Informationen direkt von der Webseite des Herstellers. \url{https://bamboo-software.de/ecourier}}
+\begin{itemize}
+	\item Geeignet für Stadtkurier / Direktkurier / nationaler + internationaler Expressversand
+	\item Anbindungen an Tom Tom und AIS vorhanden
+	\item Schnittstellen unter anderem zu (UPS, Der Kurier, KEP AG, FedEx, Ilonexs, GEL, GLS, time:matters)
+\end{itemize}
+Aufgrund mangelnder Testmöglichkeiten, Bammboo-Software biete für Evaluationszwecken keine Testinstallation an, konnte eCourier im Rahmen dieser Bachelorarbeit nicht getestet werden. Die Benutzeroberfläche\footnote{Siehe Abbildung \ref{fig1:bamboonew}} jedoch sieht viel versprechend aus und die direkte Anbindung an time:matters ist sehr interessant.
 
 \begin{figure}[ht]
 	\centering
-  \includegraphics[width=0.88\textwidth]{images/bambooNew.jpg}
+  \includegraphics[width=0.66\textwidth]{images/bambooNew.jpg}
 	\caption{Auftragsmaske für das Erstellen eines neuen Auftrages}
 	\label{fig1:bamboonew}
 \end{figure}
 
-\subsection{Schlussfolgerung}
-Wegen non functional requirements -> BAAAM.
+\subsection{Fazit}
+Obschon die beide analysierten Softwarelösungen, welche aktuelle auf dem Mark zu finden sind, einen positiven Eindruck hinterlassen und die gleiche Funktionalität, welche die im Rahmen dieser Bachelorarbeit zu entwickelnden Benutzeroberfläche benötigt, wie LoBo anbieten, sind beide Lösungen ungeeignet. Die Lösung von Bamboo-Software wurde bei der Gründung von Imagine Crago zusammen mit LoBo evaluiert und hat den Anforderungen des Start-Ups nicht genügt. Die ganze Backoffice Funktionalität wird zwar nicht für die zu Entwickelnde Benutzeroberfläche benötigt, ist aber ein grosser Bestandteil für die Wahl eines Backend. Die Benutzeroberfläche von Deliveo ist Menschen mit weniger Erfahrung zu zumuten aber aufgrund der fehlenden Möglichkeit Benutzer zu autorisieren, benötigt auch diese Lösung eine eigene Webapplikation bei welcher der Benutzer nur Aufträge aufgeben kann und keine anderen Berechtigungen hat. Zusätzlich unterhält Imagine Cargo enge Beziehungen zum Entwickler von LoBo und hat dadurch die Möglichkeit zukünftige Entwicklungen zu beeinflussen. Der Entwickler von LoBo hat auch Interesse an einer \textit{White Label}\footnote{ Eine \textit{White Label} Lösung ist ohne Marke und kann vom Kunden selbst angepasst werden.} Version der im Rahmen dieser Bachelorarbeit zu entwickelnden Webapplikation bekundet. Diese Situation bietet viele Möglichkeiten für Anpassungen in LoBo, was ein bedeutend grösserer Vorteil ist als die zuvor erwähnten von Deliveo und eCourier. Diese Fazit ist in der nicht funktionalen Anforderung NFREQ-002 festgehalten.
