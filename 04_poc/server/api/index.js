@@ -153,7 +153,6 @@ apiRouter.post('/verifyaddress',function (req,res) {
         })
         .then(function (json) {
             const data = JSON.parse(json);
-            console.log(data);
             if(data.statuscode !== -3 && data.statuscode !== -1) {
                 res.json({valid: true, message: ''});
             } else if(data.statuscode === -3) {
