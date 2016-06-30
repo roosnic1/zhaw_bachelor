@@ -98,6 +98,13 @@ class OrdersStep1 extends Component {
         this.setState(newState);
     }
 
+    calculateTask() {
+        this.props.calculateTask(this.props.orders.tasktoken)
+            .then(() => {
+                console.log('calculated task');
+            });
+    }
+
     renderStopList() {
         if(this.props.orders.stops.length > 0) {
             return (
@@ -129,7 +136,7 @@ class OrdersStep1 extends Component {
                 <form ref="step1Form" className="orders-step1__form" onSubmit={(e) => {e.preventDefault();}}>
                     <TextField id="street_address" ref="street_address" fullWidth={true} errorText={this.state.streetAddress.error} />
                     <br />
-                    <RaisedButton label="Primary" primary={true}  />
+                    <RaisedButton label="Primary" primary={true}  onClick={this.calculateTask.bind(this)}/>
                 </form>
             </div>
         );

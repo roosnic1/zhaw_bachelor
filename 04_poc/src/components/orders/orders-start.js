@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { withRouter } from 'react-router'
-import { RaisedButton, SelectField, MenuItem } from 'material-ui';
+import { RaisedButton, SelectField, MenuItem, DatePicker, TimePicker } from 'material-ui';
+
 
 
 
@@ -15,6 +16,8 @@ class OrdersStart extends Component {
         this.state = {
             productid: "6",
             paymentid: "1",
+            date: new Date(),
+            time: new Date()
         };
         //this.props.orders.productList[0].productId
     }
@@ -28,8 +31,20 @@ class OrdersStart extends Component {
         this.setState(Object.assign({},this.state,{paymentid}))
     }
 
+    handleDateChange(event,date) {
+        this.setState(Object.assign({},this.state,{date}));
+    }
+
+    handleTimeChange(event,time) {
+        this.setState(Object.assign({},this.state,{time}));
+    }
+
     createTask() {
-        this.props.createTask(this.state.productid,this.state.paymentid).then(() => { this.props.router.push('/orders/step1'); });
+        const { date, time } = this.state;
+        let datetime = new Date(date.getFullYear(), date.getMonth(), date.getDate(),
+            time.getHours(), time.getMinutes(), time.getSeconds());;
+
+        this.props.createTask(this.state.productid,this.state.paymentid,datetime.getTime() / 1000).then(() => { this.props.router.push('/orders/step1'); });
     }
 
     
@@ -62,6 +77,10 @@ class OrdersStart extends Component {
                 <p>Payment</p>
                 { this.renderPaymentSelect() }
                 <br />
+
+                <p>Date/Time</p>
+                <DatePicker hintText="Date" value={ this.state.date } onChange={ this.handleDateChange.bind(this) } />
+                <TimePicker hintText="Time" format="24hr" value={ this.state.time } onChange={ this.handleTimeChange.bind(this) } />
 
                 <RaisedButton label="Create Task" primary={true} onClick={this.createTask.bind(this)}  />
             </div>

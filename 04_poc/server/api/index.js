@@ -84,10 +84,12 @@ apiRouter.get('/paymentlist', function (req,res) {
 apiRouter.post('/createtask', function (req,res) {
     // TODO: validate incoming data
 
-    if(!req.body.reftime) {
+    /*if(!req.body.reftime) {
         req.body.reftime = new Date().getTime();
-    }
+    }*/
+
     const opt = createLoboRequest('createTask',req.body);
+    console.log(opt,req.body.reftime);
     request.post(opt, function (err,response,body) {
         if(err || response.statusCode === 403) {
             res.json({error:err,statusCode:response.statusCode});
@@ -146,7 +148,7 @@ apiRouter.post('/verifyaddress',function (req,res) {
     // TODO: validate incoming data
     
     var tasktoken = '';
-    rp(createLoboRequest('createTask',Object.assign({},req.body.ids,{customernumber: 200025})))
+    rp(createLoboRequest('createTask',Object.assign({},req.body.ids,{customernumber: 200032})))
         .then(function (json) {
             const data = JSON.parse(json);
             if(data.statuscode === 1) {
@@ -174,6 +176,24 @@ apiRouter.post('/verifyaddress',function (req,res) {
             console.error('ERROR',err);
             res.status(500).send('API Request failed');
         });
+});
+
+apiRouter.post('/calculatetask', function (req,res) {
+    // TODO: validate incoming data
+    rp(createLoboRequest('calculateTask',{tasktoken: req.body.tasktoken}))
+        .then(function (json) {
+            const data = JSON.parse(json);
+            console.log(data);
+            if(data.statuscode > 0) {
+                res.send(json);
+            } else {
+                res.json({error: 'could not calculate task', data: data});
+            }
+        })
+        .catch(function(err) {
+            console.error('ERROR',err);
+            res.status(500).send('API Request failed');
+        })
 });
 
 module.exports = apiRouter;

@@ -19,6 +19,9 @@ import {
     GET_STOPLIST_START,
     GET_STOPLIST_ERROR,
     GET_STOPLIST_SUCCESS,
+    CALCULATE_TASK_START,
+    CALCULATE_TASK_ERROR,
+    CALCULATE_TASK_SUCCESS,
     UPDATE_ORDER_ERROR,
     UPDATE_ORDER_SUCCESS
 } from './action-types';
@@ -57,13 +60,13 @@ export function getPaymentId() {
     };
 }
 
-export function createTask(productId,paymentId) {
+export function createTask(productId,paymentId,datetime) {
     return(dispatch) => {
         dispatch({type:CREATE_ORDER_START,payload:null});
         const opt = {
             'method': 'POST',
             'headers': {'Content-Type': 'application/json'},
-            'body': JSON.stringify({productid: productId,paymentid: paymentId,customernumber:CUSTOMBER_NUMBER})
+            'body': JSON.stringify({productid: productId,paymentid: paymentId, reftime: datetime,customernumber:CUSTOMBER_NUMBER})
         };
         return fetch('/api/v1/createtask',opt)
             .then(data => data.json())
@@ -284,6 +287,38 @@ export function getStopList(taskToken) {
             })
             .catch(error => dispatch({
                 type: GET_STOPLIST_ERROR,
+                payload: {err: 'fetchError',data:error}
+            }));
+    }
+}
+
+export function calculateTask(taskToken) {
+    return(dispatch) => {
+        dispatch({type:CALCULATE_TASK_START,payload:null});
+
+        const opt = {
+            'method': 'POST',
+            'headers': {'Content-Type': 'application/json'},
+            'body': JSON.stringify({tasktoken: taskToken})
+        };
+        return fetch('/api/v1/calculatetask',opt)
+            .then(data => data.json())
+            .then(json => {
+                console.log(json);
+                if(json.statuscode > 0) {
+                    dispatch({
+                        type: CALCULATE_TASK_SUCCESS,
+                        payload: json
+                    });
+                } else {
+                    dispatch({
+                        type: CALCULATE_TASK_ERROR,
+                        payload: {err: 'apiError',data:json}
+                    });
+                }
+            })
+            .catch(error => dispatch({
+                type: CALCULATE_TASK_ERROR,
                 payload: {err: 'fetchError',data:error}
             }));
     }

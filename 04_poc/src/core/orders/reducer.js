@@ -15,7 +15,10 @@ import {
     ADD_END_START,
     ADD_END_STOPADDED,
     ADD_END_ERROR,
-    ADD_END_SUCCESS
+    ADD_END_SUCCESS,
+    CALCULATE_TASK_START,
+    CALCULATE_TASK_ERROR,
+    CALCULATE_TASK_SUCCESS
 } from './action-types';
 
 
@@ -23,6 +26,7 @@ export const initialState = {
     fetchingProductList: false,
     fetchingPaymentList: false,
     creatingTask: false,
+    calculatingTask: false,
     productList: [],
     paymentList: [],
     tasktoken: null,
@@ -32,7 +36,8 @@ export const initialState = {
     fetchingEndStop: false,
     stops: [],
     startStopsAdded: false,
-    endStopsAdded: false
+    endStopsAdded: false,
+    task: {}
 
 };
 
@@ -113,12 +118,28 @@ export function ordersReducer(state = initialState, action) {
                 fetchingEndStop: false,
                 endStopsAdded: true
             });
-        case ADD_START_ERROR:
+        case ADD_END_ERROR:
             console.error(action.payload);
             return Object.assign({}, state, {
                 fetchingEndStop: false,
                 endStopsAdded: false,
                 stops: [ state.stops[0], state.stops[1] ]
+            });
+        case CALCULATE_TASK_START:
+            return Object.assign({},state, {
+                calculatingTask: true,
+                task: {}
+            });
+        case CALCULATE_TASK_SUCCESS:
+            console.log(action);
+            return Object.assign({}, state, {
+                calculatingTask: false,
+                task: action.payload
+            });
+        case CALCULATE_TASK_ERROR:
+            return Object.assign({}, state, {
+                calculatingTask: false,
+                task: {}
             });
         default:
             return state;

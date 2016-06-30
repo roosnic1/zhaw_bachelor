@@ -13,4 +13,4 @@ export const POST_SIGN_IN_PATH = TASKS_PATH;
 export const POST_SIGN_OUT_PATH = SIGN_IN_PATH;
 
 // LOBO
-export const CUSTOMBER_NUMBER = 200025;
+export const CUSTOMBER_NUMBER = 200032;
