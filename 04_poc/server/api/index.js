@@ -2,7 +2,9 @@ const express = require('express');
 const request = require('request');
 const rp = require('request-promise');
 const JsSHA = require('jssha');
+const Vec2 = require('vec2');
 const CONFIG = require('./config');
+const POLY = require('./polygons');
 
 // create new API router;
 const apiRouter = express.Router();
@@ -97,8 +99,15 @@ apiRouter.post('/createtask', function (req,res) {
 
 apiRouter.post('/gettrainstation', function (req,res) {
     // TODO: check if lat/long point is inside polygon -> Google Maps and return placeID
-
-    res.json({statuscode: 1,customernumber:200024});
+    let point = new Vec2(req.body.address.coord);
+    let zone = POLY.find(function (poly) {
+        return poly.poly.containsPoint(point);
+    });
+    if(zone) {
+        res.json({statuscode: 1,customernumber:zone.customernumber});
+    } else {
+        res.json({error:'zone not found',coords:req.body.address.coord});
+    }
 });
 
 apiRouter.post('/addstop', function (req,res) {
