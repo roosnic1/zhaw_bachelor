@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { withRouter } from 'react-router'
 import { RaisedButton, SelectField, MenuItem } from 'material-ui';
-import { getAddressFromGoogleMapAutoComplete } from 'src/core/orders/helpers'
 
 
 
@@ -14,10 +13,6 @@ class OrdersStart extends Component {
         super(props, context);
 
         this.state = {
-            streetAddress: {
-                auto: null,
-                error: ''
-            },
             productid: "6",
             paymentid: "1",
         };

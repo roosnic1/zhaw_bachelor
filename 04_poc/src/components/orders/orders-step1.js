@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { withRouter } from 'react-router';
-import { TextField, RaisedButton } from 'material-ui';
+import { TextField, RaisedButton } from 'material-ui'
+import { getAddressFromGoogleMapAutoComplete } from 'src/core/orders/helpers';
 
 
 //import { ordersActions } from 'src/core/orders';
@@ -18,12 +19,8 @@ class OrdersStep1 extends Component {
             streetAddress: {
                 auto: null,
                 error: ''
-            },
-            productid: "13",
-            paymentid: "1"
-
+            }
         };
-
     }
 
     componentDidMount() {
@@ -32,9 +29,13 @@ class OrdersStep1 extends Component {
 
     initGoogleAutocomplete() {
         // TODO: check for google lib
-        const options =  {
-            types: ['address']
+        if(!window.google) {
+            setTimeout(() => {
+                this.initGoogleAutocomplete();
+            },200);
+            return;
         }
+        const options =  { types: ['address'] };
         const streetAddress = document.getElementById('street_address');
         let autoComplete = new google.maps.places.Autocomplete(streetAddress, options);
         this.setState(Object.assign({},this.state,{
@@ -50,7 +51,7 @@ class OrdersStep1 extends Component {
             return;
         }
         const address = getAddressFromGoogleMapAutoComplete(this.state.streetAddress.auto.getPlace(),document.getElementById('street_address'));
-        const { productid, paymentid } = this.state;
+        const { productid, paymentid, tasktoken } = this.props.orders;
         const opt = {
             'method': 'POST',
             'headers': {'Content-Type': 'application/json'},
@@ -68,9 +69,9 @@ class OrdersStep1 extends Component {
                 this.setInlineError('streetAddress',json.message)
                 if(json.valid) {
                     if(!this.props.orders.startStopsAdded) {
-                        return this.props.addStartAddress(this.props.orders.taskToken,address);
+                        return this.props.addStartAddress(tasktoken,address);
                     } else {
-                        return this.props.addEndAddress(this.props.orders.taskToken,address);
+                        return this.props.addEndAddress(tasktoken,address);
                     }
 
                 }
