@@ -50,7 +50,7 @@ export class Orders extends Component {
         return (
             <div className="orders">
                 <div className="product-id">
-                    <p>Task Token: { orders.taskToken }</p>
+                    <p>Task Token: { orders.tasktoken }</p>
                 </div>
                 <div className="orders__child">
                     {React.cloneElement(this.props.children, this.props)}

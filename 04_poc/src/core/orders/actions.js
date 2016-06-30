@@ -72,7 +72,11 @@ export function createTask(productId,paymentId) {
                 if(json.statuscode === 1) {
                     dispatch({
                         type: CREATE_ORDER_SUCCESS,
-                        payload: json.tasktoken
+                        payload: {
+                            tasktoken: json.tasktoken,
+                            productid: productId,
+                            paymentid: paymentId
+                        }
                     });
                 } else {
                     dispatch({

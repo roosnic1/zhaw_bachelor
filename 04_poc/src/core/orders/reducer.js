@@ -25,7 +25,9 @@ export const initialState = {
     creatingTask: false,
     productList: [],
     paymentList: [],
-    taskToken: null,
+    tasktoken: null,
+    productid: 0,
+    paymentid: 0,
     fetchingStartStop: false,
     fetchingEndStop: false,
     stops: [],
@@ -44,8 +46,7 @@ export function ordersReducer(state = initialState, action) {
                 fetchingProductList: false,
                 productList: (action.payload && action.payload.length > 0) ?
                     [ ...action.payload ] :
-                    [ ...state.productList ],
-                taskToken: null,
+                    [ ]
             });
         case GET_PRODUCTID_ERROR:
             console.error(action.payload);
@@ -57,21 +58,24 @@ export function ordersReducer(state = initialState, action) {
                 fetchingPaymentList: false,
                 paymentList: (action.payload && action.payload.length > 0) ?
                     [ ...action.payload ] :
-                    [ ...state.paymentList ],
-                taskToken: null,
+                    [ ]
             });
         case GET_PAYMENTID_ERROR:
             console.error(action.payload);
             return Object.assign({},state, {fetchingPaymentList: false});
         case CREATE_ORDER_SUCCESS:
             return Object.assign({}, state, {
-                productList: [ ...state.productList ],
-                paymentList: [ ...state.paymentList ],
-                taskToken: action.payload
+                tasktoken: action.payload.tasktoken,
+                productid: action.payload.productid,
+                paymentid: action.payload.paymentid,
             });
         case CREATE_ORDER_ERROR:
             console.error(action.payload);
-            return state;
+            return Object.assign({}, state, {
+                tasktoken: null,
+                productid: null,
+                paymentid: null,
+            });
         case ADD_START_START:
             return Object.assign({}, state, {
                 fetchingStartStop: true,
