@@ -9,6 +9,7 @@ tmp/
 # Project Specific
 #---------------------------------
 server/api/config.js
+mapCords.html
 
 #---------------------------------
 # Extensions
