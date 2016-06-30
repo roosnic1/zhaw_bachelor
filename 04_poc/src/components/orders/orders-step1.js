@@ -100,9 +100,7 @@ class OrdersStep1 extends Component {
 
     calculateTask() {
         this.props.calculateTask(this.props.orders.tasktoken)
-            .then(() => {
-                console.log('calculated task');
-            });
+            .then(() => { this.props.router.push('/orders/step2') });
     }
 
     renderStopList() {

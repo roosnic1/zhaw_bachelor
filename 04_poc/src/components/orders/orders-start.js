@@ -42,7 +42,7 @@ class OrdersStart extends Component {
     createTask() {
         const { date, time } = this.state;
         let datetime = new Date(date.getFullYear(), date.getMonth(), date.getDate(),
-            time.getHours(), time.getMinutes(), time.getSeconds());;
+            time.getHours(), time.getMinutes(), time.getSeconds());
 
         this.props.createTask(this.state.productid,this.state.paymentid,datetime.getTime() / 1000).then(() => { this.props.router.push('/orders/step1'); });
     }

@@ -131,7 +131,6 @@ export function ordersReducer(state = initialState, action) {
                 task: {}
             });
         case CALCULATE_TASK_SUCCESS:
-            console.log(action);
             return Object.assign({}, state, {
                 calculatingTask: false,
                 task: action.payload

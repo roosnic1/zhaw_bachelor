@@ -10,8 +10,9 @@ import App from './app/app';
 import SignIn from './sign-in/sign-in';
 import Tasks from './tasks/tasks';
 import Orders from './orders/orders';
-import OrdersStep1 from './orders/orders-step1';
 import OrdersStart from './orders/orders-start';
+import OrdersStep1 from './orders/orders-step1';
+import OrdersStep2 from './orders/orders-step2';
 import Home from './home/home';
 
 
@@ -24,6 +25,7 @@ export default function Root({history, onEnter, store}) {
           <Route component={Orders} path={ORDERS_PATH}>
             <IndexRoute component={OrdersStart} />
             <Route component={OrdersStep1} path={ORDERS_PATH + '/step1'} />
+            <Route component={OrdersStep2} path={ORDERS_PATH + '/step2'} />
           </Route>
           <Route component={SignIn} path={SIGN_IN_PATH} />
           <Route component={Tasks} path={TASKS_PATH} />
