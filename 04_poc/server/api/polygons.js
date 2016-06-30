@@ -1,5 +1,4 @@
 const Polygon = require('polygon');
-const Vec2 = require('vec2');
 
 
 const zones = [

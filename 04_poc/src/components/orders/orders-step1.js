@@ -38,6 +38,7 @@ class OrdersStep1 extends Component {
         const options =  { types: ['address'] };
         const streetAddress = document.getElementById('street_address');
         let autoComplete = new google.maps.places.Autocomplete(streetAddress, options);
+        autoComplete.addListener('place_changed',this.addAddress.bind(this));
         this.setState(Object.assign({},this.state,{
             streetAddress: {
                 auto: autoComplete
@@ -126,7 +127,7 @@ class OrdersStep1 extends Component {
 
                 <h2>Input</h2>
                 <form ref="step1Form" className="orders-step1__form" onSubmit={(e) => {e.preventDefault();}}>
-                    <TextField id="street_address" ref="street_address" fullWidth={true} onBlur={this.addAddress.bind(this)} errorText={this.state.streetAddress.error} />
+                    <TextField id="street_address" ref="street_address" fullWidth={true} errorText={this.state.streetAddress.error} />
                     <br />
                     <RaisedButton label="Primary" primary={true}  />
                 </form>
