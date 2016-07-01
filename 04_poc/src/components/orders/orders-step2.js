@@ -1,8 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { withRouter } from 'react-router';
 import { TextField, RaisedButton } from 'material-ui'
-import { getAddressFromGoogleMapAutoComplete } from 'src/core/orders/helpers';
-
+import OrdersOverview from './orders-overview';
 
 //import { ordersActions } from 'src/core/orders';
 
@@ -14,17 +13,13 @@ class OrdersStep2 extends Component {
 
     constructor(props, context) {
         super(props, context);
+        console.log(OrdersOverview);
 
-        this.state = {
-        };
     }
 
     componentDidMount() {
         //
     }
-
-
-    
 
     render() {
         const {
@@ -34,6 +29,7 @@ class OrdersStep2 extends Component {
         return (
             <div className="orders-step2">
                 <h2>Order Status</h2>
+                <OrdersOverview task={orders.task} stops={orders.stops} reftime={orders.reftime * 1000}/>
             </div>
         );
     }

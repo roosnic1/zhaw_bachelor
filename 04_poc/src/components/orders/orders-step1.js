@@ -107,7 +107,13 @@ class OrdersStep1 extends Component {
         if(this.props.orders.stops.length > 0) {
             return (
                 <div className="stops-wrapper">
-                    {this.props.orders.stops.map(stop => <p>{stop.street} {stop.housenumber}, {stop.city} {stop.zip}, {stop.isocode}</p>)}
+                    {this.props.orders.stops.map(stop => {
+                        if(stop.alias) {
+                            return <p>{stop.alias}</p>;
+                        } else {
+                            return <p>{stop.street} {stop.housenumber}, {stop.city} {stop.zip}, {stop.isocode}</p>;
+                        }
+                    })}
                 </div>
             )
         } else {

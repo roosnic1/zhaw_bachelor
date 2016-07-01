@@ -30,8 +30,9 @@ export const initialState = {
     productList: [],
     paymentList: [],
     tasktoken: null,
-    productid: 0,
-    paymentid: 0,
+    productid: null,
+    paymentid: null,
+    reftime: null,
     fetchingStartStop: false,
     fetchingEndStop: false,
     stops: [],
@@ -73,6 +74,7 @@ export function ordersReducer(state = initialState, action) {
                 tasktoken: action.payload.tasktoken,
                 productid: action.payload.productid,
                 paymentid: action.payload.paymentid,
+                reftime: action.payload.reftime
             });
         case CREATE_ORDER_ERROR:
             console.error(action.payload);
@@ -80,6 +82,7 @@ export function ordersReducer(state = initialState, action) {
                 tasktoken: null,
                 productid: null,
                 paymentid: null,
+                reftime: null
             });
         case ADD_START_START:
             return Object.assign({}, state, {
