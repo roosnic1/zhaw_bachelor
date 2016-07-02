@@ -183,11 +183,28 @@ apiRouter.post('/calculatetask', function (req,res) {
     rp(createLoboRequest('calculateTask',{tasktoken: req.body.tasktoken}))
         .then(function (json) {
             const data = JSON.parse(json);
-            console.log(data);
             if(data.statuscode > 0) {
                 res.send(json);
             } else {
                 res.json({error: 'could not calculate task', data: data});
+            }
+        })
+        .catch(function(err) {
+            console.error('ERROR',err);
+            res.status(500).send('API Request failed');
+        })
+});
+
+
+apiRouter.post('/updatestopinfo', function (req,res) {
+    // TODO: validate incoming data
+    rp(createLoboRequest('setStopInfo',req.body))
+        .then(function (json) {
+            const data = JSON.parse(json);
+            if(data > 0) {
+                res.send(json);
+            } else {
+                res.json({error: 'could not add stop info', data: data});
             }
         })
         .catch(function(err) {

@@ -18,7 +18,10 @@ import {
     ADD_END_SUCCESS,
     CALCULATE_TASK_START,
     CALCULATE_TASK_ERROR,
-    CALCULATE_TASK_SUCCESS
+    CALCULATE_TASK_SUCCESS,
+    UPDATE_STOPINFO_START,
+    UPDATE_STOPINFO_ERROR,
+    UPDATE_STOPINFO_SUCCESS
 } from './action-types';
 
 
@@ -27,6 +30,7 @@ export const initialState = {
     fetchingPaymentList: false,
     creatingTask: false,
     calculatingTask: false,
+    updatingStopinfo: false,
     productList: [],
     paymentList: [],
     tasktoken: null,
@@ -142,6 +146,19 @@ export function ordersReducer(state = initialState, action) {
             return Object.assign({}, state, {
                 calculatingTask: false,
                 task: {}
+            });
+        case UPDATE_STOPINFO_START:
+            return Object.assign({},state, {
+                updatingStopinfo: true
+            });
+        case UPDATE_STOPINFO_SUCCESS:
+            return Object.assign({},state, {
+                updatingStopinfo: false
+            });
+        case UPDATE_STOPINFO_ERROR:
+            console.error(action.payload);
+            return Object.assign({},state, {
+                updatingStopinfo: false
             });
         default:
             return state;

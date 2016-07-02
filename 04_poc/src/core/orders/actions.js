@@ -22,8 +22,9 @@ import {
     CALCULATE_TASK_START,
     CALCULATE_TASK_ERROR,
     CALCULATE_TASK_SUCCESS,
-    UPDATE_ORDER_ERROR,
-    UPDATE_ORDER_SUCCESS
+    UPDATE_STOPINFO_START,
+    UPDATE_STOPINFO_ERROR,
+    UPDATE_STOPINFO_SUCCESS
 } from './action-types';
 
 import { CUSTOMBER_NUMBER } from '../../config';
@@ -305,7 +306,6 @@ export function calculateTask(taskToken) {
         return fetch('/api/v1/calculatetask',opt)
             .then(data => data.json())
             .then(json => {
-                console.log(json);
                 if(json.statuscode > 0) {
                     dispatch({
                         type: CALCULATE_TASK_SUCCESS,
@@ -325,24 +325,37 @@ export function calculateTask(taskToken) {
     }
 }
 
-/*export function registerListeners() {
-    return (dispatch, getState) => {
-        const { auth } = getState();
-        const ref = firebaseDb.ref(`tasks/${auth.id}`);
 
-        ref.on('child_added', snapshot => dispatch({
-            type: CREATE_TASK_SUCCESS,
-            payload: recordFromSnapshot(snapshot)
-        }));
+export function updateStopinfo(tasktoken,stopid,infos) {
+    return(dispatch) => {
+        dispatch({type:UPDATE_STOPINFO_START,payload:null});
 
-        ref.on('child_changed', snapshot => dispatch({
-            type: UPDATE_TASK_SUCCESS,
-            payload: recordFromSnapshot(snapshot)
-        }));
-
-        ref.on('child_removed', snapshot => dispatch({
-            type: DELETE_TASK_SUCCESS,
-            payload: recordFromSnapshot(snapshot)
-        }));
-    };
-}*/
+        const stopinfoPost= {
+            'method' : 'POST',
+            'headers': {'Content-Type': 'application/json'},
+            'body': JSON.stringify(Object.assign({
+                tasktoken : tasktoken,
+                stopid : stopid
+            },infos))
+        };
+        return fetch('/api/v1/updatestopinfo',stopinfoPost)
+            .then(data => data.json())
+            .then(json => {
+                if(json > 0) {
+                    dispatch({
+                        type: UPDATE_STOPINFO_SUCCESS,
+                        payload: json
+                    });
+                } else {
+                    dispatch({
+                        type: UPDATE_STOPINFO_ERROR,
+                        payload: {err: 'apiError', data:json}
+                    });
+                }
+            })
+            .catch(error => dispatch({
+                type: UPDATE_STOPINFO_ERROR,
+                payload: {err: 'fetchError', data: error}
+            }));
+    }
+}

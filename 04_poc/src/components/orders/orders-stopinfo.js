@@ -12,9 +12,18 @@ class OrdersStopinfo extends Component {
         stop: PropTypes.object.isRequired
     };
 
+    componentDidMount() {
+        console.log(this.props.stop);
+    }
+
 
     saveStopInfo() {
-
+        let infos = Object.keys(this.refs).reduce((prev,curr) => {
+            prev[curr] = this.refs[curr].input.value;
+            return prev;
+        }, {});
+        this.props.updateStopinfo(this.props.tasktoken,this.props.stop.id,infos)
+            .then(() => console.log('updated stop info'));
     }
 
     render() {
@@ -28,12 +37,10 @@ class OrdersStopinfo extends Component {
                     <p>{stop.street} {stop.housenumber}, {stop.city} {stop.zip}, {stop.isocode}</p>
                 </div>
                 <div className="orders-overview__infofields">
-                    <form ref="infoform" onSubmit={(e) => {e.preventDefault();}}>
-                        <TextField ref="notepublic" fullWidth={true} value={ stop.notepublic } onBlur={ this.saveStopInfo.bind(this) } />
-                        <TextField ref="noteinhouse" fullWidth={true} value={ stop.noteinhouse } onBlur={ this.saveStopInfo.bind(this) } />
-                        <TextField ref="noteprivate" fullWidth={true} value={ stop.noteprivate } onBlur={ this.saveStopInfo.bind(this) } />
-                        <TextField ref="contactperson" fullWidth={true} value={ stop.contactperson } onBlur={ this.saveStopInfo.bind(this) } />
-                    </form>
+                    <TextField id="notepublic" ref="notepublic" fullWidth={true} value={ stop.notepublic } onBlur={ this.saveStopInfo.bind(this) } />
+                    <TextField id="noteinhouse" ref="noteinhouse" fullWidth={true} value={ stop.noteinhouse } onBlur={ this.saveStopInfo.bind(this) } />
+                    <TextField id="noteinprivate" ref="noteprivate" fullWidth={true} value={ stop.noteprivate } onBlur={ this.saveStopInfo.bind(this) } />
+                    <TextField id="contactperson" ref="contactperson" fullWidth={true} value={ stop.contactperson } onBlur={ this.saveStopInfo.bind(this) } />
                 </div>
             </div>
         );
