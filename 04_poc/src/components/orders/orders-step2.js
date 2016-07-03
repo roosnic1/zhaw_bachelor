@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { withRouter } from 'react-router';
-import { TextField, RaisedButton } from 'material-ui'
+import { RaisedButton } from 'material-ui'
 import OrdersOverview from './orders-overview';
 import OrdersStopinfo from './orders-stopinfo';
 
@@ -19,6 +19,13 @@ class OrdersStep2 extends Component {
     componentDidMount() {
         // Set current step
         localStorage.setItem('currentStep','step2');
+    }
+
+    orderTask() {
+        this.props.orderTask(this.props.orders.tasktoken)
+            .then(() => {
+                console.log(this.props.orders.taskStatus);
+            });
     }
 
     renderOrderStopInfos() {
@@ -45,6 +52,7 @@ class OrdersStep2 extends Component {
                 <h2>Order Status</h2>
                 <OrdersOverview task={orders.task} stops={orders.stops} reftime={orders.reftime * 1000}/>
                 { this.renderOrderStopInfos() }
+                <RaisedButton label="Order Task" primary={true}  onClick={this.orderTask.bind(this)}/>
             </div>
         );
     }

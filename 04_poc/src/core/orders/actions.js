@@ -22,7 +22,10 @@ import {
     CALCULATE_TASK_SUCCESS,
     UPDATE_STOPINFO_START,
     UPDATE_STOPINFO_ERROR,
-    UPDATE_STOPINFO_SUCCESS
+    UPDATE_STOPINFO_SUCCESS,
+    ORDER_TASK_START,
+    ORDER_TASK_ERROR,
+    ORDER_TASK_SUCCESS
 } from './action-types';
 
 import { CUSTOMBER_NUMBER } from '../../config';
@@ -125,7 +128,7 @@ export function addStop(tasktoken,address) {
     }
 }
 
-export function getStopList(taskToken) {
+/*export function getStopList(taskToken) {
     return(dispatch) => {
         dispatch({type:GET_STOPLIST_START,payload:null});
 
@@ -154,7 +157,7 @@ export function getStopList(taskToken) {
                 payload: {err: 'fetchError',data:error}
             }));
     }
-}
+}*/
 
 export function compileTask(tasktoken) {
     return(dispatch) => {
@@ -254,5 +257,38 @@ export function updateStopinfo(tasktoken,stopid,infos) {
                 type: UPDATE_STOPINFO_ERROR,
                 payload: {err: 'fetchError', data: error}
             }));
+    }
+}
+
+export function orderTask(tasktoken) {
+    return(dispatch) => {
+        dispatch({type:ORDER_TASK_START,payload:null});
+        const orderTask = {
+            'method': 'POST',
+            'headers': {'Content-Type': 'application/json'},
+            'body': JSON.stringify({tasktoken})
+        };
+
+        return fetch('/api/v1/ordertask',orderTask)
+            .then(data => data.json())
+            .then(json => {
+                if(json.statuscode > 0) {
+                    dispatch({
+                        type: ORDER_TASK_SUCCESS,
+                        payload: json
+                    });
+                } else {
+                    dispatch({
+                        type: ORDER_TASK_ERROR,
+                        payload: {err: 'apiError', data:json}
+                    });
+                }
+            })
+            .catch(error => dispatch({
+                type: ORDER_TASK_ERROR,
+                payload: {err: 'fetchError', data: error}
+            }));
+
+
     }
 }

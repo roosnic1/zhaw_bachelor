@@ -11,9 +11,9 @@ import {
     ADD_STOP_START,
     ADD_STOP_ERROR,
     ADD_STOP_SUCCESS,
-    GET_STOPLIST_START,
+    /*GET_STOPLIST_START,
     GET_STOPLIST_ERROR,
-    GET_STOPLIST_SUCCESS,
+    GET_STOPLIST_SUCCESS,*/
     COMPILE_TASK_START,
     COMPILE_TASK_ERROR,
     COMPILE_TASK_SUCCESS,
@@ -22,7 +22,10 @@ import {
     CALCULATE_TASK_SUCCESS,
     UPDATE_STOPINFO_START,
     UPDATE_STOPINFO_ERROR,
-    UPDATE_STOPINFO_SUCCESS
+    UPDATE_STOPINFO_SUCCESS,
+    ORDER_TASK_START,
+    ORDER_TASK_ERROR,
+    ORDER_TASK_SUCCESS
 } from './action-types';
 
 
@@ -35,6 +38,7 @@ export const initialState = {
     calculatingTask: false,
     compilingTask: false,
     updatingStopinfo: false,
+    orderingTask: false,
     productList: [],
     paymentList: [],
     tasktoken: null,
@@ -42,7 +46,8 @@ export const initialState = {
     paymentid: null,
     reftime: null,
     stops: [],
-    task: null
+    task: null,
+    taskStatus: null
 };
 
 
@@ -101,7 +106,7 @@ export function ordersReducer(state = initialState, action) {
             return Object.assign({}, state, {
                 addingStop: false
             });
-        case GET_STOPLIST_START:
+        /*case GET_STOPLIST_START:
             return Object.assign({}, state, {
                 fetchingStopList: true
             });
@@ -126,7 +131,7 @@ export function ordersReducer(state = initialState, action) {
                 stop: [],
                 startStopsAdded: false,
                 endStopsAdded: false
-            });
+            });*/
         case COMPILE_TASK_START:
             return Object.assign({}, state, {
                 compilingTask: true,
@@ -176,6 +181,21 @@ export function ordersReducer(state = initialState, action) {
             console.error(action.payload);
             return Object.assign({},state, {
                 updatingStopinfo: false
+            });
+        case ORDER_TASK_START:
+            return Object.assign({}, state, {
+                orderingTask: true,
+                taskStatus: null
+            });
+        case ORDER_TASK_SUCCESS:
+            return Object.assign({}, state, {
+                orderingTask: false,
+                taskStatus: action.payload
+            });
+        case ORDER_TASK_ERROR:
+            return Object.assign({}, state, {
+                orderingTask: false,
+                taskStatus: null
             });
         default:
             return state;

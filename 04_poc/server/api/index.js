@@ -332,4 +332,21 @@ apiRouter.post('/updatestopinfo', function (req,res) {
         })
 });
 
+apiRouter.post('/ordertask', function (req,res) {
+    // TODO: validate incoming data
+    rp(createLoboRequest('orderTask',req.body))
+        .then(function (json) {
+            const data = JSON.parse(json);
+            if(data.statuscode > 0) {
+                res.send(json);
+            } else {
+                res.json({error: 'could not order task', data: data});
+            }
+        })
+        .catch(function(err) {
+            console.error('ERROR',err);
+            res.status(500).send('API Request failed');
+        })
+})
+
 module.exports = apiRouter;
