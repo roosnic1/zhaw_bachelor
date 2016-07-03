@@ -306,9 +306,7 @@ export function calculateTask(taskToken) {
         return fetch('/api/v1/calculatetask',opt)
             .then(data => data.json())
             .then(json => {
-                console.log(json);
                 if(json.statuscode > 0) {
-                    console.log('inside');
                     dispatch({
                         type: CALCULATE_TASK_SUCCESS,
                         payload: {tasktoken: taskToken, task: json}
