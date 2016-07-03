@@ -14,6 +14,20 @@ class OrdersOverview extends Component {
         stops: PropTypes.array
     };
 
+    renderOverview() {
+        const { task, reftime } = this.props;
+        if(task !== null) {
+            return (
+                <div className="orders-overview__task">
+                    <p>Costs (incl. VAT): {task.costtotalincludingvat}</p>
+                    <p>Date: {moment(reftime).format('DD.MM.YYYY')}</p>
+                    <p>Pickup: {moment(reftime).format('HH:mm')} - {moment(reftime).add(task.pickup_handlingtime,'minutes').format('HH:mm')}</p>
+                    <p>ETA: {moment(reftime).add(task.pickup_handlingtime + task.pickup_traveltime + task.delivery_traveltime ,'minutes').format('HH:mm')}</p>
+                </div>
+            )
+        }
+    }
+
     render() {
         const {
             task,
@@ -32,12 +46,7 @@ class OrdersOverview extends Component {
                         }
                     })}
                 </div>
-                <div className="orders-overview__task">
-                    <p>Costs (incl. VAT): {task.costtotalincludingvat}</p>
-                    <p>Date: {moment(reftime).format('DD.MM.YYYY')}</p>
-                    <p>Pickup: {moment(reftime).format('HH:mm')} - {moment(reftime).add(task.pickup_handlingtime,'minutes').format('HH:mm')}</p>
-                    <p>ETA: {moment(reftime).add(task.pickup_handlingtime + task.pickup_traveltime + task.delivery_traveltime ,'minutes').format('HH:mm')}</p>
-                </div>
+                { this.renderOverview() }
             </div>
         );
     }

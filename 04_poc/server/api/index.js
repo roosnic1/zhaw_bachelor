@@ -5,6 +5,7 @@ const JsSHA = require('jssha');
 const Vec2 = require('vec2');
 const CONFIG = require('./config');
 const POLY = require('./polygons');
+const querystring = require('querystring');
 
 // create new API router;
 const apiRouter = express.Router();
@@ -99,34 +100,18 @@ apiRouter.post('/createtask', function (req,res) {
     });
 });
 
-apiRouter.post('/gettrainstation', function (req,res) {
-    // TODO: check if lat/long point is inside polygon -> Google Maps and return placeID
-    let point = new Vec2(req.body.address.coord);
-    let zone = POLY.find(function (poly) {
-        return poly.poly.containsPoint(point);
-    });
-    if(zone) {
-        res.json({statuscode: 1,customernumber:zone.customernumber});
-    } else {
-        res.json({error:'zone not found',coords:req.body.address.coord});
-    }
-});
-
 apiRouter.post('/addstop', function (req,res) {
-    let request;
-    if(req.body.type === 'customer') {
-        request = createLoboRequest('addStopByCustomerNumber',req.body.params);
-    } else {
-        request = createLoboRequest('addStop',req.body.params);
-    }
-    rp(request)
+    // TODO: validate incoming data
+    console.log(req.body);
+    rp(createLoboRequest('addStop',req.body))
         .then(function (json) {
             const data = JSON.parse(json);
+            console.log(data);
             if(data.statuscode > 0) {
                 res.send(json);
             } else {
                 console.log(request);
-                data.params = req.body.params;
+                data.params = req.body;
                 data.errm = 'could not add stop';
                 res.json(data);
             }
@@ -182,22 +167,152 @@ apiRouter.post('/verifyaddress',function (req,res) {
         });
 });
 
-apiRouter.post('/calculatetask', function (req,res) {
+
+function getTrainStation(coord) {
+    let point = new Vec2(coord);
+    return zone = POLY.find(function (poly) {
+        return poly.poly.containsPoint(point);
+    });
+
+}
+
+function ApiException(message,data) {
+    this.message = message;
+    this.data = data;
+    this.name = 'ApiException';
+}
+
+apiRouter.post('/compiletask', function (req,res) {
     // TODO: validate incoming data
-    rp(createLoboRequest('calculateTask',{tasktoken: req.body.tasktoken}))
-        .then(function (json) {
-            const data = JSON.parse(json);
-            if(data.statuscode > 0) {
-                res.send(json);
+    const stopSequence = [];
+    let stops = [];
+
+    rp(createLoboRequest('getStopList', { tasktoken: req.body.tasktoken }))
+        .then(function(json) {
+            stops = JSON.parse(json);
+            if(stops.length > 0) {
+                // First Stop
+                stopSequence.push(stops[0].id);
+                const params = querystring.stringify({
+                    address: stops[0].street+'+'+stops[0].housenumber+','+stops[0].city+','+stops[0].isocode,
+                    key: CONFIG.GOOGLE_MAPS_KEY
+                });
+                return rp(JSON.parse( JSON.stringify( 'https://maps.googleapis.com/maps/api/geocode/json?' + params )));
             } else {
-                res.json({error: 'could not calculate task', data: data});
+                throw new ApiException('Could not get stopList',req.body.tasktoken);
+            }
+
+        })
+        .then(function(json) {
+            const latAndLng = JSON.parse(json);
+            const zone = getTrainStation([
+                latAndLng.results[0].geometry.location.lat,
+                latAndLng.results[0].geometry.location.lng
+            ]);
+            if(zone !== undefined) {
+                return rp(createLoboRequest('addStopByCustomerNumber', {tasktoken: req.body.tasktoken, customernumber: zone.customernumber}))
+            } else {
+                throw new ApiException('Could not get zone',{zone: zone,latAndLng: latAndLng});
+            }
+
+        })
+        .then(function (json) {
+            const stop = JSON.parse(json);
+            if(stop.statuscode > 0) {
+                stopSequence.push(stop.stop.id);
+
+                const params = querystring.stringify({
+                    address: stops[1].street+'+'+stops[1].housenumber+','+stops[1].city+','+stops[1].isocode,
+                    key: CONFIG.GOOGLE_MAPS_KEY
+                });
+                return rp(JSON.parse( JSON.stringify( 'https://maps.googleapis.com/maps/api/geocode/json?' + params )));
+            } else {
+                throw new ApiException('Could not add stop',stop);
+            }
+        })
+        .then(function (json) {
+            const latAndLng = JSON.parse(json);
+            const zone = getTrainStation([
+                latAndLng.results[0].geometry.location.lat,
+                latAndLng.results[0].geometry.location.lng
+            ]);
+            if(zone !== undefined) {
+                return rp(createLoboRequest('addStopByCustomerNumber', {tasktoken: req.body.tasktoken, customernumber: zone.customernumber}))
+            } else {
+                throw new ApiException('Could not get zone',{zone: zone,latAndLng: latAndLng});
+            }
+        })
+        .then(function (json) {
+            const stop = JSON.parse(json);
+            if(stop.statuscode > 0) {
+                stopSequence.push(stop.stop.id);
+                stopSequence.push(stops[1].id);
+                return rp(createLoboRequest('setStopSequence', {tasktoken: req.body.tasktoken, sequence: stopSequence.join()}))
+            } else {
+                throw new ApiException('Could not add stop',stop);
+            }
+        })
+        .then(function (json) {
+            const statuscode = JSON.parse(json);
+            if(statuscode > 0) {
+                return rp(createLoboRequest('getStopList', {tasktoken: req.body.tasktoken}));
+            } else {
+                throw new ApiException('Could not update stoplist sequence',statuscode);
+            }
+        })
+        .then(function (json) {
+            stops = JSON.parse(json);
+            if(stops.length > 0) {
+                
+                return rp(createLoboRequest('calculateTask',{tasktoken: req.body.tasktoken}));
+            } else {
+                throw new ApiException('Could not get stoplist',req.body.tasktoken);
+            }
+        })
+        .then(function (json) {
+            const task = JSON.parse(json);
+            if(task.statuscode > 0) {
+                res.send({
+                    task: task,
+                    stops: stops
+                });
+            } else {
+                throw new ApiException('Could not calculate task',task);
             }
         })
         .catch(function(err) {
             console.error('ERROR',err);
-            res.status(500).send('API Request failed');
-        })
+            res.json(err);
+        });
 });
+
+apiRouter.post('/calculatetask', function (req,res) {
+    // TODO: validate incoming data
+    let aTask = null;
+
+    rp(createLoboRequest('calculateTask',{tasktoken: req.body.tasktoken}))
+        .then(function (json) {
+            const task = JSON.parse(json);
+            if(task.statuscode > 0) {
+                aTask = task;
+                return rp(createLoboRequest('getStopList',{tasktoken: req.body.tasktoken}));
+            } else {
+                throw new ApiException('Could not calculate task',task);
+            }
+        })
+        .then(function (json) {
+            const stops = JSON.parse(json);
+            if(stops.length > 0) {
+                res.json({task: aTask, stops: stops});
+            } else {
+                throw new ApiException('Could not get stopList',req.body.tasktoken);
+            }
+        })
+        .catch(function (error) {
+            console.error('ERROR',error);
+            res.json(error);
+        })
+})
 
 
 apiRouter.post('/updatestopinfo', function (req,res) {

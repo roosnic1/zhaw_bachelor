@@ -8,17 +8,15 @@ import {
     CREATE_ORDER_START,
     CREATE_ORDER_ERROR,
     CREATE_ORDER_SUCCESS,
-    ADD_START_START,
-    ADD_START_STOPADDED,
-    ADD_START_ERROR,
-    ADD_START_SUCCESS,
-    ADD_END_START,
-    ADD_END_STOPADDED,
-    ADD_END_ERROR,
-    ADD_END_SUCCESS,
+    ADD_STOP_START,
+    ADD_STOP_ERROR,
+    ADD_STOP_SUCCESS,
     GET_STOPLIST_START,
     GET_STOPLIST_ERROR,
     GET_STOPLIST_SUCCESS,
+    COMPILE_TASK_START,
+    COMPILE_TASK_ERROR,
+    COMPILE_TASK_SUCCESS,
     CALCULATE_TASK_START,
     CALCULATE_TASK_ERROR,
     CALCULATE_TASK_SUCCESS,
@@ -97,169 +95,33 @@ export function createTask(productId,paymentId,datetime) {
     }
 }
 
-export function addStartAddress(taskToken,address) {
+export function addStop(tasktoken,address) {
     return(dispatch) => {
-        dispatch({type:ADD_START_START,payload:null});
-        const opt = {
+        dispatch({type:ADD_STOP_START,payload:null});
+        const addStopPost = {
             'method': 'POST',
             'headers': {'Content-Type': 'application/json'},
-            'body': JSON.stringify({
-                type: 'address',
-                params: Object.assign({tasktoken: taskToken}, address)
-            })
-        };
-        
-        return fetch('/api/v1/addstop',opt)
+            'body': JSON.stringify(Object.assign({tasktoken}, address))
+        }
+        return fetch('/api/v1/addstop',addStopPost)
             .then(data => data.json())
             .then(json => {
                 if(json.statuscode > 0) {
                     dispatch({
-                        type: ADD_START_STOPADDED,
+                        type: ADD_STOP_SUCCESS,
                         payload: json.stop
-                    });
-                    const getTrainstation = {
-                        'method': 'POST',
-                        'headers': {'Content-Type': 'application/json'},
-                        'body': JSON.stringify({address: address})
-                    };
-                    return fetch('/api/v1/gettrainstation',getTrainstation);
+                    })
                 } else {
                     dispatch({
-                        type: ADD_START_ERROR,
-                        payload: {err: 'apiError',data:json}
-                    });
-                }
-            })
-            .then(data => data.json())
-            .then(json => {
-                if(json.statuscode > 0) {
-                    const addTrainStop = {
-                        'method': 'POST',
-                        'headers': {'Content-Type': 'application/json'},
-                        'body': JSON.stringify({
-                            type: 'customer',
-                            params: Object.assign({tasktoken: taskToken},{customernumber: json.customernumber})
-                        })
-                    };
-                    return fetch('/api/v1/addstop',addTrainStop);
-                } else {
-                    dispatch({
-                        type: ADD_START_ERROR,
-                        payload: {err: 'apiError',data:json}
-                    });
-                }
-            })
-            .then(data => data.json())
-            .then(json => {
-                if(json.statuscode >0) {
-                    dispatch({
-                        type: ADD_START_STOPADDED,
-                        payload: json.stop
-                    });
-                    dispatch({
-                        type: ADD_START_SUCCESS,
-                        payload: true
-                    });
-                } else {
-                    dispatch({
-                        type: ADD_START_ERROR,
-                        payload: {err: 'apiError',data:json}
+                        type: ADD_STOP_ERROR,
+                        payload: {err: 'apiError', data: json}
                     });
                 }
             })
             .catch(error => dispatch({
-                type: ADD_START_ERROR,
+                type: ADD_STOP_ERROR,
                 payload: {err: 'fetchError',data:error}
             }));
-        
-    }
-}
-
-
-export function addEndAddress(taskToken,address) {
-    return(dispatch) => {
-        dispatch({type:ADD_END_START,payload:null});
-        const opt = {
-            'method': 'POST',
-            'headers': {'Content-Type': 'application/json'},
-            'body': JSON.stringify({
-                type: 'address',
-                params: Object.assign({tasktoken: taskToken}, address)
-            })
-        };
-
-        const getTrainstation = {
-            'method': 'POST',
-            'headers': {'Content-Type': 'application/json'},
-            'body': JSON.stringify({address: address})
-        };
-
-        return fetch('/api/v1/gettrainstation',getTrainstation)
-            .then(data => data.json())
-            .then(json => {
-                if(json.statuscode > 0) {
-                    const addTrainStop = {
-                        'method': 'POST',
-                        'headers': {'Content-Type': 'application/json'},
-                        'body': JSON.stringify({
-                            type: 'customer',
-                            params: Object.assign({tasktoken: taskToken},{customernumber: json.customernumber})
-                        })
-                    };
-                    return fetch('/api/v1/addstop',addTrainStop);
-                } else {
-                    dispatch({
-                        type: ADD_END_ERROR,
-                        payload: {err: 'apiError',data:json}
-                    });
-                }
-            })
-            .then(data => data.json())
-            .then(json => {
-                if(json.statuscode > 0) {
-                    dispatch({
-                        type: ADD_END_STOPADDED,
-                        payload: json.stop
-                    });
-                    const addEndStop = {
-                        'method': 'POST',
-                        'headers': {'Content-Type': 'application/json'},
-                        'body': JSON.stringify({
-                            type: 'address',
-                            params: Object.assign({tasktoken: taskToken}, address)
-                        })
-                    };
-                    return fetch('/api/v1/addstop',addEndStop);
-                } else {
-                    dispatch({
-                        type: ADD_END_ERROR,
-                        payload: {err: 'apiError',data:json}
-                    });
-                }
-            })
-            .then(data => data.json())
-            .then(json => {
-                if(json.statuscode >0) {
-                    dispatch({
-                        type: ADD_END_STOPADDED,
-                        payload: json.stop
-                    });
-                    dispatch({
-                        type: ADD_END_SUCCESS,
-                        payload: true
-                    });
-                } else {
-                    dispatch({
-                        type: ADD_END_ERROR,
-                        payload: {err: 'apiError',data:json}
-                    });
-                }
-            })
-            .catch(error => dispatch({
-                type: ADD_END_ERROR,
-                payload: {err: 'fetchError',data:error}
-            }));
-
     }
 }
 
@@ -294,22 +156,57 @@ export function getStopList(taskToken) {
     }
 }
 
-export function calculateTask(taskToken) {
+export function compileTask(tasktoken) {
+    return(dispatch) => {
+        dispatch({type: COMPILE_TASK_START,payload:null});
+
+        const compileTaskPost = {
+            'method': 'POST',
+            'headers': {'Content-Type': 'application/json'},
+            'body': JSON.stringify({tasktoken})
+        };
+
+        return fetch('/api/v1/compiletask',compileTaskPost)
+            .then(data => data.json())
+            .then(json => {
+                if(json.task.statuscode > 0) {
+                    json.tasktoken = tasktoken;
+                    dispatch({
+                        type: COMPILE_TASK_SUCCESS,
+                        payload: json
+                    });
+                } else {
+                    dispatch({
+                        type: COMPILE_TASK_ERROR,
+                        payload: json
+                    });
+                }
+            })
+            .catch(error => dispatch({
+                type: COMPILE_TASK_ERROR,
+                payload: error
+            }));
+    }
+}
+
+export function calculateTask(tasktoken,reftime = 0) {
     return(dispatch) => {
         dispatch({type:CALCULATE_TASK_START,payload:null});
 
         const opt = {
             'method': 'POST',
             'headers': {'Content-Type': 'application/json'},
-            'body': JSON.stringify({tasktoken: taskToken})
+            'body': JSON.stringify({tasktoken})
         };
         return fetch('/api/v1/calculatetask',opt)
             .then(data => data.json())
             .then(json => {
-                if(json.statuscode > 0) {
+                if(json.task.statuscode > 0) {
+                    json.tasktoken = tasktoken;
+                    json.reftime = reftime;
                     dispatch({
                         type: CALCULATE_TASK_SUCCESS,
-                        payload: {tasktoken: taskToken, task: json}
+                        payload: json
                     });
                 } else {
                     dispatch({

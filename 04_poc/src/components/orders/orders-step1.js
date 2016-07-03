@@ -70,25 +70,17 @@ class OrdersStep1 extends Component {
         fetch('/api/v1/verifyaddress',opt)
             .then(data => data.json())
             .then(json => {
-                this.setInlineError('streetAddress',json.message)
+                this.setInlineError('streetAddress',json.message);
                 if(json.valid) {
-                    if(!this.props.orders.startStopsAdded) {
-                        return this.props.addStartAddress(tasktoken,address);
-                    } else {
-                        return this.props.addEndAddress(tasktoken,address);
-                    }
-
+                    return this.props.addStop(tasktoken,address);
                 }
             })
             .then(() => {
-                console.log('Job should be done',this.props.orders.startStopsAdded);
-                if(this.props.orders.startStopsAdded || this.props.orders.endStopsAdded) {
+                if(this.props.orders.stops.length > 0) {
                     const input = document.getElementById('street_address');
                     input.value = '';
                     input.focus();
                 }
-
-
             })
             .catch(error => {
                 console.error(error);
@@ -102,7 +94,7 @@ class OrdersStep1 extends Component {
     }
 
     calculateTask() {
-        this.props.calculateTask(this.props.orders.tasktoken)
+        this.props.compileTask(this.props.orders.tasktoken)
             .then(() => { this.props.router.push('/orders/step2') });
     }
 

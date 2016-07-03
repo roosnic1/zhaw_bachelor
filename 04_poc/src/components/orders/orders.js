@@ -32,10 +32,7 @@ export class Orders extends Component {
                 //check if there is a current task.
                 console.log(currentTask);
                  if(currentTask !== undefined) {
-                     return Promise.all([
-                         this.props.getStopList(currentTask.tasktoken),
-                         this.props.calculateTask(currentTask.tasktoken)
-                     ]);
+                     return this.props.calculateTask(currentTask.tasktoken,currentTask.reftime);
 
                  }
             })

@@ -36,6 +36,6 @@ export function getAddressFromGoogleMapAutoComplete(place,input) {
                 break;
         }
     });
-    address.coord = [place.geometry.location.lat(),place.geometry.location.lng()];
+    address.addition = JSON.stringify([place.geometry.location.lat(),place.geometry.location.lng()]);
     return address;
 }
