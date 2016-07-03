@@ -141,6 +141,10 @@ apiRouter.post('/getstoplist', function (req,res) {
     rp(createLoboRequest('getStopList',req.body))
         .then(function (json) {
             res.send(json);
+        })
+        .catch(function (err) {
+            console.error('ERROR', err);
+            res.status(500).send('API Request failed');
         });
 });
 

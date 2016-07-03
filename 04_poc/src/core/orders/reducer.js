@@ -16,6 +16,9 @@ import {
     ADD_END_STOPADDED,
     ADD_END_ERROR,
     ADD_END_SUCCESS,
+    GET_STOPLIST_START,
+    GET_STOPLIST_ERROR,
+    GET_STOPLIST_SUCCESS,
     CALCULATE_TASK_START,
     CALCULATE_TASK_ERROR,
     CALCULATE_TASK_SUCCESS,
@@ -29,6 +32,7 @@ export const initialState = {
     fetchingProductList: false,
     fetchingPaymentList: false,
     creatingTask: false,
+    fetchingStopList: false,
     calculatingTask: false,
     updatingStopinfo: false,
     productList: [],
@@ -132,20 +136,49 @@ export function ordersReducer(state = initialState, action) {
                 endStopsAdded: false,
                 stops: [ state.stops[0], state.stops[1] ]
             });
+        case GET_STOPLIST_START:
+            return Object.assign({}, state, {
+                fetchingStopList: true
+            });
+        case GET_STOPLIST_SUCCESS:
+            let startStopsAdded = false;
+            let endStopsAdded = false;
+            if(action.payload.length > 0) {
+                startStopsAdded = true;
+            } else if(action.payload.length > 2) {
+                endStopsAdded = true;
+            }
+            return Object.assign({}, state, {
+                fetchingStopList: false,
+                stops: [ ...action.payload ],
+                startStopsAdded,
+                endStopsAdded
+            });
+        case GET_STOPLIST_ERROR:
+            console.error(action.payload);
+            return Object.assign({}, state, {
+                fetchingStopList: false,
+                stop: [],
+                startStopsAdded: false,
+                endStopsAdded: false
+            });
         case CALCULATE_TASK_START:
             return Object.assign({},state, {
                 calculatingTask: true,
                 task: {}
             });
         case CALCULATE_TASK_SUCCESS:
+            console.log(action);
             return Object.assign({}, state, {
                 calculatingTask: false,
-                task: action.payload
+                tasktoken: action.payload.tasktoken,
+                task: action.payload.task
             });
         case CALCULATE_TASK_ERROR:
             return Object.assign({}, state, {
                 calculatingTask: false,
-                task: {}
+                task: {},
+                stops: []
             });
         case UPDATE_STOPINFO_START:
             return Object.assign({},state, {

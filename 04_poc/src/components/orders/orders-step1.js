@@ -24,6 +24,9 @@ class OrdersStep1 extends Component {
     }
 
     componentDidMount() {
+        // Set current step
+        localStorage.setItem('currentStep','step1');
+
         this.initGoogleAutocomplete();
     }
 

@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { withRouter } from 'react-router'
+import { withRouter } from 'react-router';
 import { RaisedButton, SelectField, MenuItem, DatePicker, TimePicker } from 'material-ui';
 
 
@@ -19,7 +19,12 @@ class OrdersStart extends Component {
             date: new Date(),
             time: new Date()
         };
-        //this.props.orders.productList[0].productId
+    }
+
+    componentDidMount() {
+        // Delete current task
+        // TODO: find out where to remove it
+        //localStorage.removeItem('currentTask');
     }
     
 
@@ -44,7 +49,13 @@ class OrdersStart extends Component {
         let datetime = new Date(date.getFullYear(), date.getMonth(), date.getDate(),
             time.getHours(), time.getMinutes(), time.getSeconds());
 
-        this.props.createTask(this.state.productid,this.state.paymentid,datetime.getTime() / 1000).then(() => { this.props.router.push('/orders/step1'); });
+        this.props.createTask(this.state.productid,this.state.paymentid,datetime.getTime() / 1000).then(() => {
+            localStorage.setItem('currentTask',JSON.stringify({
+                tasktoken: this.props.orders.tasktoken,
+                reftime: datetime.getTime() / 1000
+            }));
+            this.props.router.push('/orders/step1');
+        });
     }
 
     

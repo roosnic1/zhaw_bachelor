@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { Navigation } from 'react-router';
+import { Navigation, withRouter } from 'react-router';
 
 //import { notificationActions } from 'src/core/notification';
 import { ordersActions } from 'src/core/orders';
@@ -20,20 +20,47 @@ export class Orders extends Component {
     }
 
     componentWillMount() {
-        this.getIds();
-        console.log(this.props);
+        let currentTask;
+        if(localStorage.getItem('currentTask') !== null) {
+            currentTask = JSON.parse(localStorage.getItem('currentTask'));
+        }
+        this.getIds()
+            .then(() => {
+                //TODO: check if ids are loaded
+                this.setState({readyForTask: true});
+
+                //check if there is a current task.
+                console.log(currentTask);
+                 if(currentTask !== undefined) {
+                     return Promise.all([
+                         this.props.getStopList(currentTask.tasktoken),
+                         this.props.calculateTask(currentTask.tasktoken)
+                     ]);
+
+                 }
+            })
+            .then(() => {
+                const step = localStorage.getItem('currentStep');
+                if(step !== null && this.props.orders.tasktoken !== null) {
+                    console.log('loaded stoplist and calculated task');
+                    this.props.router.push('/orders/' + step);
+                } else {
+                    console.log('go to start');
+                    localStorage.removeItem('currentTask');
+                    localStorage.removeItem('currentStep');
+
+                    this.props.router.push('/orders');
+                }
+            });
     }
 
     //renderSelect()
 
     getIds() {
-        Promise.all([
+        return Promise.all([
             this.props.getProductId(),
             this.props.getPaymentId()
-        ]).then(() => {
-            this.setState({readyForTask: true});
-            console.log('Got all the infos');
-        });
+        ]);
     }
 
     getChildContext() {
@@ -68,4 +95,4 @@ export default connect(state => {
     return {
         orders: state.orders
     }
-}, Object.assign({}, ordersActions))(Orders);
+}, Object.assign({}, ordersActions))(withRouter(Orders));

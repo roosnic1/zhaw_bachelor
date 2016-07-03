@@ -272,10 +272,10 @@ export function getStopList(taskToken) {
             'headers': {'Content-Type': 'application/json'},
             'body': JSON.stringify({tasktoken: taskToken})
         };
-        return fetch('/api/v1/addaddress',opt)
+        return fetch('/api/v1/getstoplist',opt)
             .then(data => data.json())
             .then(json => {
-                if(json.statuscode > 0) {
+                if(json) {
                     dispatch({
                         type: GET_STOPLIST_SUCCESS,
                         payload: json
@@ -306,10 +306,12 @@ export function calculateTask(taskToken) {
         return fetch('/api/v1/calculatetask',opt)
             .then(data => data.json())
             .then(json => {
+                console.log(json);
                 if(json.statuscode > 0) {
+                    console.log('inside');
                     dispatch({
                         type: CALCULATE_TASK_SUCCESS,
-                        payload: json
+                        payload: {tasktoken: taskToken, task: json}
                     });
                 } else {
                     dispatch({

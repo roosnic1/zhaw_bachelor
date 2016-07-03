@@ -14,12 +14,25 @@ class OrdersStep2 extends Component {
 
     constructor(props, context) {
         super(props, context);
-        console.log(OrdersOverview);
-
     }
 
     componentDidMount() {
-        //
+        // Set current step
+        localStorage.setItem('currentStep','step2');
+    }
+
+    renderOrderStopInfos() {
+        const {
+            orders
+        } = this.props;
+        if(orders.stops.length > 0) {
+            return (
+                <div>
+                    <OrdersStopinfo stop={orders.stops[0]} tasktoken={orders.tasktoken} updateStopinfo={this.props.updateStopinfo} />
+                    <OrdersStopinfo stop={orders.stops[3]} tasktoken={orders.tasktoken} updateStopinfo={this.props.updateStopinfo} />
+                </div>
+            )
+        }
     }
 
     render() {
@@ -31,7 +44,7 @@ class OrdersStep2 extends Component {
             <div className="orders-step2">
                 <h2>Order Status</h2>
                 <OrdersOverview task={orders.task} stops={orders.stops} reftime={orders.reftime * 1000}/>
-                <OrdersStopinfo stop={orders.stops[0]} tasktoken={orders.tasktoken} updateStopinfo={this.props.updateStopinfo} />
+                { this.renderOrderStopInfos() }
             </div>
         );
     }
