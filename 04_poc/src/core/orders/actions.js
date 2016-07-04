@@ -11,9 +11,6 @@ import {
     ADD_STOP_START,
     ADD_STOP_ERROR,
     ADD_STOP_SUCCESS,
-    GET_STOPLIST_START,
-    GET_STOPLIST_ERROR,
-    GET_STOPLIST_SUCCESS,
     COMPILE_TASK_START,
     COMPILE_TASK_ERROR,
     COMPILE_TASK_SUCCESS,
@@ -73,7 +70,6 @@ export function createTask(productId, paymentId, datetime) {
     return fetch('/api/v1/createtask', opt)
             .then(data => data.json())
             .then(json => {
-              console.log(json);
               if (json.statuscode === 1) {
                 dispatch({
                   type: CREATE_ORDER_SUCCESS,

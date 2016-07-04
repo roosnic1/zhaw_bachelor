@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { POST_SIGN_IN_PATH, SIGN_IN_PATH } from 'src/config';
 
 

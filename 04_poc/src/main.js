@@ -29,13 +29,13 @@ injectTapEventPlugin();
 function render(Root) {
   ReactDOM.render(
     <AppContainer>
-        <MuiThemeProvider muiTheme={getMuiTheme()}>
-          <Root
-            history={syncedHistory}
-            onEnter={onEnter}
-            store={store}
-          />
-        </MuiThemeProvider>
+      <MuiThemeProvider muiTheme={getMuiTheme()}>
+        <Root
+          history={syncedHistory}
+          onEnter={onEnter}
+          store={store}
+        />
+      </MuiThemeProvider>
     </AppContainer>,
     rootElement
   );

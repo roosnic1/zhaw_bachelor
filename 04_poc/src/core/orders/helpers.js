@@ -7,30 +7,30 @@ export function getAddressFromGoogleMapAutoComplete(place, input) {
   }
   const address = {};
   place.address_components.map(comp => {
-    switch (comp.types[0]) {
+    switch (comp.types[0]) { // eslint-disable-line default-case
       case 'street_number':
         if (isNaN(comp.long_name)) {
-          address['housenumber'] = input.value.match(/\d+/)[0];
+          address.housenumber = input.value.match(/\d+/)[0];
         } else {
-          address['housenumber'] = comp.long_name;
+          address.housenumber = comp.long_name;
         }
         break;
       case 'route':
-        address['street'] = comp.long_name;
+        address.street = comp.long_name;
         break;
       case 'postal_code':
-        address['zip'] = comp.long_name;
+        address.zip = comp.long_name;
         break;
       case 'country':
-        switch (comp.short_name) {
+        switch (comp.short_name) { // eslint-disable-line default-case
           case 'DE':
-            address['isocode'] = 'DEU';
+            address.isocode = 'DEU';
             break;
           case 'CH':
-            address['isocode'] = 'CHE';
+            address.isocode = 'CHE';
             break;
           case 'AT':
-            address['isocode'] = 'AUT';
+            address.isocode = 'AUT';
             break;
         }
         break;

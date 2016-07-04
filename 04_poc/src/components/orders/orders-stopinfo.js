@@ -20,8 +20,10 @@ class OrdersStopinfo extends Component {
   }
 
   saveStopInfo() {
-    let infos = this.fields.reduce((prev, curr) => {
-      prev[curr.id] = curr.input.value;
+    const infos = this.fields.reduce((prev, curr) => {
+      if (curr !== null) {
+        prev[curr.input.id] = curr.input.value;
+      }
       return prev;
     }, {});
     this.props.updateStopinfo(this.props.tasktoken, this.props.stop.id, infos);
@@ -56,7 +58,7 @@ class OrdersStopinfo extends Component {
             onBlur={this.saveStopInfo.bind(this)}
           />
           <TextField
-            id="noteinprivate"
+            id="noteprivate"
             ref={r => this.fields.push(r)}
             floatingLabelText="Private Note"
             floatingLabelFixed={true}

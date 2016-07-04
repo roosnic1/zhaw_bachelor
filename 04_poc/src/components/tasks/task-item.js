@@ -55,8 +55,7 @@ export class TaskItem extends Component {
   onKeyUp(event) {
     if (event.keyCode === 13) {
       this.saveTitle(event);
-    }
-    else if (event.keyCode === 27) {
+    } else if (event.keyCode === 27) {
       this.stopEditing();
     }
   }
