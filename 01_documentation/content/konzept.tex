@@ -3,10 +3,42 @@
 \label{sec:konzept}
 
 \section{Planung}
-\textcolor{darkgray} {
-	verschiedene Konzeptvarianten möglich.
-}
+Möglichkeit 1: JS client direkt auf LOBO und (andere services) -> security / performance bottelneck weil immer gleiche Lobo Instanz
+
+Möglichkeit 2: JS client mit mini Backend (zurzeit notwendige Business logik weg von frontend, Secure (API Keys), mini backend instanzen sind einfach hoch zu skalieren (weil keine DB.)
+
+Progressive Web App -> JavaScript (sehr populäre sprache und bietet am meisten möglichkeiten)
+Single Page App -> momentaner Standard, grosser erfolgfaktor bei Benutzererfahrung.  Lässt abtrennung zwischen Business Logik und UI/UX Logik zu. Aufgaben aufteilung
+
+Nodejs -> weil gleiche Programmiersprache für Front und Back. JSON!!! einfach und adaptiv für features welche schlussendlich in Lobo implementiert werden sollen.
+
+ES2015 -> weil besser performance mit weniger libs. Neuer standard. besser maintainbarer code
+
+FLux -> weil Prozess weniger störungs anfällig, immer klarer State,
+https://scotch.io/tutorials/getting-to-know-flux-the-react-js-architecture
+
+React -> weil Flux, weil slim, weil Komponenten (wiederverwendbarkeit), weil brand neu
+
+Addresse Auto Complete -> Google Maps and Open street maps
+Sbb times -> opendata.ch
+
+
+
+%http://iso4app.net/ für die polygone
+%https://github.com/tmpvar/polygon.js
+%https://www.npmjs.com/package/vec2
+
+
+%https://www.smashingmagazine.com/2016/06/an-introduction-to-redux/?utm_source=javascriptweekly&utm_medium=email
+
 \section{Schnittstellen}
 \section{Technologie}
 \section{Architektur}
-\section{build or buy}
+
+\subsection{Frontend}
+Alle actions wie adresse auto complete, update stop info, update task info in komponenten. können in Steps und Advanced tour wiederverwendet werden. Steps sind auch wieder komponenten welche die anderen komponenten weiderverwenden.
+
+\subsection{Backend}
+Frontend ausliefern und API
+
+Api notwendigen aufrufe. Nur notwendigstes zurück liefern. Error handling wenn möglich nur im Backend.
