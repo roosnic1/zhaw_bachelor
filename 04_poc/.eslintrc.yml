@@ -29,7 +29,7 @@ rules:
   accessor-pairs: 0
   block-scoped-var: 0
   block-spacing: 2
-  brace-style: [2, "stroustrup", {allowSingleLine: true}]
+  brace-style: [2, "1tbs", {allowSingleLine: true}]
   callback-return: 0
   camelcase: [2, {properties: "always"}]
   comma-dangle: 2
@@ -82,7 +82,7 @@ rules:
   no-class-assign: 2
   no-cond-assign: 2
   no-confusing-arrow: 0
-  no-console: 2
+  no-console: [2, {allow: ["warn", "error"]}]
   no-const-assign: 2
   no-constant-condition: 2
   no-continue: 0

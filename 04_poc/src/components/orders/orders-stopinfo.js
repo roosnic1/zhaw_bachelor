@@ -1,81 +1,82 @@
 import React, { Component, PropTypes } from 'react';
-import { TextField, RaisedButton } from 'material-ui'
-import { getAddressFromGoogleMapAutoComplete } from 'src/core/orders/helpers';
-import moment from 'moment';
+import { TextField } from 'material-ui';
 
 
-//import { ordersActions } from 'src/core/orders';
 const textFieldStyle = {
-    display: 'block'
+  display: 'block'
 };
 
 
 class OrdersStopinfo extends Component {
-    static propTypes = {
-        stop: PropTypes.object.isRequired
-    };
+  static propTypes = {
+    stop: PropTypes.object.isRequired,
+    tasktoken: PropTypes.string.isRequired,
+    updateStopinfo: PropTypes.func.isRequired
+  };
 
-    componentDidMount() {
-        console.log(this.props.stop);
-    }
+  constructor(props, context) {
+    super(props, context);
+    this.fields = [];
+  }
 
+  saveStopInfo() {
+    let infos = this.fields.reduce((prev, curr) => {
+      prev[curr.id] = curr.input.value;
+      return prev;
+    }, {});
+    this.props.updateStopinfo(this.props.tasktoken, this.props.stop.id, infos);
+  }
 
-    saveStopInfo() {
-        let infos = Object.keys(this.refs).reduce((prev,curr) => {
-            prev[curr] = this.refs[curr].input.value;
-            return prev;
-        }, {});
-        this.props.updateStopinfo(this.props.tasktoken,this.props.stop.id,infos)
-            .then(() => console.log('updated stop info'));
-    }
+  render() {
+    const { stop } = this.props;
 
-    render() {
-        const {
-            stop
-        } = this.props;
-
-        return (
-            <div className="orders-stopinfo">
-                <h2>Stop Information</h2>
-                <div className="orders-stopinfo__header">
-                    <p>{stop.street} {stop.housenumber}, {stop.city} {stop.zip}, {stop.isocode}</p>
-                </div>
-                <div className="orders-overview__infofields">
-                    <TextField id="notepublic"
-                               ref="notepublic"
-                               floatingLabelText="Public Note"
-                               floatingLabelFixed={true}
-                               style={ textFieldStyle }
-                               value={ stop.notepublic }
-                               onBlur={ this.saveStopInfo.bind(this) } />
-                    <TextField id="noteinhouse"
-                               ref="noteinhouse"
-                               floatingLabelText="Inhouse Note"
-                               floatingLabelFixed={true}
-                               style={ textFieldStyle }
-                               value={ stop.noteinhouse }
-                               onBlur={ this.saveStopInfo.bind(this) } />
-                    <TextField id="noteinprivate"
-                               ref="noteprivate"
-                               floatingLabelText="Private Note"
-                               floatingLabelFixed={true}
-                               style={ textFieldStyle }
-                               value={ stop.noteprivate }
-                               onBlur={ this.saveStopInfo.bind(this) } />
-                    <TextField id="contactperson"
-                               ref="contactperson"
-                               floatingLabelText="Contact Person"
-                               floatingLabelFixed={true}
-                               style={ textFieldStyle }
-                               value={ stop.contactperson }
-                               onBlur={ this.saveStopInfo.bind(this) } />
-                </div>
-            </div>
-        );
-    }
+    return (
+      <div className="orders-stopinfo">
+        <h2>Stop Information</h2>
+        <div className="orders-stopinfo__header">
+          <p>{stop.street} {stop.housenumber}, {stop.city} {stop.zip}, {stop.isocode}</p>
+        </div>
+        <div className="orders-overview__infofields">
+          <TextField
+            id="notepublic"
+            ref={r => this.fields.push(r)}
+            floatingLabelText="Public Note"
+            floatingLabelFixed={true}
+            style={textFieldStyle}
+            value={stop.notepublic}
+            onBlur={this.saveStopInfo.bind(this)}
+          />
+          <TextField
+            id="noteinhouse"
+            ref={r => this.fields.push(r)}
+            floatingLabelText="Inhouse Note"
+            floatingLabelFixed={true}
+            style={textFieldStyle}
+            value={stop.noteinhouse}
+            onBlur={this.saveStopInfo.bind(this)}
+          />
+          <TextField
+            id="noteinprivate"
+            ref={r => this.fields.push(r)}
+            floatingLabelText="Private Note"
+            floatingLabelFixed={true}
+            style={textFieldStyle}
+            value={stop.noteprivate}
+            onBlur={this.saveStopInfo.bind(this)}
+          />
+          <TextField
+            id="contactperson"
+            ref={r => this.fields.push(r)}
+            floatingLabelText="Contact Person"
+            floatingLabelFixed={true}
+            style={textFieldStyle}
+            value={stop.contactperson}
+            onBlur={this.saveStopInfo.bind(this)}
+          />
+        </div>
+      </div>
+    );
+  }
 }
-
-
-
 
 export default OrdersStopinfo;

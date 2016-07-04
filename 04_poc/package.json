@@ -20,7 +20,7 @@
     "build": "cross-env NODE_ENV=production webpack --display-chunks --display-modules --progress",
     "clean": "del-cli ./target",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --progress",
-    "lint": "eslint -c .eslintrc.yml *.js ./src ./server",
+    "lint": "node_modules/eslint/bin/eslint.js -c .eslintrc.yml *.js ./src ./server",
     "prebuild": "npm-run-all clean lint test",
     "server": "cross-env NODE_ENV=development nodemon -w 'server/**/*.*' ./server/main.js",
     "start": "npm run dev",
@@ -41,8 +41,8 @@
     "cross-env": "~1.0.8",
     "css-loader": "~0.23.1",
     "del-cli": "~0.2.0",
-    "eslint": "~2.11.1",
-    "eslint-plugin-react": "~5.1.1",
+    "eslint": "^3.0.0",
+    "eslint-plugin-react": "^5.2.2",
     "express": "~4.13.4",
     "extract-text-webpack-plugin": "~1.0.1",
     "firebase": "~3.0.3",
@@ -73,8 +73,8 @@
     "style-loader": "~0.13.1",
     "webpack": "~1.13.1",
     "webpack-dev-server": "~1.14.1",
-    "winston": "~2.2.0",
-    "webpack-md5-hash": "~0.0.5"
+    "webpack-md5-hash": "~0.0.5",
+    "winston": "~2.2.0"
   },
   "dependencies": {
     "jssha": "^2.1.0",

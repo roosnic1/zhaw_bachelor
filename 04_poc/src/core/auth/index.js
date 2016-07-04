@@ -13,9 +13,9 @@ export function initAuth(dispatch) {
     const unsub = firebaseAuth.onAuthStateChanged(
       user => {
           // onSuccess dispatch initAuth with returned user
-          dispatch(authActions.initAuth(user));
-          unsub();
-          resolve();
+        dispatch(authActions.initAuth(user));
+        unsub();
+        resolve();
       },
       error => reject(error)
     );

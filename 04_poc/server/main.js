@@ -10,8 +10,8 @@ const bodyParser = require('body-parser');
 const NODE_ENV = process.env.NODE_ENV;
 
 const ENV_DEVELOPMENT = NODE_ENV === 'development';
-const ENV_PRODUCTION = NODE_ENV === 'production';
-const ENV_TEST = NODE_ENV === 'test';
+const ENV_PRODUCTION = NODE_ENV === 'production'; // eslint-disable-line no-unused-vars
+const ENV_TEST = NODE_ENV === 'test'; // eslint-disable-line no-unused-vars
 
 
 //=========================================================
@@ -31,15 +31,16 @@ app.use(express.static(`${PROJECT_ROOT_DIR}/target`));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-if(ENV_DEVELOPMENT) {
-  //CORS middleware
-  var allowCrossDomain = function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
+function allowCrossDomain(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
 
-    next();
-  }
+  next();
+}
+
+if (ENV_DEVELOPMENT) {
+  // CORS middleware
   app.use(allowCrossDomain);
 }
 
@@ -47,7 +48,7 @@ if(ENV_DEVELOPMENT) {
 // API  ROUTER
 //---------------------------------------------------------
 apiRouter.connectToLobo();
-app.use('/api/v1',apiRouter);
+app.use('/api/v1', apiRouter);
 
 
 
@@ -69,8 +70,7 @@ app.use(router);
 app.listen(app.get('port'), app.get('host'), error => {
   if (error) {
     logger.error(error);
-  }
-  else {
+  } else {
     logger.info(`Server listening @ ${app.get('host')}:${app.get('port')}`);
   }
 });

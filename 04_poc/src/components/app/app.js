@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { POST_SIGN_IN_PATH, POST_SIGN_OUT_PATH } from 'src/config';
 import { authActions } from 'src/core/auth';
 
-import { AppBar, Paper } from 'material-ui'
+import { AppBar, Paper } from 'material-ui';
 
 
 export class App extends Component {
@@ -29,8 +29,7 @@ export class App extends Component {
 
     if (auth.authenticated && !nextProps.auth.authenticated) {
       router.replace(POST_SIGN_OUT_PATH);
-    }
-    else if (!auth.authenticated && nextProps.auth.authenticated) {
+    } else if (!auth.authenticated && nextProps.auth.authenticated) {
       router.replace(POST_SIGN_IN_PATH);
     }
   }
@@ -41,7 +40,7 @@ export class App extends Component {
   }
 
   render() {
-    const { auth, children } = this.props;
+    const { children } = this.props;
 
     return (
       <div>

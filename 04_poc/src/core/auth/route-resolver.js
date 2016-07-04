@@ -8,7 +8,7 @@ export function authRouteResolver(getState) {
     const { pathname } = nextState.location;
 
     // commented out because auth not yet implemented
-    /*if (!auth.authenticated && pathname !== SIGN_IN_PATH) {
+    /* if (!auth.authenticated && pathname !== SIGN_IN_PATH) {
       replace({pathname: SIGN_IN_PATH});
     }
     if (pathname !== POST_SIGN_IN_PATH) {
