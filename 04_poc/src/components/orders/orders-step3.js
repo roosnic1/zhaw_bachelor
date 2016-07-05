@@ -7,7 +7,7 @@ import OrdersStopinfo from './orders-stopinfo';
 // import { ordersActions } from 'src/core/orders';
 
 
-class OrdersStep2 extends Component {
+class OrdersStep3 extends Component {
   static propTypes = {
     orderTask: PropTypes.func.isRequired,
     orders: PropTypes.object,
@@ -20,7 +20,7 @@ class OrdersStep2 extends Component {
 
   componentDidMount() {
     // Set current step
-    localStorage.setItem('currentStep', 'step2');
+    localStorage.setItem('currentStep', 'step3');
   }
 
   orderTask() {
@@ -47,7 +47,7 @@ class OrdersStep2 extends Component {
     const { orders } = this.props;
 
     return (
-      <div className="orders-step2">
+      <div className="orders-step3">
         <h2>Order Status</h2>
         <OrdersOverview task={orders.task} stops={orders.stops} reftime={orders.reftime * 1000} />
         {this.renderOrderStopInfos()}
@@ -58,4 +58,4 @@ class OrdersStep2 extends Component {
 }
 
 
-export default withRouter(OrdersStep2);
+export default withRouter(OrdersStep3);
