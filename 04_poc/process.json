@@ -1,0 +1,13 @@
+{
+  "apps" : [{
+    "name": "imagineCargo",
+    "cwd": "/var/www/html/ic.gifstr.io",
+    "script": "server/main.js",
+    "watch"       : true,
+    "env": {
+      "NODE_ENV": "production",
+      "HOST": "localhost",
+      "PORT": 14875
+    }
+  }]
+}

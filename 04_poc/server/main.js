@@ -1,3 +1,5 @@
+#!/usr/bin/env nodejs
+
 const apiRouter = require('./api');
 
 const express = require('express');
