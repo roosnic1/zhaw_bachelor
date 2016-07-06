@@ -1,15 +1,15 @@
 import React, { Component, PropTypes } from 'react';
+import {Paper, DatePicker, TimePicker} from 'material-ui';
+import FontAwesome from 'react-fontawesome';
 import moment from 'moment';
 
 
 class OrdersOverview extends Component {
   static propTypes = {
-    reftime: PropTypes.number,
-    stops: PropTypes.array,
-    task: PropTypes.object
+    orders: PropTypes.object
   };
 
-  renderOverview() {
+  /*renderOverview() {
     const { task, reftime } = this.props;
     if (task !== null) {
       return (
@@ -21,23 +21,57 @@ class OrdersOverview extends Component {
         </div>
       );
     }
+  }*/
+
+  handleDateChange(event, date) {
+    const { orders } = this.props;
+    const reftime = new Date(orders.reftime);
+    const datetime = new Date(date.getFullYear(), date.getMonth(), date.getDate(),
+      reftime.getHours(), reftime.getMinutes(), reftime.getSeconds());
+    this.props.updateReftime(orders.tasktoken,datetime.getTime());
+  }
+
+  handleTimeChange(event, time) {
+    const { orders } = this.props;
+    const reftime = new Date(orders.reftime);
+    const datetime = new Date(reftime.getFullYear(), reftime.getMonth(), reftime.getDate(),
+      time.getHours(), time.getMinutes(), time.getSeconds());
+    this.props.updateReftime(orders.tasktoken,datetime.getTime());
+  }
+
+  renderDatetime() {
+    const { reftime } = this.props.orders;
+    return (
+      <div className="orders-overview__date">
+        <DatePicker hintText="Date" value={new Date(reftime)} onChange={this.handleDateChange.bind(this)} />
+        <TimePicker hintText="Time" format="24hr" value={new Date(reftime)} onChange={this.handleTimeChange.bind(this)} />
+      </div>
+    )
+  }
+
+  renderStops() {
+    const { stops } = this.props.orders;
+    return (
+      <div className="orders-overview__stops">
+        {stops.map((stop,index) => {
+          if (stop.alias) {
+            return [<div className="stop train-stop">{stop.alias}</div>, <FontAwesome className="symbol-stop" name={ index===1 ? "train" : "bicycle"} size="2x" />];
+          } else {
+            return [<div className="stop street-stop">{stop.street} {stop.housenumber} <br />{stop.city} {stop.zip} {stop.isocode}</div>, <FontAwesome className={index < stops.length-1 ? 'symbol-stop' : 'symbol-hide'}  name="bicycle" size="2x" />];
+          }
+        })}
+    </div>
+    )
   }
 
   render() {
-    const { stops } = this.props;
+    const { orders } = this.props;
     return (
-      <div className="orders-overview">
-        <div className="orders-overview__stops">
-          {stops.map(stop => {
-            if (stop.alias) {
-              return <p>{stop.alias}</p>;
-            } else {
-              return <p>{stop.street} {stop.housenumber}, {stop.city} {stop.zip}, {stop.isocode}</p>;
-            }
-          })}
-        </div>
-        {this.renderOverview()}
-      </div>
+      <Paper zDepth={2} className="orders-overview">
+        <p>Task Token: {orders.tasktoken}</p>
+        {this.renderStops()}
+        {this.renderDatetime()}
+      </Paper>
     );
   }
 }

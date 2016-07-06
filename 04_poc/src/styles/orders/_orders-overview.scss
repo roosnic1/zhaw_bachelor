@@ -1,0 +1,27 @@
+
+.orders-overview__stops {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+
+  .stop {
+    text-align: center;
+  }
+
+  .symbol-stop {
+    text-align: center;
+    flex-grow: 1;
+  }
+
+  .symbol-hide {
+    display: none;
+  }
+
+  .train-stop {
+    flex-grow: 1;
+  }
+
+  .street-stop {
+    flex-grow: 2;
+  }
+}

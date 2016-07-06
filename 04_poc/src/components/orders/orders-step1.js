@@ -43,7 +43,7 @@ class OrdersStep1 extends Component {
     const options = { types: ['address'] };
     const streetAddress = document.getElementById('street_address');
     let autoComplete = new google.maps.places.Autocomplete(streetAddress, options);
-    autoComplete.addListener('place_changed', this.addAddress.bind(this));
+    //autoComplete.addListener('place_changed', this.addAddress.bind(this));
     this.setState(Object.assign({}, this.state, {
       streetAddress: {
         auto: autoComplete
@@ -83,6 +83,7 @@ class OrdersStep1 extends Component {
                 input.value = '';
                 input.focus();
               }
+              this.forceUpdate()
             })
             .catch(error => {
               console.error(error);
@@ -100,40 +101,17 @@ class OrdersStep1 extends Component {
             .then(() => { this.props.router.push('/orders/step2'); });
   }
 
-  renderStopList() {
-    if (this.props.orders.stops.length > 0) {
-      return (
-        <div className="stops-wrapper">
-          {this.props.orders.stops.map(stop => {
-            if (stop.alias) {
-              return <p>{stop.alias}</p>;
-            } else {
-              return <p>{stop.street} {stop.housenumber}, {stop.city} {stop.zip}, {stop.isocode}</p>;
-            }
-          })}
-        </div>
-      );
-    } else {
-      return (
-        <div className="stops-wrapper">
-          <p>No Stops yet</p>
-        </div>
-      );
-    }
-  }
-
-
   render() {
+    const { orders } = this.props;
     return (
-      <div className="orders-start">
-        <h2>Stops</h2>
-        {this.renderStopList()}
+      <div className="orders-step1">
         <h2>Input</h2>
-        <form className="orders-step1__form" onSubmit={e => { e.preventDefault(); }}>
-          <TextField id="street_address" fullWidth={true} errorText={this.state.streetAddress.error} />
-          <br />
-          <RaisedButton label="Primary" primary={true} onClick={this.calculateTask.bind(this)} />
-        </form>
+        <TextField
+          id="street_address"
+          floatingLabelText={orders.stops.length > 0 ? 'End address' : 'Start address' }
+          floatingLabelFixed={true}
+          errorText={this.state.streetAddress.error} />
+        <RaisedButton label={orders.stops.length > 0 ? 'Add End' : 'Add Start' } primary={true}  onClick={this.addAddress.bind(this)} />
       </div>
     );
   }

@@ -5,12 +5,18 @@ import {
     GET_PAYMENTID_START,
     GET_PAYMENTID_ERROR,
     GET_PAYMENTID_SUCCESS,
+    GET_CONNECTIONS_START,
+    GET_CONNECTIONS_ERROR,
+    GET_CONNECTIONS_SUCCESS,
     CREATE_ORDER_START,
     CREATE_ORDER_ERROR,
     CREATE_ORDER_SUCCESS,
     ADD_STOP_START,
     ADD_STOP_ERROR,
     ADD_STOP_SUCCESS,
+    UPDATE_REFTIME_START,
+    UPDATE_REFTIME_ERROR,
+    UPDATE_REFTIME_SUCCESS,
     COMPILE_TASK_START,
     COMPILE_TASK_ERROR,
     COMPILE_TASK_SUCCESS,
@@ -57,6 +63,33 @@ export function getPaymentId() {
               payload: {err: 'fetchError', data: error}
             }));
   };
+}
+
+export function getConnections(from,to,date,pickup) {
+  return dispatch => {
+    dispatch({type: GET_CONNECTIONS_START, payload: null});
+    const connections = {
+      'method': 'POST',
+      'headers': {'Content-Type': 'application/json'},
+      'body': JSON.stringify({from, to, date, pickup})
+    }
+    return fetch('/api/v1/connections',connections)
+      .then(data => data.json())
+      .then(json => {
+        console.log(json);
+        dispatch({
+          type: GET_CONNECTIONS_SUCCESS,
+          payload: json
+        });
+      })
+      .catch(error => {
+        console.log('super test',error);
+        dispatch({
+          type: GET_CONNECTIONS_ERROR,
+          payload: error
+        })
+      });
+  }
 }
 
 export function createTask(productId, paymentId, datetime) {
@@ -121,6 +154,29 @@ export function addStop(tasktoken, address) {
               type: ADD_STOP_ERROR,
               payload: {err: 'fetchError', data: error}
             }));
+  };
+}
+
+export function updateReftime(tasktoken, reftime) {
+  return dispatch => {
+    dispatch({type: UPDATE_REFTIME_START, payload: null});
+    const addStopPost = {
+      'method': 'POST',
+      'headers': {'Content-Type': 'application/json'},
+      'body': JSON.stringify({tasktoken, reftime})
+    };
+    return fetch('/api/v1/updatereftime', addStopPost)
+      .then(data => data.json())
+      .then(json => {
+        dispatch({
+          type: UPDATE_REFTIME_SUCCESS,
+          payload: reftime
+        });
+      })
+      .catch(error => dispatch({
+        type: UPDATE_REFTIME_ERROR,
+        payload: {err: 'fetchError', data: error}
+      }));
   };
 }
 

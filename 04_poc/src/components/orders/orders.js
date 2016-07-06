@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import OrdersOverview from './orders-overview';
 
 // import { notificationActions } from 'src/core/notification';
 import { ordersActions } from 'src/core/orders';
@@ -40,7 +41,11 @@ export class Orders extends Component {
                 // check if there is a current task.
               if (currentTask !== undefined) {
                 return this.props.calculateTask(currentTask.tasktoken, currentTask.reftime);
-
+              } else {
+                //TODO: handle product & paymentid
+                localStorage.removeItem('currentStep');
+                const d = new Date();
+                return this.props.createTask(16, 1, d.getTime());
               }
             })
             .then(() => {
@@ -69,9 +74,8 @@ export class Orders extends Component {
 
     return (
       <div className="orders">
-        <div className="product-id">
-          <p>Task Token: {orders.tasktoken}</p>
-        </div>
+        <OrdersOverview orders={orders}/>
+
         <div className="orders__child">
           {React.cloneElement(this.props.children, this.props)}
         </div>

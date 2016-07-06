@@ -6,14 +6,17 @@ import {
     GET_PAYMENTID_START,
     GET_PAYMENTID_SUCCESS,
     GET_PAYMENTID_ERROR,
+    GET_CONNECTIONS_START,
+    GET_CONNECTIONS_ERROR,
+    GET_CONNECTIONS_SUCCESS,
     CREATE_ORDER_SUCCESS,
     CREATE_ORDER_ERROR,
     ADD_STOP_START,
     ADD_STOP_ERROR,
     ADD_STOP_SUCCESS,
-    /* GET_STOPLIST_START,
-    GET_STOPLIST_ERROR,
-    GET_STOPLIST_SUCCESS,*/
+    UPDATE_REFTIME_START,
+    UPDATE_REFTIME_ERROR,
+    UPDATE_REFTIME_SUCCESS,
     COMPILE_TASK_START,
     COMPILE_TASK_ERROR,
     COMPILE_TASK_SUCCESS,
@@ -32,6 +35,7 @@ import {
 export const initialState = {
   fetchingProductList: false,
   fetchingPaymentList: false,
+  fetchtingConnections: false,
   creatingTask: false,
   fetchingStopList: false,
   addingStop: false,
@@ -47,6 +51,7 @@ export const initialState = {
   reftime: null,
   stops: [],
   task: null,
+  connections: [],
   taskStatus: null
 };
 
@@ -84,6 +89,18 @@ export function ordersReducer(state = initialState, action) {
         paymentid: action.payload.paymentid,
         reftime: action.payload.reftime
       });
+    case GET_CONNECTIONS_START:
+      return Object.assign({}, state, {fetchtingConnections: true});
+    case GET_CONNECTIONS_SUCCESS:
+      return Object.assign({}, state, {
+        fetchtingConnections: false,
+        connections: action.payload
+      });
+    case GET_CONNECTIONS_ERROR:
+      return Object.assign({}, state, {
+        fetchtingConnections: false,
+        connections: []
+      });
     case CREATE_ORDER_ERROR:
       console.error(action.payload);
       return Object.assign({}, state, {
@@ -106,32 +123,10 @@ export function ordersReducer(state = initialState, action) {
       return Object.assign({}, state, {
         addingStop: false
       });
-        /* case GET_STOPLIST_START:
-            return Object.assign({}, state, {
-                fetchingStopList: true
-            });
-        case GET_STOPLIST_SUCCESS:
-            let startStopsAdded = false;
-            let endStopsAdded = false;
-            if(action.payload.length > 0) {
-                startStopsAdded = true;
-            } else if(action.payload.length > 2) {
-                endStopsAdded = true;
-            }
-            return Object.assign({}, state, {
-                fetchingStopList: false,
-                stops: [ ...action.payload ],
-                startStopsAdded,
-                endStopsAdded
-            });
-        case GET_STOPLIST_ERROR:
-            console.error(action.payload);
-            return Object.assign({}, state, {
-                fetchingStopList: false,
-                stop: [],
-                startStopsAdded: false,
-                endStopsAdded: false
-            });*/
+    case UPDATE_REFTIME_SUCCESS:
+      return Object.assign({},state, {
+        reftime: action.payload
+      });
     case COMPILE_TASK_START:
       return Object.assign({}, state, {
         compilingTask: true,
