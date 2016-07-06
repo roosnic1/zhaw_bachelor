@@ -78,12 +78,11 @@ class OrdersStep1 extends Component {
               }
             })
             .then(() => {
-              if (this.props.orders.stops.length > 0) {
+              if (this.props.orders.stops.length === 1) {
                 const input = document.getElementById('street_address');
                 input.value = '';
                 input.focus();
               }
-              this.forceUpdate()
             })
             .catch(error => {
               console.error(error);
@@ -96,22 +95,34 @@ class OrdersStep1 extends Component {
     this.setState(newState);
   }
 
-  calculateTask() {
+  compileTask() {
     this.props.compileTask(this.props.orders.tasktoken)
-            .then(() => { this.props.router.push('/orders/step2'); });
+      .then(() => { this.props.router.push('/orders/step2'); });
+  }
+
+  renderInputField() {
+    const { orders } = this.props;
+    const style = {
+      width: 450
+    };
+    return (
+      <div>
+        <TextField
+          id="street_address"
+          floatingLabelText={orders.stops.length > 0 ? 'End address' : 'Start address' }
+          floatingLabelFixed={true}
+          style={style}
+          errorText={this.state.streetAddress.error} />
+        <RaisedButton label={orders.stops.length > 0 ? 'Add End' : 'Add Start' } primary={true}  onClick={this.addAddress.bind(this)} />
+      </div>
+    )
   }
 
   render() {
     const { orders } = this.props;
     return (
       <div className="orders-step1">
-        <h2>Input</h2>
-        <TextField
-          id="street_address"
-          floatingLabelText={orders.stops.length > 0 ? 'End address' : 'Start address' }
-          floatingLabelFixed={true}
-          errorText={this.state.streetAddress.error} />
-        <RaisedButton label={orders.stops.length > 0 ? 'Add End' : 'Add Start' } primary={true}  onClick={this.addAddress.bind(this)} />
+        {orders.stops.length < 2 ? this.renderInputField() : <RaisedButton label="Next" primary={true} onClick={this.compileTask.bind(this)} />}
       </div>
     );
   }

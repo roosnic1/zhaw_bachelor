@@ -23,7 +23,7 @@ export default function Root({history, onEnter, store}) {
         <Route component={App} onEnter={onEnter} path="/">
           <IndexRoute component={Home} />
           <Route component={Orders} path={ORDERS_PATH}>
-            <IndexRoute component={OrdersStep1} path={ORDERS_PATH + '/step1'} />
+            <IndexRoute component={OrdersStep1} />
             <Route component={OrdersStep2} path={ORDERS_PATH + '/step2'} />
             <Route component={OrdersStep3} path={ORDERS_PATH + '/step3'} />
           </Route>

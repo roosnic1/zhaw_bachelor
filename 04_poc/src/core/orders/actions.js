@@ -28,7 +28,8 @@ import {
     UPDATE_STOPINFO_SUCCESS,
     ORDER_TASK_START,
     ORDER_TASK_ERROR,
-    ORDER_TASK_SUCCESS
+    ORDER_TASK_SUCCESS,
+    DELETE_TASK
 } from './action-types';
 
 import { CUSTOMBER_NUMBER } from '../../config';
@@ -180,36 +181,11 @@ export function updateReftime(tasktoken, reftime) {
   };
 }
 
-/* export function getStopList(taskToken) {
-    return(dispatch) => {
-        dispatch({type:GET_STOPLIST_START,payload:null});
-
-        const opt = {
-            'method': 'POST',
-            'headers': {'Content-Type': 'application/json'},
-            'body': JSON.stringify({tasktoken: taskToken})
-        };
-        return fetch('/api/v1/getstoplist',opt)
-            .then(data => data.json())
-            .then(json => {
-                if(json) {
-                    dispatch({
-                        type: GET_STOPLIST_SUCCESS,
-                        payload: json
-                    });
-                } else {
-                    dispatch({
-                        type: GET_STOPLIST_ERROR,
-                        payload: {err: 'apiError',data:json}
-                    });
-                }
-            })
-            .catch(error => dispatch({
-                type: GET_STOPLIST_ERROR,
-                payload: {err: 'fetchError',data:error}
-            }));
-    }
-}*/
+export function deleteTask() {
+  return dispatch => {
+    dispatch({type: DELETE_TASK});
+  }
+}
 
 export function compileTask(tasktoken) {
   return dispatch => {

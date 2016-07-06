@@ -56,12 +56,8 @@ class OrdersStep2 extends Component {
 
 
   render() {
-    const { orders } = this.props;
-
     return (
       <div className="orders-step2">
-        <h2>Order Status</h2>
-        <OrdersOverview task={orders.task} stops={orders.stops} reftime={orders.reftime * 1000} />
         {this.renderConnections()}
         <RaisedButton label="Order Task" primary={true} onClick={this.chooseConnection.bind(this)} />
       </div>

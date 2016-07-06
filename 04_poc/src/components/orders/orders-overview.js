@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import {Paper, DatePicker, TimePicker} from 'material-ui';
+import {Paper, DatePicker, TimePicker, FlatButton} from 'material-ui';
 import FontAwesome from 'react-fontawesome';
 import moment from 'moment';
 
@@ -8,20 +8,6 @@ class OrdersOverview extends Component {
   static propTypes = {
     orders: PropTypes.object
   };
-
-  /*renderOverview() {
-    const { task, reftime } = this.props;
-    if (task !== null) {
-      return (
-        <div className="orders-overview__task">
-          <p>Costs (incl. VAT): {task.costtotalincludingvat}</p>
-          <p>Date: {moment(reftime).format('DD.MM.YYYY')}</p>
-          <p>Pickup: {moment(reftime).format('HH:mm')} - {moment(reftime).add(task.pickup_handlingtime, 'minutes').format('HH:mm')}</p>
-          <p>ETA: {moment(reftime).add(task.pickup_handlingtime + task.pickup_traveltime + task.delivery_traveltime, 'minutes').format('HH:mm')}</p>
-        </div>
-      );
-    }
-  }*/
 
   handleDateChange(event, date) {
     const { orders } = this.props;
@@ -37,6 +23,11 @@ class OrdersOverview extends Component {
     const datetime = new Date(reftime.getFullYear(), reftime.getMonth(), reftime.getDate(),
       time.getHours(), time.getMinutes(), time.getSeconds());
     this.props.updateReftime(orders.tasktoken,datetime.getTime());
+  }
+
+  handleTaskDelete() {
+    this.props.deleteTask();
+    this.props.router.push('/');
   }
 
   renderDatetime() {
@@ -60,15 +51,18 @@ class OrdersOverview extends Component {
             return [<div className="stop street-stop">{stop.street} {stop.housenumber} <br />{stop.city} {stop.zip} {stop.isocode}</div>, <FontAwesome className={index < stops.length-1 ? 'symbol-stop' : 'symbol-hide'}  name="bicycle" size="2x" />];
           }
         })}
+
     </div>
     )
   }
 
   render() {
-    const { orders } = this.props;
     return (
       <Paper zDepth={2} className="orders-overview">
-        <p>Task Token: {orders.tasktoken}</p>
+        <div className="orders-overview__taskinfo">
+          <span>Task Token: {this.props.orders.tasktoken}</span>
+          <FlatButton label="Delete Task" secondary={true} onClick={this.handleTaskDelete.bind(this)} />
+        </div>
         {this.renderStops()}
         {this.renderDatetime()}
       </Paper>

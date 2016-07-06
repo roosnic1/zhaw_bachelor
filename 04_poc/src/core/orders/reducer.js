@@ -28,7 +28,8 @@ import {
     UPDATE_STOPINFO_SUCCESS,
     ORDER_TASK_START,
     ORDER_TASK_ERROR,
-    ORDER_TASK_SUCCESS
+    ORDER_TASK_SUCCESS,
+    DELETE_TASK
 } from './action-types';
 
 
@@ -126,6 +127,17 @@ export function ordersReducer(state = initialState, action) {
     case UPDATE_REFTIME_SUCCESS:
       return Object.assign({},state, {
         reftime: action.payload
+      });
+    case DELETE_TASK:
+      return Object.assign({}, state, {
+        tasktoken: null,
+        productid: null,
+        paymentid: null,
+        reftime: null,
+        stops: [],
+        task: null,
+        connections: [],
+        taskStatus: null
       });
     case COMPILE_TASK_START:
       return Object.assign({}, state, {

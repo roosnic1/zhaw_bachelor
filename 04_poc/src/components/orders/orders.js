@@ -71,10 +71,11 @@ export class Orders extends Component {
     const {
             orders
         } = this.props;
+    console.log(this.props.orders);
 
     return (
       <div className="orders">
-        <OrdersOverview orders={orders}/>
+        <OrdersOverview orders={orders} router={this.props.router} />
 
         <div className="orders__child">
           {React.cloneElement(this.props.children, this.props)}
