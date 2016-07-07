@@ -40,18 +40,42 @@ Für die Auslieferung der \textit{Single-page application} wird nur ein Webserve
 Obwohl die Logik für die zu entwickelnde Benutzeroberfläche ausschliesslich in der SPA ausgeführt werden könnte, hat der Einsatz eines sogenannten Mini Backends erhebliche Vorteile. LoBo benutzt für die Authentifizierung einen Schlüssel mit welchem alle Anfragen \textit{gehasht} werden müssen. Der Entstandene Hash wird im Header jeder Anfrage mitgeschickt. Dadurch kann LoBo die Authenzität und Integrität der Anfragen sicher stellen. Dieses hashing könnte in der SPA geschehen, hat jedoch den Nachteil, dass der Schlüssel von den Benutzer ausgelesen werden kann. Zusätzlich vereinfacht der Einsatz eines Mini-Backend die Skalierung. Es können mehrere Instanzen des Mini-Backends gestartet werden und ein zusätzlicher Webserver verteilt die Anfragen auf die verfügbaren Instanzen. Die Mini-Backends können auch mit verschiedenen LoBo Systemen kommunizieren. Dies verhindert einen Flaschenhals bei einem Anstieg der Benutzerzahlen. Im Rahmen dieser Bachelorarbeit wird eine Single-page Applikation mit JavaScript entwickelt und ein Mini-Backend welches auf Node.js basiert. Node.js wurde ausgewählt weil es in der gleichen Sprache programmiert wird, wie die SPA und dadurch einige Vorteile bietet.
 
 \section{JavaScript}
-JavaScript ist zurzeit eine der populärsten Programmiersprachen. Die Sprache hat im Juni 2015.
+JavaScript ist eine zurzeit populäre Programmiersprachen welche zu einem grossen Teil für dynamischen Aspekte einer Webseite verantwortlich ist aber auch Serverseitig zum Einsatz kommt. Obwohl während den Anfängen von JavaScript mehrere Interpretationen der Sprache existierten, ist JavaScript heute der einzige Dialekt welcher auf der EcmaScript Spezifikation basiert und interpretiert wird. JavaScript wird von allen grossen Browsern mit ihren jeweiligen Implementationen unterstützt. Im folgenden eine Liste der JavaScript Engines der bekanntesten Browsers\footnote{Liste von Wikipedia \url{https://en.wikipedia.org/wiki/ECMAScript}}.
+\begin{description}
+	\item[SpiderMonkey] wird von Mozilla für den Browser Firefox entwickelt.
+	\item[V8] wird von Google für den Browser Chrome entwickelt.
+	\item[JavaScriptCore] wird von Apple für den Browser Safari entwickelt.
+	\item[Chakra] wird von Microsoft für den Browser Edge entwickelt.
+\end{description}
+V8 von Google wird unter anderem auch für Node.js verwendet welches im Rahmen dieser Bachelorarbeit für das Mini-Backend verwendet wird.
+
 \subsection{ES2015}
-ES2015 -> weil besser performance mit weniger libs. Neuer standard. besser maintainbarer code
+Die Sprache hat im Juni 2015 eine lang erwartet neue Version bekommen. Ecma International\footnote{European Computer Manufacturers Association \url{http://www.ecma-international.org/}} welche die Spezifikationen für die Programmiersprache JavaScript schriebt, hat die Version EcmaScript 2015 veröffentlicht und damit der Sprache einige neue Funktionen verleihen. Mit EcmaScript 2015 (ES2015) können Klassen erstellt werden und mit einem Module System Klassen, Objekte, Funktionen und Variablen exportiert wie auch importiert werden. Dank dieser Erneuerung ist es bedeutend einfacher JavaScript Code zu unterhalten und pflegen. Er kann in verschiedene Module unterteilt werden und ist dadurch auch besser lesbar. Einige der Erneuerungen machen auch Helfer Bibliotheken wie \textit{underscore.js} oder \textit{jquery} überflüssig, was wiederum zur Performanz beiträgt.
 
 \subsection{Framework}
-FLux -> weil Prozess weniger störungs anfällig, immer klarer State,
-https://scotch.io/tutorials/getting-to-know-flux-the-react-js-architecture
-React -> weil Flux, weil slim, weil Komponenten (wiederverwendbarkeit), weil brand neu
+In JavaScript existieren unzählige Frameworks welche etliche Anwendungsfälle unterstützten können. Obwohl eine Single-Page Applikation auch ohne Framework und Helfer Bibliothek entwickelt werden kann, können Frameworks zur stabilität und erfolg der Webseite beitragen. Frameworks wie Angular\footnote{Javascript Framework von Google \url{https://angularjs.org/}} und Ember.js\footnote{Javascript Framework aus der OpenSource Gemeinschaft \url{http://emberjs.com/}} unterstützen die Entwicklung einer \textit{Model View Controller} (MVC) SPA erheblich. Angular stellt z.B. einen Service (\textit{\$resource}) zur Verfügung mit welchem alle \textit{XMLHttpRequest} Anfragen ausgeführt werden können. Die Handhabung im Falle eines Fehlers kann zentral implementiert werden und auch die Transformation von Empfangen sowie zu Versendenden Daten kann mit dem Service verwaltet werden. In Ember.js wird eine Datenverwaltungs Komponente zur Verfügung gestellt, welche die gesamte Synchronisation der Daten mit einem Backend übernimmt. Sofern das Backend eine standardisierte JSON REST\footnote{REST steht für \textit{Representational State Transfer} und bezeichnet ein Programmierparadigma} Programmierschnittstelle besitzt, kann diese Synchronisation, welche Daten erstellt, bearbeitet, lädt und löscht, mit wenigen Zeilen Code implementiert werden. Diese Beispiele sind nur vereinzelte Einblick in die Möglichkeiten der Frameworks. Frameworks bringen aber auch Nachteile mit sich, sobald ein Anwendungsfall implementiert werden soll, welcher nicht dem Framework entspricht, kann es kompliziert und Fehleranfällig werden.
+\newline{}
+Ein relativ neues JavaScript Framework ist \textit{React}\footnote{JavaScript Framework von Facebook \url{https://facebook.github.io/react/}} welches von Facebook entwickelt wird. React setzt im Gegensatz zu MVC Frameworks eine andere Philosophie um. Zum einen wird in React mit Komponenten, welche wiederum Subkomponenten beinhalten können, gearbeitet. Zum anderen wird das Programmierparadigma \textit{Data Down, Actions up} umgesetzt. In diesem Programmierparadigma wird den Komponenten die Benötigten Daten übergeben und die Komponenten rufen eine Methode auf welche die bearbeitet Daten zurück gibt. Zusätzlich werden die \textit{Templates} welche benötigt werden für die visuelle Repräsentation der Komponenten nicht wie üblich in HTML geschrieben sonder in JSX\footnote{JSX steht für \textit{JavaScript Syntax extension} und erlaubt das Schreiben von HTML in JavaScript} womit der gesamte Code einer Komponente in der gleichen Datei geschrieben werden kann. Auch von Facebook stammt die Applikations Architektur \textit{Flux}. Flux besteht aus hauptsächlich aus einem \textit{Dispatcher}, \textit{Store} und den \textit{Views} und baut auf einigen wenigen Prinzipien auf welche in der folgenden Liste erklärt werden.
+\begin{description}
+	\item[Unidirektionaler Datenfluss] Daten fliesen immer in eine Richtung. Jede Änderung der Daten findet über eine Aktion statt.
+	\item[Klare Trennung der Kontrolle] Die Kontrolle über die Daten befindet sich in den \textit{Stores} und diese können von Aussen nicht verändert werden.
+	\item[Zentralisierter Dispatcher] Es existiert nur ein \textit{Dispatcher}, welcher alle \textit{Stores} über eine neu Aktion informiert. Dadurch wird garantiert, dass immer nur eine Aktion aufs mal ausgeführt wird.
+\end{description}
+Flux und die Prinzipien sind in der Abbildung \ref{fig:flux} dargestellt.
+
+\begin{figure}[ht]
+	\centering
+  \includegraphics[width=0.88\textwidth]{images/flux.png}
+	\caption{Darstellung des Programmierparadigma Flux}
+	\label{fig:flux}
+\end{figure}
+Flux und React können kombiniert werden und ergeben dadurch ein stabiles, modernes und Fehlerarmes JavaScript Framework.
+
+\subsection{Fazit}
+Aus den Anforderungen in Kapitel \ref{sec:anforderungsanalyse} wird klar, dass die gleichen Eingabemasken an verschiedenen Stellen zum Einsatz kommen. Die Eingabe einer Adresse wird gleich in mehreren Anforderungen benötigt. Für diese Anforderung spricht ein Framework wie React, welches diese Eingabemasken als Komponenten einmal implementiert und an verschiedene Stellen zu Verfügung stellt. Auch der Aufbau einer Schritt für Schritt Eingabe lässt sich in Komponenten und Subkomponenten praktisch umsetzten. Weil für die Erstellung eines Auftrags in LoBo einem klaren Prozess gefolgt werden muss, eignet sich der Einsatz von Flux. Mit Flux ist die gesamte Single-page Applikation weniger störungsanfällig und hat zu jedem Zeitpunkt einen klaren Zustand. Im Rahmen dieser Bachelorarbeit wird die zu erstellende Benutzeroberfläche mit React und Flux entwickelt.
 
 
 \section{Architektur}
-
 
 \subsection{Frontend}
 Alle actions wie adresse auto complete, update stop info, update task info in komponenten. können in Steps und Advanced tour wiederverwendet werden. Steps sind auch wieder komponenten welche die anderen komponenten weiderverwenden.
