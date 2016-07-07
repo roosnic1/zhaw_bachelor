@@ -101,14 +101,8 @@ apiRouter.get('/paymentlist', function(req, res) {
 
 apiRouter.post('/createtask', function(req, res) {
     // TODO: validate incoming data
-
-    /* if(!req.body.reftime) {
-        req.body.reftime = new Date().getTime();
-    }*/
-
-  const opt = createLoboRequest('createTask', req.body);
-  console.log(opt, req.body.reftime);
-  request.post(opt, function(err, response, body) {
+  const params = Object.assign({},req.body,{reftime: Math.floor(req.body.reftime / 1000)});
+  request.post(createLoboRequest('createTask', params), function(err, response, body) {
     if (err || response.statusCode === 403) {
       res.json({error: err, statusCode: response.statusCode});
     } else {
@@ -122,7 +116,6 @@ apiRouter.post('/addstop', function(req, res) {
   rp(createLoboRequest('addStop', req.body))
         .then(function(json) {
           const data = JSON.parse(json);
-          console.log(data);
           if (data.statuscode > 0) {
             res.send(json);
           } else {
@@ -283,7 +276,7 @@ apiRouter.post('/compiletask', function(req, res) {
     })
     .catch(function(err) {
       console.error('ERROR', err);
-      res.json(err);
+      res.status(500).json(err);
     });
 });
 
@@ -334,10 +327,12 @@ apiRouter.post('/updatestopinfo', function(req, res) {
 });
 
 apiRouter.post('/updatereftime', function(req, res) {
-  // TODO: validate incoming data
-  rp(createLoboRequest('setRefTime', req.body))
+  // TODO: validate incoming
+  const params = Object.assign({},req.body,{reftime: Math.floor(req.body.reftime / 1000)});
+  rp(createLoboRequest('setRefTime', params))
     .then(function(json) {
       const data = JSON.parse(json);
+      console.log(data);
       if (data > 0) {
         res.send(json);
       } else {
@@ -376,7 +371,9 @@ apiRouter.post('/connections', function (req, res) {
     date: moment(req.body.date).format('YYYY-MM-DD'),
     time: moment(req.body.date).add(req.body.pickup,'minutes').format('hh:mm')
   });
-  rp('https://transport.opendata.ch/v1/connections?'+params)
+  const request = 'https://transport.opendata.ch/v1/connections?'+params;
+  console.log(request);
+  rp(request)
     .then(function (json) {
       console.log(json);
       const data = JSON.parse(json);

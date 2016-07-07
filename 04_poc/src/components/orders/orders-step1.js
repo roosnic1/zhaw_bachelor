@@ -97,7 +97,10 @@ class OrdersStep1 extends Component {
 
   compileTask() {
     this.props.compileTask(this.props.orders.tasktoken)
-      .then(() => { this.props.router.push('/orders/step2'); });
+      .then((test) => {
+        console.log('asadas',test);
+        this.props.router.push('/orders/step2');
+      });
   }
 
   renderInputField() {

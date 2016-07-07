@@ -16,14 +16,27 @@ class OrdersStep2 extends Component {
     super(props, context);
   }
 
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.orders.reftime !== this.props.orders.reftime) {
+      console.log('Reftime changed');
+      const { orders } = nextProps;
+      this.loadConnections(orders.stops[1].name,orders.stops[2].name,orders.reftime,orders.task.pickup_handlingtime+orders.task.pickup_traveltime);
+    }
+  }
+
   componentDidMount() {
     // Set current step
     localStorage.setItem('currentStep', 'step2');
     const { orders } = this.props;
-    this.props.getConnections(orders.stops[1].name,orders.stops[2].name,orders.reftime * 1000,orders.task.pickup_handlingtime+orders.task.pickup_traveltime)
-      .then(() => {
-        console.log(orders.connections);
-      });
+    this.loadConnections(orders.stops[1].name,orders.stops[2].name,orders.reftime,orders.task.pickup_handlingtime+orders.task.pickup_traveltime);
+  }
+
+  loadConnections(from,to,date,pickup) {
+    this.props.getConnections(from,to,date,pickup)
+     .then(() => {
+      console.log(this.props.orders.connections);
+     });
   }
 
   chooseConnection() {
@@ -36,7 +49,6 @@ class OrdersStep2 extends Component {
 
   renderConnections() {
     const { orders } = this.props;
-    console.log(orders.connections.length);
     if(orders.connections.length > 0) {
       return (
         <List>

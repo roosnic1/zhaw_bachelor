@@ -77,7 +77,7 @@ export function getConnections(from,to,date,pickup) {
     return fetch('/api/v1/connections',connections)
       .then(data => data.json())
       .then(json => {
-        console.log(json);
+        console.log('actual action',json);
         dispatch({
           type: GET_CONNECTIONS_SUCCESS,
           payload: json
@@ -161,12 +161,12 @@ export function addStop(tasktoken, address) {
 export function updateReftime(tasktoken, reftime) {
   return dispatch => {
     dispatch({type: UPDATE_REFTIME_START, payload: null});
-    const addStopPost = {
+    const reftimePost = {
       'method': 'POST',
       'headers': {'Content-Type': 'application/json'},
       'body': JSON.stringify({tasktoken, reftime})
     };
-    return fetch('/api/v1/updatereftime', addStopPost)
+    return fetch('/api/v1/updatereftime', reftimePost)
       .then(data => data.json())
       .then(json => {
         dispatch({
@@ -202,7 +202,7 @@ export function compileTask(tasktoken) {
             .then(json => {
               if (json.task.statuscode > 0) {
                 json.tasktoken = tasktoken;
-                dispatch({
+                 return dispatch({
                   type: COMPILE_TASK_SUCCESS,
                   payload: json
                 });

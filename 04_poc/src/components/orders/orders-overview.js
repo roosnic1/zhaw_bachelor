@@ -8,7 +8,7 @@ class OrdersOverview extends Component {
   static propTypes = {
     orders: PropTypes.object
   };
-
+  
   handleDateChange(event, date) {
     const { orders } = this.props;
     const reftime = new Date(orders.reftime);
