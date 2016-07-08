@@ -26,6 +26,9 @@ import {
     UPDATE_STOPINFO_START,
     UPDATE_STOPINFO_ERROR,
     UPDATE_STOPINFO_SUCCESS,
+    UPDATE_STOPTIME_START,
+    UPDATE_STOPTIME_ERROR,
+    UPDATE_STOPTIME_SUCCESS,
     ORDER_TASK_START,
     ORDER_TASK_ERROR,
     ORDER_TASK_SUCCESS,
@@ -274,6 +277,7 @@ export function updateStopinfo(tasktoken, stopid, infos) {
                   type: UPDATE_STOPINFO_SUCCESS,
                   payload: json
                 });
+                return true;
               } else {
                 dispatch({
                   type: UPDATE_STOPINFO_ERROR,
@@ -286,6 +290,32 @@ export function updateStopinfo(tasktoken, stopid, infos) {
               payload: {err: 'fetchError', data: error}
             }));
   };
+}
+
+export function updateStoptime(tasktoken, stopid, times) {
+  return dispatch => {
+    dispatch({type: UPDATE_STOPTIME_START});
+
+    const stoptimePost = {
+      'method': 'POST',
+      'headers': {'Content-Type': 'application/json'},
+      'body': JSON.stringify(Object.assign({
+        tasktoken: tasktoken,
+        stopid: stopid
+      }, times))
+    };
+    return fetch('/api/v1/updatestoptime', stoptimePost)
+      .then(data => {
+        if(data.ok) {
+          dispatch({type: UPDATE_STOPTIME_SUCCESS});
+          return true;
+        } else {
+          throw 'Could not update stop times';
+        }
+      })
+      .catch(error => dispatch({type:UPDATE_STOPINFO_ERROR,payload:error}));
+
+  }
 }
 
 export function orderTask(tasktoken) {

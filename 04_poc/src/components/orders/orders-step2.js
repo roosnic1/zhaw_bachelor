@@ -2,9 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import {withRouter} from 'react-router';
 import {RaisedButton, Subheader} from 'material-ui';
 import {List, ListItem} from 'material-ui/List';
-import OrdersOverview from './orders-overview';
-
-// import { ordersActions } from 'src/core/orders';
+import moment from 'moment';
 
 
 class OrdersStep2 extends Component {
@@ -19,32 +17,54 @@ class OrdersStep2 extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.orders.reftime !== this.props.orders.reftime) {
-      console.log('Reftime changed');
-      const { orders } = nextProps;
-      this.loadConnections(orders.stops[1].name,orders.stops[2].name,orders.reftime,orders.task.pickup_handlingtime+orders.task.pickup_traveltime);
+      this.loadConnections(nextProps.orders);
     }
   }
 
   componentDidMount() {
     // Set current step
     localStorage.setItem('currentStep', 'step2');
-    const { orders } = this.props;
-    this.loadConnections(orders.stops[1].name,orders.stops[2].name,orders.reftime,orders.task.pickup_handlingtime+orders.task.pickup_traveltime);
+    this.loadConnections();
   }
 
-  loadConnections(from,to,date,pickup) {
-    this.props.getConnections(from,to,date,pickup)
-     .then(() => {
-      console.log(this.props.orders.connections);
-     });
+  loadConnections(orders = this.props.orders) {
+    this.props.getConnections(orders.stops[1].name,orders.stops[2].name,orders.reftime,orders.task.pickup_handlingtime+orders.task.pickup_traveltime);
   }
 
-  chooseConnection() {
-    /*this.props.orderTask(this.props.orders.tasktoken)
-      .then(() => {
-        // Continue to last step
-      });*/
-    this.props.router.push('/orders/step3');
+  chooseConnection(connection) {
+    const {orders} = this.props;
+    const startTime = connection.from.departureTimestamp;
+    const duration = moment.duration(connection.duration.replace('d','.'));
+    Promise.all([
+      this.props.updateStoptime(orders.tasktoken,orders.stops[1].id,{
+       appointedtime: moment(startTime * 1000).format('HH:mm'),
+       appointeddate: moment(startTime * 1000).format('YYYY-MM-DD'),
+       timecondition: 0
+      }),
+      this.props.updateStopinfo(orders.tasktoken,orders.stops[1].id,{
+        notepublic: 'Platform: ' + connection.from.platform
+      }),
+      this.props.updateStoptime(orders.tasktoken,orders.stops[2].id,{
+        appointedtime: moment(startTime * 1000).add(duration).format('HH:mm'),
+        appointeddate: moment(startTime * 1000).add(duration).format('YYYY-MM-DD'),
+        timecondition: 0
+      }),
+      this.props.updateStopinfo(orders.tasktoken,orders.stops[2].id,{
+        notepublic: 'Platform: ' + connection.to.platform
+      }),
+      this.props.updateStoptime(orders.tasktoken,orders.stops[3].id,{
+        appointedtime: moment(startTime * 1000).add(duration).add(15,'m').format('HH:mm'),
+        appointeddate: moment(startTime * 1000).add(duration).add(15,'m').format('YYYY-MM-DD'),
+        timecondition: 1
+      })
+    ]).then((data) => {
+      if(data.reduce((prev,curr) => prev && curr,true)) {
+        this.props.router.push('/orders/step3');
+      } else {
+        // TODO: Error handling
+      }
+    });
+    
   }
 
   renderConnections() {
@@ -58,6 +78,7 @@ class OrdersStep2 extends Component {
               <ListItem
                 primaryText={connection.from.station.name + ' - ' + connection.to.station.name + ' / Departure: ' + connection.from.departure}
                 secondaryText={'Duration: ' + connection.duration + ' / Products: ' + connection.products.join()}
+                onClick={this.chooseConnection.bind(this,connection)}
               />
             );
           })}

@@ -14,9 +14,11 @@ const moment = require('moment');
 const apiRouter = new express.Router();
 
 function createLoboRequest(action, params = {}) {
+
+  // Ensure that all parameters are strings
   for (let key in params) {
     if ({}.hasOwnProperty.call(params, key)) {
-      params[key] = String(params[key]);
+        params[key] = String(params[key]);
     }
   }
   const postArray = Object.assign({
@@ -326,10 +328,31 @@ apiRouter.post('/updatestopinfo', function(req, res) {
         });
 });
 
+
+apiRouter.post('/updatestoptime', function (req, res) {
+  // TODO: validate incoming data
+  const opt = createLoboRequest('setStopTime',req.body);
+  console.log('Starting updatestoptime with: ', opt);
+  rp(opt)
+    .then(function (json) {
+      if(json > 0) {
+        res.status(200).end();
+      } else {
+        throw new ApiException('Could not update stop time', JSON.parse(json));
+      }
+    })
+    .catch(function (error) {
+      console.error(error);
+      res.status(500).send(error);
+    });
+});
+
 apiRouter.post('/updatereftime', function(req, res) {
   // TODO: validate incoming
   const params = Object.assign({},req.body,{reftime: Math.floor(req.body.reftime / 1000)});
-  rp(createLoboRequest('setRefTime', params))
+  const opt = createLoboRequest('setRefTime', params);
+  console.log('Starting updatereftime with: ', opt);
+  rp(opt)
     .then(function(json) {
       const data = JSON.parse(json);
       console.log(data);
