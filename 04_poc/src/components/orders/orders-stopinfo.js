@@ -40,33 +40,6 @@ class OrdersStopinfo extends Component {
         </div>
         <div className="orders-overview__infofields">
           <TextField
-            id="notepublic"
-            ref={r => this.fields.push(r)}
-            floatingLabelText="Public Note"
-            floatingLabelFixed={true}
-            style={textFieldStyle}
-            value={stop.notepublic}
-            onBlur={this.saveStopInfo.bind(this)}
-          />
-          <TextField
-            id="noteinhouse"
-            ref={r => this.fields.push(r)}
-            floatingLabelText="Inhouse Note"
-            floatingLabelFixed={true}
-            style={textFieldStyle}
-            value={stop.noteinhouse}
-            onBlur={this.saveStopInfo.bind(this)}
-          />
-          <TextField
-            id="noteprivate"
-            ref={r => this.fields.push(r)}
-            floatingLabelText="Private Note"
-            floatingLabelFixed={true}
-            style={textFieldStyle}
-            value={stop.noteprivate}
-            onBlur={this.saveStopInfo.bind(this)}
-          />
-          <TextField
             id="contactperson"
             ref={r => this.fields.push(r)}
             floatingLabelText="Contact Person"
@@ -75,6 +48,26 @@ class OrdersStopinfo extends Component {
             value={stop.contactperson}
             onBlur={this.saveStopInfo.bind(this)}
           />
+          <TextField
+            id="noteinhouse"
+            ref={r => this.fields.push(r)}
+            floatingLabelText="Phonenumber"
+            floatingLabelFixed={true}
+            style={textFieldStyle}
+            value={stop.noteinhouse}
+            onBlur={this.saveStopInfo.bind(this)}
+          />
+          <TextField
+            id="notepublic"
+            ref={r => this.fields.push(r)}
+            floatingLabelText="Information"
+            floatingLabelFixed={true}
+            style={textFieldStyle}
+            value={stop.notepublic}
+            onBlur={this.saveStopInfo.bind(this)}
+          />
+
+
         </div>
       </div>
     );

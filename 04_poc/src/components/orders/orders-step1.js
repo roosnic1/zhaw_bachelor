@@ -98,8 +98,11 @@ class OrdersStep1 extends Component {
   compileTask() {
     this.props.compileTask(this.props.orders.tasktoken)
       .then((test) => {
-        console.log('asadas',test);
-        this.props.router.push('/orders/step2');
+        if(this.props.orders.stops.length > 2) {
+          this.props.router.push('/orders/step2');
+        } else {
+          this.props.router.push('/orders/step3');
+        }
       });
   }
 

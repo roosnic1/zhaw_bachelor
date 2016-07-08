@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { withRouter } from 'react-router';
 import { RaisedButton } from 'material-ui';
-import OrdersOverview from './orders-overview';
 import OrdersStopinfo from './orders-stopinfo';
 
 // import { ordersActions } from 'src/core/orders';
@@ -27,6 +26,7 @@ class OrdersStep3 extends Component {
     this.props.orderTask(this.props.orders.tasktoken)
       .then(() => {
         // Continue to last step
+        this.props.router.push('/orders/step4');
       });
   }
 
@@ -36,20 +36,20 @@ class OrdersStep3 extends Component {
     if (orders.stops.length > 0) {
       return (
         <div>
-          <OrdersStopinfo stop={orders.stops[0]} tasktoken={orders.tasktoken} updateStopinfo={this.props.updateStopinfo} />
-          <OrdersStopinfo stop={orders.stops[3]} tasktoken={orders.tasktoken} updateStopinfo={this.props.updateStopinfo} />
+          {orders.stops.map(stop => {
+           if(!stop.alias) {
+             return <OrdersStopinfo stop={stop} tasktoken={orders.tasktoken} updateStopinfo={this.props.updateStopinfo} />
+           }
+          })}
         </div>
       );
     }
   }
 
   render() {
-    const { orders } = this.props;
 
     return (
       <div className="orders-step3">
-        <h2>Order Status</h2>
-        <OrdersOverview task={orders.task} stops={orders.stops} reftime={orders.reftime * 1000} />
         {this.renderOrderStopInfos()}
         <RaisedButton label="Order Task" primary={true} onClick={this.orderTask.bind(this)} />
       </div>

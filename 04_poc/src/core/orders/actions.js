@@ -80,14 +80,12 @@ export function getConnections(from,to,date,pickup) {
     return fetch('/api/v1/connections',connections)
       .then(data => data.json())
       .then(json => {
-        console.log('actual action',json);
         dispatch({
           type: GET_CONNECTIONS_SUCCESS,
           payload: json
         });
       })
       .catch(error => {
-        console.log('super test',error);
         dispatch({
           type: GET_CONNECTIONS_ERROR,
           payload: error
