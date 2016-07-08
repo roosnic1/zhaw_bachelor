@@ -22,6 +22,7 @@ class OrdersStep4 extends Component {
       <div className="orders-step4">
         <h2>Status</h2>
         <a href={orders.taskStatus.statusurl} target="_blank">Status</a>
+        <br />
         <a href={orders.taskStatus.confirmationpdf} target="_blank">Confirmation PDF</a>
       </div>
     );

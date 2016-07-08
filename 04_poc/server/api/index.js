@@ -218,11 +218,13 @@ apiRouter.post('/compiletask', function(req, res) {
       console.log(zones);
 
       if(zones[0].customernumber !== zones[1].customernumber) {
-        return Promise.all(zones.map(function (zone) {
+        return Promise.all([...zones.map(function (zone) {
           return rp(createLoboRequest('addStopByCustomerNumber', {tasktoken: req.body.tasktoken, customernumber: zone.customernumber}));
-        }));
+        }),
+          rp(createLoboRequest('setProductId',{tasktoken: req.body.tasktoken,productid:16}))
+        ]);
       } else {
-        return false;
+        return rp(createLoboRequest('setProductId',{tasktoken: req.body.tasktoken,productid:11}));
       }
 
       //TODO: throw new ApiException('Could not get zone', {zone: zone, latAndLng: latAndLng});
@@ -230,7 +232,10 @@ apiRouter.post('/compiletask', function(req, res) {
     })
     .then(function(results) {
       console.log(results);
-      if (results !== false) {
+      if(results.pop() !== '1') {
+        throw new ApiException('Could not set proper product id');
+      }
+      if (results.length > 0) {
         stopSequence.push(...results.map(function (result) {
           const stop = JSON.parse(result);
           return stop.stop.id;
