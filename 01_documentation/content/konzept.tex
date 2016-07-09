@@ -78,7 +78,16 @@ Flux und React können kombiniert werden und ergeben dadurch ein stabiles, moder
 Aus den Anforderungen in Kapitel \ref{sec:anforderungsanalyse} wird klar, dass die gleichen Eingabemasken an verschiedenen Stellen zum Einsatz kommen. Die Eingabe einer Adresse wird gleich in mehreren Anforderungen benötigt. Für diese Anforderung spricht ein Framework wie React, welches diese Eingabemasken als Komponenten einmal implementiert und an verschiedene Stellen zu Verfügung stellt. Auch der Aufbau einer Schritt für Schritt Eingabe lässt sich in Komponenten und Subkomponenten praktisch umsetzten. Weil für die Erstellung eines Auftrags in LoBo einem klaren Prozess gefolgt werden muss, eignet sich der Einsatz von Flux. Mit Flux ist die gesamte Single-page Applikation weniger störungsanfällig und hat zu jedem Zeitpunkt einen klaren Zustand. Im Rahmen dieser Bachelorarbeit wird die zu erstellende Benutzeroberfläche mit React und Flux entwickelt.
 
 \section{Prozess}
-Wie wird ein Task erstellt. Unterschied zwischen Inner City und Intercity. überleiten in die Architektur und....
+Die Erstellung eines Auftrages hat nur zwei Szenarien. Die Start und Zieladresse sind entweder im gleichen Versorgungsgebiet oder befinden sich in unterschiedlichen. Die Single-Page-Applikation weiss dies nicht und es ist Aufgabe des Mini-Backends dies herauszufinden. Davor muss aber zuerst ein Auftrag erstellt werden. Mit dem gewonnen \textit{Tasktoken} werden die verifizierten Adressen als Stops hinzugefügt. Danach wird im Mini-Backend die Methode \textit{compiletask} aufgerufen welche herausfinden soll ob und welche Stops hinzugefügt werden sollen. Die Abbildung \ref{fig:compiletask} soll die Aufgabe der Methode grafisch darstellen.
+
+\begin{figure}[ht]
+	\centering
+  \includegraphics[width=0.88\textwidth]{images/compileTask.png}
+	\caption{Darstellung der compileTask Methode}
+	\label{fig:compiletask}
+\end{figure}
+
+Sollten die Start- und Zieladresse in unterschiedlichen Versorgungsgebieten liegen, werden die Verfügbaren Bahnverbindungen angezeigt. Ansonsten werden direkt die Kontaktinformationen für die Start und Zieladresse gesammelt. Danach wird der Auftrag bestellt und der Benutzer bekommt eine Bestätigung.
 
 
 \section{Architektur}
@@ -120,18 +129,31 @@ Die primäre Aufgabe der Single-page Applikation ist das aufnehmen der richtigen
 \end{figure}
 
 \subsubsection{Orders}
+Die Orders Komponente hat keine visuelle Repräsentation. Je nach URL Pfad wird eine der vier OrdersStep Komponente dargestellt. Die Orders Komponente hat die Aufgabe einen Auftrag zu erstellen und den \textit{tasktoken} zu speichern. Beim einen neu laden der Webseite, ist die Orders Komponente verantwortlich den letzten Auftrag wieder Aufzunehmen und den entsprechenden Schritt zu laden.
 
+\subsubsection{OrdersOverview}
+Die OrdersOverview Komponente wird in jedem Schritt verwendet und zeigt alle Relevanten Informationen wie startzeit, Start und Zieladresse sowie den Preis des Auftrags. Zusätzlich verwendet die Komponente eine weitere Komponente welche zur Eingabe der Adressen eingesetzt wird.
 
+\subsubsection{OrdersAddstop}
+Die OrdersAddstop Komponente versucht die vom Benutzer eingegebene Adresse zu vervollständigen. Diese geschieht mit der Programmierschnittstelle von Google Maps\footnote{Goole Maps Programmierschnittstelle \url{https://developers.google.com/maps/web}}, welche während der Eingabe des Benutzer versucht die fertige Adresse anzubieten. Die Komponente verifiziert die Adresse ebenfalls mit LoBo.
 
-Alle actions wie adresse auto complete, update stop info, update task info in komponenten. können in Steps und Advanced tour wiederverwendet werden. Steps sind auch wieder komponenten welche die anderen komponenten weiderverwenden.
+\subsubsection{OrdersStopinfo}
+Die OrdersStopinfo Komponente biete dem Benutzer Eingabefelder an, welche zur Eingabe für Informationen wie Kontaktperson, Telefonnummer und sonstige Hinweise verwendet werden können.
 
+\subsubsection{OrdersConnections}
+Die OrdersConnections Komponente lädt die verfügbaren Bahnverbindungen zwischen zwei Standorten. Die Bahnverbindungen werden mithilfe der Programmierschnittstelle von Opendata.ch\footnote{transport.opendata.ch Programmierschnittstelle \url{https://transport.opendata.ch/}} geladen. Nach erfolgreicher Auswahl des Benutzers werden die Zeitinformationen (Abfahrts- und Ankunftszeit sowie die jeweiligen Bahnsteige) in den jeweiligen Stops in LoBo gespeichert.
 
+\subsubsection{OrdersStep1}
+Die OrdersStep1 Komponente ist verantwortlich nach Eingabe der Start und Zieladresse zu übermitteln und den Auftrag zu vervollständigen. Nach erfolgreicher Ausführung wird entweder zur OrdersStep2 oder OrdersStep3 Komponente gewechselt.
 
-\section{Schnitstellen}
-Lobo -> Lobo
-Addresse Auto Complete -> Google Maps and Open street maps
-Sbb times -> opendata.ch
+\subsubsection{OrdersStep2}
+Die OrdersStep2 Komponente ist verantwortlich die OrdersConnections Komponente darzustellen und nach erfolgreicher Bahnverbindungsauswahl zur OrderStep3 Komponente zu wechseln.
 
+\subsubsection{OrdersStep3}
+Die OrdersStep3 Komponente ist verantwortlich für die jeweiligen Stops (Start und Zeil) die OrdersStopinfo Komponenten anzuzeigen und einen klickbare Aktion welche den Auftrag vollständig in LoBo einträgt und nach erfolgreicher Durchführung zu der OrdersStep4 Komponente wechselt.
+
+\subsubsection{OrdersStep4}
+Die OrdersStep4 Komponente ist verantwortlich Links zu dem erstellten Bestätigungs PDF sowie zur Auftragsstatus Seite bereit zu stellen.
 
 
 
