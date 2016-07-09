@@ -77,6 +77,9 @@ Flux und React können kombiniert werden und ergeben dadurch ein stabiles, moder
 \subsection{Fazit}
 Aus den Anforderungen in Kapitel \ref{sec:anforderungsanalyse} wird klar, dass die gleichen Eingabemasken an verschiedenen Stellen zum Einsatz kommen. Die Eingabe einer Adresse wird gleich in mehreren Anforderungen benötigt. Für diese Anforderung spricht ein Framework wie React, welches diese Eingabemasken als Komponenten einmal implementiert und an verschiedene Stellen zu Verfügung stellt. Auch der Aufbau einer Schritt für Schritt Eingabe lässt sich in Komponenten und Subkomponenten praktisch umsetzten. Weil für die Erstellung eines Auftrags in LoBo einem klaren Prozess gefolgt werden muss, eignet sich der Einsatz von Flux. Mit Flux ist die gesamte Single-page Applikation weniger störungsanfällig und hat zu jedem Zeitpunkt einen klaren Zustand. Im Rahmen dieser Bachelorarbeit wird die zu erstellende Benutzeroberfläche mit React und Flux entwickelt.
 
+\section{Prozess}
+Wie wird ein Task erstellt. Unterschied zwischen Inner City und Intercity. überleiten in die Architektur und....
+
 
 \section{Architektur}
 
@@ -104,10 +107,22 @@ Somit braucht das Mini-Backend nur die Schnittstellenendpunkte zur Verfügung zu
 	\item[ordertask] finalisiert den Auftrag
 \end{description}
 
+Zusätzlich soll das Mini-Backend soviel Fehlerhandhabung betrieben wie möglich. Die SPA soll Fehler nur bekommen wenn ein Dienst nicht verfügbar ist oder ein schwerwiegender Fehler passiert ist.
 
-Error handling wenn möglich nur im Backend.
+\subsection{SPA}
+Die primäre Aufgabe der Single-page Applikation ist das aufnehmen der richtigen Benutzerinformationen und wiedergeben der daraus berechneten Daten. Die SPA wird in Komponenten ausgeteilt welche einzelne Arbeitsschritte ausführen. Diese Komponenten werden in sogenannten \textit{Step-}Komponenten zusammengefasst. In der Abbildung \ref{fig:comparch} sind die Komponenten und ihre Verwendung grafisch dargestellt. In den folgenden Kapitel werden die Funktionen der Komponenten beschrieben.
 
-\subsection{Frontend}
+\begin{figure}[ht]
+	\centering
+  \includegraphics[width=0.88\textwidth]{images/comparch.png}
+	\caption{Darstellung der Komponenten und ihrer Verwendung}
+	\label{fig:comparch}
+\end{figure}
+
+\subsubsection{Orders}
+
+
+
 Alle actions wie adresse auto complete, update stop info, update task info in komponenten. können in Steps und Advanced tour wiederverwendet werden. Steps sind auch wieder komponenten welche die anderen komponenten weiderverwenden.
 
 
@@ -117,14 +132,6 @@ Lobo -> Lobo
 Addresse Auto Complete -> Google Maps and Open street maps
 Sbb times -> opendata.ch
 
-
-\section{Bibliotheken}
-%http://iso4app.net/ für die polygone
-%https://github.com/tmpvar/polygon.js
-%https://www.npmjs.com/package/vec2
-
-
-%https://www.smashingmagazine.com/2016/06/an-introduction-to-redux/?utm_source=javascriptweekly&utm_medium=email
 
 
 

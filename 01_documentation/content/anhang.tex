@@ -12,14 +12,6 @@
   \item Offizielle Aufgabenstellung, Projektauftrag
   \item (Zeitplan)
   \item (Besprechungsprotokolle oder Journals)
-  \end{itemize}
-}
-
-\section{Weiteres}
-\label{sec:Weiteres}
-
-\textcolor{darkgray}{
-  \begin{itemize}
   \item CD mit dem vollständigen Bericht als pdf-File inklusive Film- und Fotomaterial
   \item (Schaltpläne und Ablaufschemata)
   \item (Spezifikationen u. Datenblätter der verwendeten Messgeräte und/oder Komponenten)
@@ -31,6 +23,43 @@
   \item (Softwarecode)
   \end{itemize}
 }
+
+\newpage{}
+
+\section{LoBo API}
+\label{sec:loboAPI}
+Im folgenden sind die möglichen Schnittstellen Endpunkte von LoBo beschrieben. Die Angaben stammen direkt aus der Beschreibung der Schnittstelle des Entwicklers und werden der Vollständigkeit halber aufgeführt.
+
+\begin{description}
+  \item[getGrantedActions] returns an array of actions covered by your license key
+  \item[getProductList] Lists all publicly available products
+  \item[getPaymentList] Lists all available payment methods
+  \item[getPriceScale] Get details of the price scale for the given product and list all graduations.
+  \item[createTask] Creates an internal (yet hidden) task. The returned tasktoken is a reference to access and change this task, eg. to add stops, set a new reference time, change the productid, ...
+  \item[setProductId] Change the product of the given task. Next, you might want to call action='calculateTask' to query the updated cost and transit times.
+  \item[setPaymentId] Change the payment for a given task (typically called just before action='orderTask')
+  \item[setCustomerNumber] Change the customer of the given task. Please consider that the resulting costs will change if the newly assigned customer is associated with another discount system. Next, you might want to call action='calculateTask' to query the resulting cost.
+  \item[setRefTime] Change the reference time of the given task. Next, you might want to call action='calculateTask' to query the updated transit times and/or if the the product is still available at the new time.
+  \item[addStop] Verifies an address and, on success (statuscode > 0): adds the address as new stop to the given task
+  \item[verifyAddress] Verifies an address. Returned placeid can be used
+  \item[addStopByPlaceId] Add a place as stop based on the search with action='verifyAddress' or action='autoCompletePlaceAndStreet'
+  \item[addStopByCustomerNumber] Add a customer as stop
+  \item[deleteStop] Deletes the given stop from the given task
+  \item[setStopSequence] Set a new sequence of the stops.
+  \item[getStopList] Returns the current stop list including address information
+  \item[calculateTask] Calculates the cost and transit time parameters.
+  \item[optimizeTask] Makes a copy of the existing task and minimizes the cost by reordering the stops (traveling sales man problem).
+  \item[setTaskInfo] Set additional plain text infos for given task. To reset a field, send empty value. All optional params (notepublic, noteinhouse, noteprivate, contactperson) that are not defined in a request remain unchanged.
+  \item[setStopInfo] Set additional plain text infos for given stop. To reset a field, send empty value. All optional params (notepublic, noteinhouse, noteprivate, contactperson, placename) that are not defined in a request remain unchanged.
+  \item[setStopTime] Set a fixed time for the given stop. The fixed time can be ser either relative to the task's reference time (same date), or on a different date, if appointeddate parameter is given. Optionally you can set the a timecondition 'at', 'as from', or 'by' the fixed time. To reset the fxied time of a stop, simply set the appointedtime paramter to 0.
+  \item[orderTask] Place the order in the LoBo system. After this call no more changes can be made to task (via the API).
+  \item[autoCompleteStreet] Autocomplete street name based on an combination of a right wildcard and similarity search. If a street spans accross an area of different zip codes and/or city names it will be found for every unique combination.
+  \item[getCustomer] Get list of customers (matching filter criteria).
+  \item[createCustomer] Create new customer.
+  \item[getZoneCompilation] List zone details of a given (zone based) product. Zones can be either be based on geopolygons or on postal codes.
+  \item[getStatistics] Get usage statistics.
+\end{description}
+
 \newpage{}
 \section{Kano Modell}
 \label{sec:kanomodel}
