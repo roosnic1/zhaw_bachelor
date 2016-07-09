@@ -2,20 +2,39 @@
 \chapter{Prototyp}
 \label{sec:prototyp}
 
-redux -> weil.
+\section{Tools}
+Sourcecode versionierung -> Github,
+Entwicklungsumgebung -> Webstorm,
+Browser -> Google Chrome Canary
+Test Server -> Debian, pm2, nginx
+redux and react google chrome extensions
 
-Firebase, redux react example project
+\section{Codebase}
+Firebase, redux react example project -> basic structure und async handling of redux https://github.com/r-park/todo-react-redux
+--> connect von redux welches state in Komponenten injected.
 
 Webpack -> weil angepasst auf react, modular, keine zusätzlichen taskrunner, einfach
-
-github
-
-deploy auf eigenem server
+Babel -> transpile to ES5. (performance booster false kein transpile mehr stattfindet)
+NPM task -> server frontend & backend mit proxy zu backend hot loading react... komfort beim entwickeln
+Eslint -> code quality
+Sass -> because easy
 
 \section{Entwicklungsprozess}
-
-Keine erkennung in welcher Zone -> polygon -> Lat, Lng
-
+\subsection{Mini-Backend}
+API endpunkte entwickeln.
+Lobo requests erstell methode.
+Lobo limmitierung. keine polygone. Versorgungs gebiete selber erstellen. Polygon mit lat und lng erstellen. überprüfen ob punkt drin liegt.
 %http://iso4app.net/ für die polygone
 %https://github.com/tmpvar/polygon.js
 %https://www.npmjs.com/package/vec2
+
+???Error handling
+
+
+\subsection{SPA}
+aktion erstellen (XYZ_START, XYZ_SUCCESS, XYZ_ERROR)
+reducer und State (pure functions ???)
+Komponente erstellen
+
+
+
