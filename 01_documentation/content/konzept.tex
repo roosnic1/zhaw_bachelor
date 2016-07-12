@@ -91,6 +91,7 @@ Sollten die Start- und Zieladresse in unterschiedlichen Versorgungsgebieten lieg
 
 
 \section{Architektur}
+\label{sec:architektur}
 
 \subsection{Mini-Backend}
 Das Backend hat 2 elementare Aufgaben. Das ausliefern der SPA und das bereitstellen der Schnittstelle mit welcher die SPA kommuniziert. Die SPA befindet sich in einem Verzeichnis und wird bei einem Aufruf direkt ausgeliefert. Alle Anfrage der SPA werden an eine bestimmte URL gesendet, welche mit der Entsprechenden Antwort oder einem Fehler antwortet. Das Mini-Backend soll aber nicht nur die Anfragen von der SPA an LoBo weiterleiten sonder auch die Komplexität gewisser Prozessabläufe vereinfachen. Obwohl LoBo viele Schnittstellenendpunkte zur Verfügung stellt, werden für gewisse Funktionen mehrere Anfragen benötigt. Für Die Abfrage ob eine bestimmte Strassenadresse in einem Gebiet liegt, welches von Imagine Cargo versorgt wird, werden 3 Anfragen an LoBo benötigt. Zuerst muss in LoBo ein neuer Auftrag erstellt werden, mit dem dadurch gewonnen Auftragstoken muss eine Adresse hinzugefügt werden. Zuletzt muss eine Anfrage gestellt werden, welche überprüft ob der Auftrag konform ist. Die Fehlermeldung dieser Anfrage bestimmt ob die Adresse in einem Versorgungsgebiet von Imagine Crago liegt. Der gesamte Ablauf ist in der Abbildung \ref{fig:addressverify} grafisch dargestellt. Darin ist zu sehen wie viel Arbeit vom Mini-Backend gehandhabt wird.
