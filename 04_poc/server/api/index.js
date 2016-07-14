@@ -21,12 +21,15 @@ function createLoboRequest(action, params = {}) {
         params[key] = String(params[key]);
     }
   }
+
+  // Combine Parameters with defaults
   const postArray = Object.assign({
     action: action,
     clientIp: '127.0.0.1',
     responseFormat: 'json'
   }, params);
 
+  // Create Hash
   const shaObj = new JsSHA('SHA-256', 'TEXT');
   shaObj.setHMACKey(CONFIG.LOBO_API_PRIVATE_KEY, 'TEXT');
   shaObj.update(JSON.stringify(postArray));
@@ -333,7 +336,7 @@ apiRouter.post('/updatestoptime', function (req, res) {
   rp(opt)
     .then(function (json) {
       if(json > 0) {
-        res.status(200).end();
+        res.status(200).end();Ad
       } else {
         throw new ApiException('Could not update stop time', JSON.parse(json));
       }

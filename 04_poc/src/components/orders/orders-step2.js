@@ -87,12 +87,10 @@ class OrdersStep2 extends Component {
     }
   }
 
-
   render() {
     return (
       <div className="orders-step2">
         {this.renderConnections()}
-        <RaisedButton label="Order Task" primary={true} onClick={this.chooseConnection.bind(this)} />
       </div>
     );
   }

@@ -76,7 +76,7 @@ export function getConnections(from,to,date,pickup) {
       'method': 'POST',
       'headers': {'Content-Type': 'application/json'},
       'body': JSON.stringify({from, to, date, pickup})
-    }
+    };
     return fetch('/api/v1/connections',connections)
       .then(data => data.json())
       .then(json => {

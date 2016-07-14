@@ -1,10 +1,16 @@
 import React, { Component, PropTypes } from 'react';
 import { withRouter } from 'react-router';
+import { RaisedButton } from 'material-ui';
+import OrdersStopinfo from './orders-stopinfo';
+
+// import { ordersActions } from 'src/core/orders';
 
 
 class OrdersStep4 extends Component {
   static propTypes = {
+    orderTask: PropTypes.func.isRequired,
     orders: PropTypes.object,
+    updateStopinfo: PropTypes.func.isRequired
   };
 
   constructor(props, context) {
@@ -13,17 +19,35 @@ class OrdersStep4 extends Component {
 
   componentDidMount() {
     // Set current step
+    localStorage.setItem('currentStep', 'step4');
   }
-  
+
+  orderTask() {
+    this.props.orderTask(this.props.orders.tasktoken)
+      .then(() => {
+        // Continue to last step
+        this.props.router.push('/orders/step4');
+      });
+  }
+
+  renderOrderPackageInfos() {
+    const { orders } = this.props;
+
+    if (orders.stops.length > 0) {
+      return (
+        <div>
+          adaas
+        </div>
+      );
+    }
+  }
 
   render() {
-    const {orders} = this.props;
+
     return (
       <div className="orders-step4">
-        <h2>Status</h2>
-        <a href={orders.taskStatus.statusurl} target="_blank">Status</a>
-        <br />
-        <a href={orders.taskStatus.confirmationpdf} target="_blank">Confirmation PDF</a>
+        {this.renderOrderPackageInfos()}
+        <RaisedButton label="Order Task" primary={true} onClick={this.orderTask.bind(this)} />
       </div>
     );
   }

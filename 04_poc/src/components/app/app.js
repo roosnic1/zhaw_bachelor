@@ -44,7 +44,7 @@ export class App extends Component {
 
     return (
       <div>
-        <AppBar title="My AppBar" />
+        <AppBar title="ImagineCargo" />
         <div className="main">
           {children}
         </div>

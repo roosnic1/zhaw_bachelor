@@ -23,11 +23,7 @@ class OrdersStep3 extends Component {
   }
 
   orderTask() {
-    this.props.orderTask(this.props.orders.tasktoken)
-      .then(() => {
-        // Continue to last step
-        this.props.router.push('/orders/step4');
-      });
+    this.props.router.push('/orders/step4');
   }
 
   renderOrderStopInfos() {
@@ -51,7 +47,7 @@ class OrdersStep3 extends Component {
     return (
       <div className="orders-step3">
         {this.renderOrderStopInfos()}
-        <RaisedButton label="Order Task" primary={true} onClick={this.orderTask.bind(this)} />
+        <RaisedButton label="Next" primary={true} onClick={this.orderTask.bind(this)} />
       </div>
     );
   }

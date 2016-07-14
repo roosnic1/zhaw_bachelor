@@ -49,14 +49,15 @@ export class Orders extends Component {
               }
             })
             .then(() => {
-              const step = localStorage.getItem('currentStep');
+              /*const step = localStorage.getItem('currentStep');
               if (step !== null && this.props.orders.tasktoken !== null) {
                 this.props.router.push('/orders/' + step);
               } else {
                 localStorage.removeItem('currentTask');
                 localStorage.removeItem('currentStep');
                 this.props.router.push('/orders');
-              }
+              }*/
+              this.props.router.push('/orders');
             });
   }
 
