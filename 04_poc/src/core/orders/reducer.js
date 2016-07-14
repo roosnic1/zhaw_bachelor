@@ -26,6 +26,9 @@ import {
     UPDATE_STOPINFO_START,
     UPDATE_STOPINFO_ERROR,
     UPDATE_STOPINFO_SUCCESS,
+    UPDATE_TASKINFO_START,
+    UPDATE_TASKINFO_ERROR,
+    UPDATE_TASKINFO_SUCCESS,
     ORDER_TASK_START,
     ORDER_TASK_ERROR,
     ORDER_TASK_SUCCESS,
@@ -43,6 +46,7 @@ export const initialState = {
   calculatingTask: false,
   compilingTask: false,
   updatingStopinfo: false,
+  updatingTaskinfo: false,
   orderingTask: false,
   productList: [],
   paymentList: [],
@@ -188,6 +192,19 @@ export function ordersReducer(state = initialState, action) {
       console.error(action.payload);
       return Object.assign({}, state, {
         updatingStopinfo: false
+      });
+    case UPDATE_TASKINFO_START:
+      return Object.assign({}, state, {
+        updatingTaskinfo: true
+      });
+    case UPDATE_TASKINFO_SUCCESS:
+      return Object.assign({}, state, {
+        updatingTaskinfo: false
+      });
+    case UPDATE_TASKINFO_ERROR:
+      console.error(action.payload);
+      return Object.assign({}, state, {
+        updatingTaskinfo: false
       });
     case ORDER_TASK_START:
       return Object.assign({}, state, {

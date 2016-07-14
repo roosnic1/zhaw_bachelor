@@ -39,14 +39,17 @@ export class Orders extends Component {
               this.setState({readyForTask: true});
 
                 // check if there is a current task.
-              if (currentTask !== undefined) {
+              /*if (currentTask !== undefined) {
                 return this.props.calculateTask(currentTask.tasktoken, currentTask.reftime);
               } else {
                 //TODO: handle product & paymentid
                 localStorage.removeItem('currentStep');
                 const d = new Date();
                 return this.props.createTask(16, 1, d.getTime());
-              }
+              }*/
+
+              const d = new Date();
+              return this.props.createTask(16, 1, d.getTime());
             })
             .then(() => {
               /*const step = localStorage.getItem('currentStep');
@@ -57,6 +60,7 @@ export class Orders extends Component {
                 localStorage.removeItem('currentStep');
                 this.props.router.push('/orders');
               }*/
+              console.log('asdasds');
               this.props.router.push('/orders');
             });
   }

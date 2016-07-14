@@ -26,6 +26,9 @@ import {
     UPDATE_STOPINFO_START,
     UPDATE_STOPINFO_ERROR,
     UPDATE_STOPINFO_SUCCESS,
+    UPDATE_TASKINFO_START,
+    UPDATE_TASKINFO_ERROR,
+    UPDATE_TASKINFO_SUCCESS,
     UPDATE_STOPTIME_START,
     UPDATE_STOPTIME_ERROR,
     UPDATE_STOPTIME_SUCCESS,
@@ -287,6 +290,41 @@ export function updateStopinfo(tasktoken, stopid, infos) {
               type: UPDATE_STOPINFO_ERROR,
               payload: {err: 'fetchError', data: error}
             }));
+  };
+}
+
+export function updateTaskinfo(tasktoken, string) {
+  return dispatch => {
+    dispatch({type: UPDATE_TASKINFO_START, payload: null});
+
+    const taskInfoPost = {
+      'method': 'POST',
+      'headers': {'Content-Type': 'application/json'},
+      'body': JSON.stringify({
+        tasktoken: tasktoken,
+        notepublic: string
+      })
+    };
+    return fetch('/api/v1/updatetaskinfo', taskInfoPost)
+      .then(data => data.json())
+      .then(json => {
+        if (json > 0) {
+          dispatch({
+            type: UPDATE_TASKINFO_SUCCESS,
+            payload: json
+          });
+          return true;
+        } else {
+          dispatch({
+            type: UPDATE_TASKINFO_ERROR,
+            payload: {err: 'apiError', data: json}
+          });
+        }
+      })
+      .catch(error => dispatch({
+        type: UPDATE_TASKINFO_ERROR,
+        payload: {err: 'fetchError', data: error}
+      }));
   };
 }
 

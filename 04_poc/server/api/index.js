@@ -328,6 +328,24 @@ apiRouter.post('/updatestopinfo', function(req, res) {
         });
 });
 
+apiRouter.post('/updatetaskinfo', function(req, res) {
+  // TODO: validate incoming data
+  rp(createLoboRequest('setTaskInfo', req.body))
+    .then(function(json) {
+      console.log(json);
+      const data = JSON.parse(json);
+      if (data > 0) {
+        res.send(json);
+      } else {
+        res.json({error: 'could not add stop info', data: data});
+      }
+    })
+    .catch(function(err) {
+      console.error('ERROR', err);
+      res.status(500).send('API Request failed');
+    });
+});
+
 
 apiRouter.post('/updatestoptime', function (req, res) {
   // TODO: validate incoming data
